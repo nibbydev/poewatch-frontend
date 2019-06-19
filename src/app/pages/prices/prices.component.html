@@ -1,0 +1,24 @@
+<div class="row flex-fill">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+
+        <table class="table table-sm table-hover table-striped table-bordered">
+          <thead>
+          <tr>
+            <td *ngFor="let col of [1,2,3,4,5]">Col {{col}}</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let col of [1,2,3,4,5]">
+            <td *ngFor="let row of [1,2,3,4,5]">Row {{row}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="card-footer"></div>
+    </div>
+  </div>
+</div>
