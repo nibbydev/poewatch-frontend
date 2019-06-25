@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NavLink} from './header/nav-link';
+import { Component } from '@angular/core';
+import { NavLink } from './modules/header/nav-link';
 
 @Component({
   selector: 'app-root',

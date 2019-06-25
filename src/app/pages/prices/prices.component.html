@@ -1,23 +1,35 @@
+<app-title [title]='"Price statistics"'></app-title>
+
 <div class="row flex-fill">
   <div class="col-12">
     <div class="card">
       <div class="card-header"></div>
-      <div class="card-body">
 
-        <table class="table table-sm table-hover table-striped table-bordered">
-          <thead>
-          <tr>
-            <td *ngFor="let col of [1,2,3,4,5]">Col {{col}}</td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let col of [1,2,3,4,5]">
-            <td *ngFor="let row of [1,2,3,4,5]">Row {{row}}</td>
-          </tr>
-          </tbody>
-        </table>
-
+      <div *ngIf="!items" class="card-body text-center">
+        <div class="spinner-border"></div>
       </div>
+
+      <div *ngIf="items">
+        <div class="card-body">
+          <app-search></app-search>
+        </div>
+
+        <hr/>
+
+        <div class="card-body pt-0">
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let item of items" class="list-group-item p-0">
+              <a class="d-flex align-items-center p-1 text-reset">
+                <div class="img-container-sm d-flex justify-content-center align-items-center mr-2">
+                  <img [src]="item.icon" alt="..." class="img-fluid">
+                </div>
+                <span class="nowrap">{{item.name}}{{item.type}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <div class="card-footer"></div>
     </div>
   </div>

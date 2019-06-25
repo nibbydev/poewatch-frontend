@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PricesService} from '../../services/prices.service';
+import {PricesItem} from './prices-item';
 
 @Component({
   selector: 'app-prices',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
+  items: PricesItem[];
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private pricesService: PricesService) {
   }
 
+  ngOnInit() {
+    this.getPrices();
+  }
+
+  getPrices(): void {
+    this.pricesService.getPrices().subscribe(prices => this.items = prices);
+  }
 }

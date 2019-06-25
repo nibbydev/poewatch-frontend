@@ -1,18 +1,20 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-import {ModalModule} from 'ngx-bootstrap';
-import {TooltipModule} from 'ngx-bootstrap';
-import {BsDropdownModule} from 'ngx-bootstrap';
-import {FrontComponent} from './pages/front/front.component';
-import {FooterComponent} from './footer/footer.component';
-import {HeaderComponent} from './header/header.component';
-import {AboutComponent} from './pages/about/about.component';
-import {ApiComponent} from './pages/api/api.component';
-import {PricesComponent} from './pages/prices/prices.component';
+import { BsDropdownModule, ModalModule, TooltipModule } from 'ngx-bootstrap';
+import { FrontComponent } from './pages/front/front.component';
+import { FooterComponent } from './modules/footer/footer.component';
+import { HeaderComponent } from './modules/header/header.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ApiComponent } from './pages/api/api.component';
+import { PricesComponent } from './pages/prices/prices.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TitleComponent } from './modules/title/title.component';
+import { NavbarComponent } from './modules/navbar/navbar.component';
+import { SearchComponent } from './pages/prices/search/search.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +25,17 @@ import {PricesComponent} from './pages/prices/prices.component';
     AboutComponent,
     ApiComponent,
     PricesComponent,
+    TitleComponent,
+    NavbarComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
