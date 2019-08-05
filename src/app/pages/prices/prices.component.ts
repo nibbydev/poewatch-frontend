@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {PricesService} from '../../services/prices.service';
-import {PricesItem} from './prices-item';
+import { Component, OnInit } from '@angular/core';
+import { PricesService } from '../../services/prices.service';
+import { PricesItem } from './prices-item';
 
 @Component({
   selector: 'app-prices',

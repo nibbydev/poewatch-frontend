@@ -11,8 +11,11 @@
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
-      <li *ngFor="let nav of navLinks" class="nav-item nav-link">
-        <a routerLink="/{{nav.href}}" class="text-reset">{{nav.display}}</a>
+      <li *ngFor="let route of getFilteredRoutes()" class="nav-item nav-link">
+        <a routerLink="{{route.path}}" class="text-reset" [title]="route.data.comment">
+          <span>{{route.data.navTitle}}</span>
+          <span *ngIf="route.data.isNew" class="badge badge-success">New</span>
+        </a>
       </li>
     </ul>
   </div>

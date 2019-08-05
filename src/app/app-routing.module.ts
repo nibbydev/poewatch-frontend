@@ -1,15 +1,52 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {FrontComponent} from './pages/front/front.component';
-import {AboutComponent} from './pages/about/about.component';
-import {PricesComponent} from './pages/prices/prices.component';
-import {ApiComponent} from './pages/api/api.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { FrontComponent } from './pages/front/front.component';
+import { AboutComponent } from './pages/about/about.component';
+import { PricesComponent } from './pages/prices/prices.component';
+import { ApiComponent } from './pages/api/api.component';
 
 const routes: Routes = [
-  {path: '', component: FrontComponent},
-  {path: 'prices', component: PricesComponent},
-  {path: 'api', component: ApiComponent},
-  {path: 'about', component: AboutComponent},
+  {
+    path: '',
+    component: FrontComponent,
+    data: {
+      pageTitle: 'Poe Watch',
+      navTitle: 'Front',
+      isNew: false,
+      enabled: true,
+      comment: ''
+    },
+  }, {
+    path: 'prices',
+    component: PricesComponent,
+    data: {
+      pageTitle: 'Price Statistics',
+      navTitle: 'Prices',
+      isNew: false,
+      enabled: true,
+      comment: 'Price statistics and history'
+    },
+  }, {
+    path: 'api',
+    component: ApiComponent,
+    data: {
+      pageTitle: 'API Documentation',
+      navTitle: 'API',
+      isNew: false,
+      enabled: true,
+      comment: 'Documentation for developers'
+    },
+  }, {
+    path: 'about',
+    component: AboutComponent,
+    data: {
+      pageTitle: 'About',
+      navTitle: 'About',
+      isNew: true,
+      enabled: true,
+      comment: 'Info about the site'
+    },
+  },
 ];
 
 @NgModule({

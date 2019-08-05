@@ -1,11 +1,12 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <app-header></app-header>
+
 <div class="container my-4">
   <div class="row">
     <div class="col-2 d-none d-lg-block">
       <app-navbar></app-navbar>
     </div>
     <div class="col-12 col-lg-10">
+      <app-title [title]="pageTitle"></app-title>
       <router-outlet></router-outlet>
     </div>
   </div>

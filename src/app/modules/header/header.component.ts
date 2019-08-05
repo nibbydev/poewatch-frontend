@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {NavLink} from './nav-link';
+import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,16 +7,14 @@ import {NavLink} from './nav-link';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private navLinks: NavLink[] = [];
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
-    this.navLinks = [
-      {id: 1, isNew: false, href: 'prices', display: 'Prices'},
-      {id: 2, isNew: false, href: 'api',    display: 'API'},
-      {id: 3, isNew: false, href: 'about',  display: 'About'},
-    ];
+  }
+
+  private getFilteredRoutes(): Route[] {
+    return this.router.config.filter((route) => route.data.enabled);
   }
 }
