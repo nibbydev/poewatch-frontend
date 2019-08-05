@@ -13,9 +13,9 @@
     <ul class="navbar-nav mr-auto">
       <li *ngFor="let route of getFilteredRoutes()" class="nav-item nav-link">
         <a routerLink="{{route.path}}" class="text-reset" [title]="route.data.comment">
-          <span>{{route.data.navTitle}}</span>
-          <span *ngIf="route.data.isNew" class="badge badge-success">New</span>
+          {{route.data.navTitle}}
         </a>
+        <span *ngIf="route.data.isNew" class="badge badge-success" title="This feature was added recently">New</span>
       </li>
     </ul>
   </div>

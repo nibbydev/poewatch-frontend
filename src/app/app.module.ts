@@ -15,6 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { TitleComponent } from './modules/title/title.component';
 import { NavbarComponent } from './modules/navbar/navbar.component';
 import { SearchComponent } from './pages/prices/search/search.component';
+import { ItemComponent } from './modules/item/item.component';
+import { PriceBoxComponent } from './modules/item/price-box/price-box.component';
+import { SparklineComponent } from './modules/item/sparkline/sparkline.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { SearchComponent } from './pages/prices/search/search.component';
     TitleComponent,
     NavbarComponent,
     SearchComponent,
+    ItemComponent,
+    PriceBoxComponent,
+    SparklineComponent,
   ],
   imports: [
     BrowserModule,

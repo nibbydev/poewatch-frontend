@@ -17,12 +17,10 @@
         <div class="card-body pt-0">
           <ul class="list-group list-group-flush">
             <li *ngFor="let item of items" class="list-group-item p-0">
-              <a class="d-flex align-items-center p-1 text-reset">
-                <div class="img-container-sm d-flex justify-content-center align-items-center mr-2">
-                  <img [src]="item.icon" alt="..." class="img-fluid">
-                </div>
-                <span class="nowrap">{{item.name}}{{item.type}}</span>
-              </a>
+
+              <app-item [item]="item" [options]="itemNameOptions"></app-item>
+              <app-sparkline [history]="item.history" [options]="sparkLineOptions"></app-sparkline>
+
             </li>
           </ul>
         </div>

@@ -8,7 +8,18 @@ import { PricesItem } from './prices-item';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
-  items: PricesItem[];
+  private items: PricesItem[];
+  private itemNameOptions = {
+    clickable: false,
+    showImg: true,
+    imgSize: 'sm'
+  };
+  private sparkLineOptions = {
+    width: 60,
+    height: 30,
+    yPad: 2,
+    radius: 0.2
+  };
 
   constructor(private pricesService: PricesService) {
   }
@@ -18,6 +29,6 @@ export class PricesComponent implements OnInit {
   }
 
   getPrices(): void {
-    this.pricesService.getPrices().subscribe(prices => this.items = prices);
+    this.pricesService.getPrices(null, null).subscribe(prices => this.items = prices);
   }
 }

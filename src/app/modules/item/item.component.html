@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center">
+  <div *ngIf="options.showImg" [ngClass]="getImgSizeClass()" class="img-container text-center mr-1">
+    <img [src]="getIcon()" alt="...">
+  </div>
+
+  <div class="custom-text-gray-lo">
+    <span [ngClass]="getPrimaryClasses()">
+      <span>{{getName()}}</span>
+      <span *ngIf="item.type" [ngClass]="getSecondaryClasses()">, {{item.type}}</span>
+    </span>
+
+    <span *ngIf="hasProperties()" class="pw-subtext-1 custom-text-gray p-0">
+      {{getProperties()}}
+    </span>
+  </div>
+
+</div>

@@ -12,7 +12,7 @@ export class PricesItem {
   baseItemLevel?: number;
   gemQuality?: number;
   gemLevel?: number;
-  gemInCorrupted?: boolean;
+  gemIsCorrupted?: boolean;
   enchantMin?: number;
   enchantMax?: number;
   stackSize?: number;
