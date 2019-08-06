@@ -9,17 +9,6 @@ import { PricesItem } from './prices-item';
 })
 export class PricesComponent implements OnInit {
   private items: PricesItem[];
-  private itemNameOptions = {
-    clickable: false,
-    showImg: true,
-    imgSize: 'sm'
-  };
-  private sparkLineOptions = {
-    width: 60,
-    height: 30,
-    yPad: 2,
-    radius: 0.2
-  };
 
   constructor(private pricesService: PricesService) {
   }

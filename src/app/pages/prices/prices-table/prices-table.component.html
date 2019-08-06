@@ -1,0 +1,64 @@
+<table class="table table-sm table-hover mb-0 table-responsive">
+  <thead>
+  <tr>
+    <th class="w-100"><span class="sort-column">Item</span></th>
+    <th class="d-none d-md-table-cell">Spark</th>
+    <th><span class="sort-column">Chaos</span></th>
+    <th class="d-none d-md-table-cell">Exalted</th>
+    <th><span class="sort-column" title="Price compared to 7d ago">Change</span></th>
+    <th><span class="sort-column" title="Number of items currently on sale">Now</span></th>
+    <th><span class="sort-column" title="Number of items listed every 24h">Daily</span></th>
+    <th><span class="sort-column" title="Total number of items listed">Total</span></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let item of items">
+    <td class="d-flex align-items-center">
+      <app-item [item]="item" [options]="itemNameOptions"></app-item>
+    </td>
+    <td class="d-none d-md-table-cell">
+      <app-sparkline [history]="item.history" [options]="sparkLineOptions"></app-sparkline>
+    </td>
+
+
+    <td>
+      <div class="pricebox pw-subtext-1 font-weight-bold">
+          <span class="img-container img-container-xs text-center mr-1">
+            <img [src]="chaosIcon" alt="...">
+          </span>
+        {{item.mean | number:'1.0-2'}}
+      </div>
+    </td>
+    <td class="d-none d-md-table-cell">
+      <div *ngIf="item.exalted > 1" class="pricebox pw-subtext-1 font-weight-bold">
+          <span class="img-container img-container-xs text-center mr-1">
+            <img [src]="exaltedIcon" alt="...">
+          </span>
+        {{item.exalted | number:'1.0-2'}}
+      </div>
+    </td>
+    <td class="text-center p-0">
+      <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+        {{item.change | number:'1.0-0'}}
+      </span>
+    </td>
+    <td class="text-center p-0">
+        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+          {{item.current}}
+        </span>
+    </td>
+    <td class="text-center p-0">
+        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+          {{item.daily}}
+        </span>
+    </td>
+    <td class="text-center p-0">
+        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+          {{item.total}}
+        </span>
+    </td>
+  </tr>
+  </tbody>
+
+</table>

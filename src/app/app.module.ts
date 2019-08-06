@@ -18,6 +18,7 @@ import { SearchComponent } from './pages/prices/search/search.component';
 import { ItemComponent } from './modules/item/item.component';
 import { PriceBoxComponent } from './modules/item/price-box/price-box.component';
 import { SparklineComponent } from './modules/item/sparkline/sparkline.component';
+import { PricesTableComponent } from './pages/prices/prices-table/prices-table.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SparklineComponent } from './modules/item/sparkline/sparkline.component
     ItemComponent,
     PriceBoxComponent,
     SparklineComponent,
+    PricesTableComponent,
   ],
   imports: [
     BrowserModule,

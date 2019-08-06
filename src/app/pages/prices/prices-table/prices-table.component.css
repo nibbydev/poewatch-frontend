@@ -1,0 +1,32 @@
+table,
+table > thead > tr > th {
+  border: 0;
+  vertical-align: middle;
+  padding: 0 5px 0 2px;
+}
+
+td {
+  vertical-align: middle;
+  padding: 0 5px 0 2px;
+  border: 0;
+}
+
+tbody > td {
+  border-top: 1px rgba(0,0,0,.1);
+}
+
+tbody > tr:hover {
+  background-color: rgba(0,0,0,.1);
+}
+
+.sort-column {cursor: pointer}
+
+.pricebox {
+  display: flex;
+  align-items: center;
+}
+
+.pricebox .sparkline {padding: 0 5px 0 0}
+
+.pw-subtext-1 {font-size: 75%}
+.custom-text-gray-lo    {color: #a1a1a1}
