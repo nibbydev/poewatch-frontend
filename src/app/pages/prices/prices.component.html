@@ -9,15 +9,13 @@
 
       <div *ngIf="items">
         <div class="card-body">
-          <app-search></app-search>
+          <app-prices-search></app-prices-search>
         </div>
 
         <hr/>
 
         <div class="card-body pt-0">
-
           <app-prices-table [items]="items"></app-prices-table>
-
         </div>
       </div>
 

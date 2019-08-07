@@ -14,11 +14,11 @@ import { PricesComponent } from './pages/prices/prices.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TitleComponent } from './modules/title/title.component';
 import { NavbarComponent } from './modules/navbar/navbar.component';
-import { SearchComponent } from './pages/prices/search/search.component';
 import { ItemComponent } from './modules/item/item.component';
 import { PriceBoxComponent } from './modules/item/price-box/price-box.component';
 import { SparklineComponent } from './modules/item/sparkline/sparkline.component';
 import { PricesTableComponent } from './pages/prices/prices-table/prices-table.component';
+import { PricesSearchComponent } from './pages/prices/prices-search/prices-search.component';
 
 @NgModule({
   declarations: [
@@ -31,11 +31,11 @@ import { PricesTableComponent } from './pages/prices/prices-table/prices-table.c
     PricesComponent,
     TitleComponent,
     NavbarComponent,
-    SearchComponent,
     ItemComponent,
     PriceBoxComponent,
     SparklineComponent,
     PricesTableComponent,
+    PricesSearchComponent,
   ],
   imports: [
     BrowserModule,
