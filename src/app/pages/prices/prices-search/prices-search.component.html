@@ -4,64 +4,41 @@
   </div>
 
   <div class='row'>
-    <!-- League -->
-    <div class="col-6 col-sm">
+    <div *ngIf="settings.league" class="col-6 col-sm">
       <h4 class="nowrap">League</h4>
       <select class="form-control custom-select" id="search-league">
-        <option value="Legion">Legion</option>
-        <option value="Hardcore Legion">HC Legion</option>
-        <option value="Standard">Standard</option>
-        <option value="Hardcore">Hardcore</option>
-        <option value="Synthesis Event (SRE001)">● Synthesis Event</option>
-        <option value="Synthesis Event HC (SRE002)">● Synthesis Event HC</option>
-        <option value="Synthesis">● Synthesis</option>
-        <option value="Hardcore Synthesis">● HC Synthesis</option>
-        <option value="Betrayal">● Betrayal</option>
-        <option value="Hardcore Betrayal">● HC Betrayal</option>
-        <option value="Delve">● Delve</option>
-        <option value="Incursion">● Incursion</option>
+        <option *ngFor="let league of this.leagueService.leagues" value="{{league.name}}">
+          {{(league.active ? '' : '● ') + (league.display || league.name)}}
+        </option>
       </select>
     </div>
-    <!--//League//-->
 
-    <!-- Confidence -->
-    <div class="col-6 col-sm">
+    <div *ngIf="settings.lowDaily" class="col-6 col-sm">
       <h4 class="nowrap">Low daily</h4>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons" id="radio-confidence">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-outline-secondary">
-          <input type="radio" name="confidence" value="false" checked>Hide
+          <input checked name="confidence" type="radio" value="false">
+          <span>Hide</span>
         </label>
         <label class="btn btn-outline-secondary">
-          <input type="radio" name="confidence" value="true">Show
+          <input name="confidence" type="radio" value="true">
+          <span>Show</span>
         </label>
       </div>
     </div>
-    <!--//Confidence//-->
 
-    <!-- Group -->
-    <div class="col-6 col-sm">
+    <div *ngIf="settings.group" class="col-6 col-sm">
       <h4>Group</h4>
       <select class="form-control custom-select" id="search-group">
         <option value='all'>All</option>
-        <option value='fossil'>Fossils</option>
-        <option value='currency'>Currency</option>
-        <option value='piece'>Harbinger pieces</option>
-        <option value='essence'>Essences</option>
-        <option value='vial'>Vials</option>
-        <option value='resonator'>Resonators</option>
-        <option value='splinter'>Splinters</option>
-        <option value='net'>Nets</option>
-        <option value='incubator'>Incubators</option>
+        <option *ngFor="let group of groups$ | async" [value]="group.id">{{group.display}}</option>
       </select>
     </div>
-    <!--//Group//-->
 
-    <!-- Search -->
-    <div class="col-6 col-sm">
+    <div *ngIf="settings.search" class="col-6 col-sm">
       <h4>Search</h4>
-      <input type="text" class="form-control" id="search-searchbar" placeholder="Search">
+      <input class="form-control" placeholder="Search" type="text">
     </div>
-    <!--//Search//-->
   </div>
 </div>
 <!--//Search forms//-->

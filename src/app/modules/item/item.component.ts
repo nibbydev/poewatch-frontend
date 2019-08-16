@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PricesItem } from '../../pages/prices/prices-item';
+import { GetEntry } from '../../services/data/get-entry';
 
 @Component({
   selector: 'app-item',
@@ -7,7 +7,7 @@ import { PricesItem } from '../../pages/prices/prices-item';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
-  @Input() item: PricesItem;
+  @Input() item: GetEntry;
   @Input() options = {
     clickable: false,
     showImg: true,

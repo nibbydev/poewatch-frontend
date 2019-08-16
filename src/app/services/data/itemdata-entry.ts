@@ -1,4 +1,4 @@
-export class PricesItem {
+export class ItemdataEntry {
   id: number;
   name: string;
   type?: string;
@@ -19,18 +19,4 @@ export class PricesItem {
   linkCount?: number;
   variation?: number;
   icon: string;
-
-  mean: number;
-  median: number;
-  mode: number;
-  min: number;
-  max: number;
-  exalted: number;
-  total: number;
-  daily: number;
-  current: number;
-  accepted: number;
-
-  change: number;
-  history: number[];
 }

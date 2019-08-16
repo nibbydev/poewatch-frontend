@@ -19,6 +19,7 @@ import { PriceBoxComponent } from './modules/item/price-box/price-box.component'
 import { SparklineComponent } from './modules/item/sparkline/sparkline.component';
 import { PricesTableComponent } from './pages/prices/prices-table/prices-table.component';
 import { PricesSearchComponent } from './pages/prices/prices-search/prices-search.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { PricesSearchComponent } from './pages/prices/prices-search/prices-searc
     TooltipModule.forRoot(),
     BsDropdownModule.forRoot(),
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

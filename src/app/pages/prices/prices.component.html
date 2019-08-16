@@ -1,25 +1,24 @@
 <div class="row flex-fill">
   <div class="col-12">
+
     <div class="card">
       <div class="card-header"></div>
-
-      <div *ngIf="!items" class="card-body text-center">
-        <div class="spinner-border"></div>
+      <div class="card-body">
+        <app-prices-search></app-prices-search>
       </div>
 
-      <div *ngIf="items">
-        <div class="card-body">
-          <app-prices-search></app-prices-search>
+      <hr/>
+
+      <div class="card-body pt-0">
+        <div class="text-center">
+          <div class="spinner-border"></div>
         </div>
 
-        <hr/>
-
-        <div class="card-body pt-0">
-          <app-prices-table [items]="items"></app-prices-table>
-        </div>
+        <app-prices-table [entries$]="this.pricesService.entries$"></app-prices-table>
       </div>
 
       <div class="card-footer"></div>
     </div>
+
   </div>
 </div>

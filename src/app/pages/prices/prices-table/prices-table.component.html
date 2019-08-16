@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let item of items">
+  <tr *ngFor="let item of entries$ | async">
     <td class="d-flex align-items-center">
       <app-item [item]="item" [options]="itemNameOptions"></app-item>
     </td>

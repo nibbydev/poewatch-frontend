@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PricesItem } from '../prices-item';
+import { GetEntry } from '../../../services/data/get-entry';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-prices-table',
@@ -7,7 +8,7 @@ import { PricesItem } from '../prices-item';
   styleUrls: ['./prices-table.component.css']
 })
 export class PricesTableComponent implements OnInit {
-  @Input() private items: PricesItem[];
+  @Input() private entries$: Observable<GetEntry[]>;
   private itemNameOptions = {
     clickable: false,
     showImg: true,

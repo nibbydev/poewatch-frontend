@@ -30,7 +30,7 @@ export class SparklineComponent implements OnInit {
    * Convert an item's this.history of prices to a list of percentage differences
    */
   private formatSparkData(): number[] {
-    // If there is no this.history (eg old leagues)
+    // If there is no this.history (eg old getLeagues)
     if (!this.history) {
       return null;
     }
