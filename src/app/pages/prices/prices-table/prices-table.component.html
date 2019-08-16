@@ -1,4 +1,4 @@
-<table class="table table-sm table-hover mb-0 table-responsive">
+<table *ngIf="entries$ | async" class="table table-sm table-hover mb-0 table-responsive">
   <thead>
   <tr>
     <th class="w-100"><span class="sort-column">Item</span></th>
