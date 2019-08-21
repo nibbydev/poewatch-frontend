@@ -12,7 +12,7 @@ export class BaseService {
   }
 
   get<T>(endPoint: string, params: HttpParams, ifFailed?: T): Observable<T> {
-    const url = AppSettings.API_ENDPOINT + '/' + endPoint;
+    const url = AppSettings.API_ENDPOINT + endPoint;
 
     return this.http.get<T>(url, {params}).pipe(
       tap(_ => console.log('Made request to ' + endPoint)),
@@ -20,8 +20,9 @@ export class BaseService {
     );
   }
 
-  private handleError<T>(operation = 'operation', ifFailed?: T) {
+  private handleError<T>(operation = '', ifFailed?: T) {
     return (error: any): Observable<T> => {
+      console.error('Failed request to ' + operation);
       console.error(error);
       return of(ifFailed as T);
     };

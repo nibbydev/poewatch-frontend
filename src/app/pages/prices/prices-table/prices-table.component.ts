@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class PricesTableComponent implements OnInit {
   @Input() private entries$: Observable<GetEntry[]>;
-  private itemNameOptions = {
+  private readonly itemNameOptions = {
     clickable: false,
     showImg: true,
     imgSize: 'sm'
   };
-  private sparkLineOptions = {
+  private readonly sparkLineOptions = {
     width: 60,
     height: 30,
     yPad: 2,
