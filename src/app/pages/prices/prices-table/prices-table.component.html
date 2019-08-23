@@ -1,4 +1,4 @@
-<table *ngIf="entries$ | async" class="table table-sm table-hover mb-0 table-responsive">
+<table *ngIf="entries$ | async" class="table table-sm table-hover mb-0 table-striped table-responsive">
   <thead>
   <tr>
     <th class="w-100"><span class="sort-column">Item</span></th>
@@ -20,7 +20,6 @@
     <td class="d-none d-md-table-cell">
       <app-sparkline [history]="item.history" [options]="sparkLineOptions"></app-sparkline>
     </td>
-
 
     <td>
       <div class="pricebox pw-subtext-1 font-weight-bold">

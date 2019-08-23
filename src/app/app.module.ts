@@ -13,7 +13,7 @@ import { ApiComponent } from './pages/api/api.component';
 import { PricesComponent } from './pages/prices/prices.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TitleComponent } from './modules/title/title.component';
-import { NavbarComponent } from './modules/navbar/navbar.component';
+import { SidebarComponent } from './modules/sidebar/sidebar.component';
 import { ItemComponent } from './modules/item/item.component';
 import { PriceBoxComponent } from './modules/item/price-box/price-box.component';
 import { SparklineComponent } from './modules/item/sparkline/sparkline.component';
@@ -31,7 +31,7 @@ import { FormsModule } from '@angular/forms';
     ApiComponent,
     PricesComponent,
     TitleComponent,
-    NavbarComponent,
+    SidebarComponent,
     ItemComponent,
     PriceBoxComponent,
     SparklineComponent,

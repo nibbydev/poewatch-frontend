@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarItem } from './navbar-item';
+import { SidebarItem } from './sidebar-item';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
-export class NavbarComponent implements OnInit {
-  private elements: NavbarItem[] = [
+export class SidebarComponent implements OnInit {
+  private elements: SidebarItem[] = [
     {
       display: 'Accessories',
       name: 'accessory',

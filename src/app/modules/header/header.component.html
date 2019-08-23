@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm">
+<nav class="navbar navbar-expand-sm pw-navbar">
   <a class="navbar-brand text-reset" routerLink="/">
     <img src='https://poe.watch/assets/img/favico.png' class='d-inline-block align-top mr-2' alt="...">
     PoeWatch
@@ -15,7 +15,7 @@
         <a routerLink="{{route.path}}" class="text-reset" [title]="route.data.comment">
           {{route.data.navTitle}}
         </a>
-        <span *ngIf="route.data.isNew" class="badge badge-success" title="This feature was added recently">New</span>
+        <span *ngIf="route.data.isNew" class="badge badge-success" title="This page was added recently">New</span>
       </li>
     </ul>
   </div>

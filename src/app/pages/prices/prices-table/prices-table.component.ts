@@ -20,6 +20,12 @@ export class PricesTableComponent implements OnInit {
     yPad: 2,
     radius: 0.2
   };
+  private readonly columns = [
+    {
+      sort: true,
+
+    }
+  ];
 
   private readonly chaosIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1';
   private readonly exaltedIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&amp;w=1&amp;h=1';

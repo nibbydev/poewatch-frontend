@@ -16,7 +16,7 @@ export class PricesComponent implements OnInit {
     this.pricesService.get('standard', 'jewel');
   }
 
-  private asd($event: Event) {
+  private asd($event: string) {
     console.log($event);
   }
 }

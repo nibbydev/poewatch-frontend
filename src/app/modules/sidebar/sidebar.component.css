@@ -1,0 +1,11 @@
+.pw-sidebar-item {
+  background-color: #333;
+}
+
+.pw-sidebar-item.active {
+  background-color: #3f3f3f
+}
+
+.pw-sidebar-item:hover {
+  background-color: #444
+}
