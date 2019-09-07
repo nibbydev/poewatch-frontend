@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LeagueService } from '../../../services/league.service';
 import { CategoryService } from '../../../services/category.service';
-import { Observable } from 'rxjs';
-import { GroupEntry } from '../../../services/data/group-entry';
+import { LeagueEntry } from '../../../services/data/league-entry';
 
 @Component({
   selector: 'app-prices-search',
@@ -10,19 +9,37 @@ import { GroupEntry } from '../../../services/data/group-entry';
   styleUrls: ['./prices-search.component.css']
 })
 export class PricesSearchComponent implements OnInit {
+  @Output() private readonly searchEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() private readonly leagueEmitter: EventEmitter<string> = new EventEmitter<string>();
+
   private settings = {
-    league: true,
-    lowDaily: true,
-    group: true,
-    search: true
+    visibility: {
+      league: true,
+      confidence: true,
+      group: true,
+      search: true,
+      mapTier: false,
+      gemQuality: false,
+      gemLevel: false,
+      baseInfluence: false,
+      baseItemLevel: false,
+      gemCorruption: false,
+      links: false,
+      rarity: false
+    }
   };
 
   private groups$ = this.categoryService.getGroups('map');
 
-  constructor(private leagueService: LeagueService, private categoryService: CategoryService) {
+  constructor(private leagueService: LeagueService,
+              private categoryService: CategoryService) {
   }
 
   ngOnInit() {
+  }
+
+  private formatLeagueDisplay(league: LeagueEntry): string {
+    return (league.active ? '' : '● ') + (league.display || league.name);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { PriceService } from '../../services/price.service';
 
 @Component({
@@ -7,10 +7,16 @@ import { PriceService } from '../../services/price.service';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
+  private emitter: EventEmitter<Event>;
+
   constructor(private pricesService: PriceService) {
   }
 
   ngOnInit() {
     this.pricesService.get('standard', 'jewel');
+  }
+
+  private asd($event: string) {
+    console.log($event);
   }
 }

@@ -1,44 +1,55 @@
 <!-- Search forms -->
 <div class="px-2">
-  <div class='d-flex flex-wrap'>
-  </div>
-
   <div class='row'>
-    <div *ngIf="settings.league" class="col-6 col-sm">
-      <h4 class="nowrap">League</h4>
-      <select class="form-control custom-select" id="search-league">
-        <option *ngFor="let league of this.leagueService.leagues" value="{{league.name}}">
-          {{(league.active ? '' : '● ') + (league.display || league.name)}}
-        </option>
-      </select>
-    </div>
 
-    <div *ngIf="settings.lowDaily" class="col-6 col-sm">
-      <h4 class="nowrap">Low daily</h4>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-outline-secondary">
+    <div *ngIf="settings.visibility.confidence" class="col-6 col-sm">
+      <h4 class="nowrap">Low confidence</h4>
+      <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+        <label class="btn btn-outline-dark active">
           <input checked name="confidence" type="radio" value="false">
           <span>Hide</span>
         </label>
-        <label class="btn btn-outline-secondary">
+        <label class="btn btn-outline-dark">
           <input name="confidence" type="radio" value="true">
           <span>Show</span>
         </label>
       </div>
     </div>
 
-    <div *ngIf="settings.group" class="col-6 col-sm">
+
+    <div *ngIf="settings.visibility.group" class="col-6 col-sm">
       <h4>Group</h4>
-      <select class="form-control custom-select" id="search-group">
-        <option value='all'>All</option>
-        <option *ngFor="let group of groups$ | async" [value]="group.id">{{group.display}}</option>
-      </select>
+      <label class="w-100">
+        <select class="form-control custom-select">
+          <option value='all'>All</option>
+          <option *ngFor="let group of groups$ | async" [value]="group.id">
+            {{group.display}}
+          </option>
+        </select>
+      </label>
     </div>
 
-    <div *ngIf="settings.search" class="col-6 col-sm">
-      <h4>Search</h4>
-      <input class="form-control" placeholder="Search" type="text">
+
+    <div *ngIf="settings.visibility.league" class="col-6 col-sm">
+      <h4 class="nowrap">League</h4>
+      <label class="w-100">
+        <select (select)="leagueEmitter?.emit()" class="form-control custom-select">
+          <option *ngFor="let league of (this.leagueService.entries$ | async)?.reverse()" [value]="league.name">
+            {{formatLeagueDisplay(league)}}
+          </option>
+        </select>
+      </label>
     </div>
+
+
+    <div *ngIf="settings.visibility.search" class="col-6 col-sm">
+      <h4>Search</h4>
+      <label class="w-100">
+        <input class="form-control" placeholder="Search" type="text">
+      </label>
+    </div>
+
+
   </div>
 </div>
-<!--//Search forms//-->
+<!-- //Search forms// -->
