@@ -7,5 +7,10 @@
 }
 
 .pw-sidebar-item:hover {
-  background-color: #444
+  background-color: #444;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
 }
