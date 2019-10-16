@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm pw-navbar">
   <a class="navbar-brand text-reset" routerLink="/">
-    <img src='assets/favico.png' class='d-inline-block align-top mr-2' alt="...">
+    <img src='assets/favicon.png' class='d-inline-block align-top mr-2' alt="Logo">
     PoeWatch
   </a>
 
@@ -14,8 +14,8 @@
       <li *ngFor="let route of getFilteredRoutes()" class="nav-item nav-link">
         <a routerLink="{{route.path}}" class="text-reset" [title]="route.data.comment">
           {{route.data.navTitle}}
+          <span *ngIf="route.data.isNew" class="badge badge-success" title="This page was added recently">New</span>
         </a>
-        <span *ngIf="route.data.isNew" class="badge badge-success" title="This page was added recently">New</span>
       </li>
     </ul>
   </div>
