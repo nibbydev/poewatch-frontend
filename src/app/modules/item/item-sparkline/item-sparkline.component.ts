@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-sparkline',
-  templateUrl: './sparkline.component.html',
-  styleUrls: ['./sparkline.component.css']
+  selector: 'app-item-sparkline',
+  templateUrl: './item-sparkline.component.html',
+  styleUrls: ['./item-sparkline.component.css']
 })
-export class SparklineComponent implements OnInit {
+export class ItemSparklineComponent implements OnInit {
   @Input() history: number[];
   @Input() private options = {
     width: 60,
