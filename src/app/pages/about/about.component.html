@@ -1,13 +1,17 @@
 <div class="row">
   <div class="col">
     <div class="card">
-      <div class="card-header">FAQ</div>
+      <div class="card-header">Questions someone might ask one day</div>
 
       <div class="card-body">
+        <div *ngIf="!(faqService.faq$ | async)" class="text-center">
+          <div class="spinner-border"></div>
+        </div>
+
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let aboutItem of aboutItems">
-            <h5 class="mb-3 custom-text-green-lo">{{aboutItem.question}}</h5>
-            <span class=''>{{aboutItem.answer}}</span>
+          <li class="list-group-item" *ngFor="let faq of (faqService.faq$ | async)?.faq">
+            <h5 class="mb-3 custom-text-green-lo">{{faq.title}}</h5>
+            <span>{{faq.text}}</span>
           </li>
         </ul>
       </div>

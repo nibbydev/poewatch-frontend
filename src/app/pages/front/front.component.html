@@ -4,27 +4,14 @@
       <div class="card-header slim-card-edge"></div>
       <div class="card-body">
 
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let entry of about">
-            <h5 class="mb-3 custom-text-green-lo">{{entry.title}}</h5>
-            <span class=''>{{entry.text}}</span>
-          </li>
-        </ul>
-
-      </div>
-      <div class="card-footer slim-card-edge"></div>
-    </div>
-  </div>
-
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header">FAQ</div>
-      <div class="card-body">
+        <div *ngIf="!(faqService.faq$ | async)" class="text-center">
+          <div class="spinner-border"></div>
+        </div>
 
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let entry of faq">
-            <h5 class="mb-3 custom-text-green-lo">{{entry.title}}</h5>
-            <span class=''>{{entry.text}}</span>
+          <li class="list-group-item" *ngFor="let about of (faqService.faq$ | async)?.about">
+            <h5 class="mb-3 custom-text-green-lo">{{about.title}}</h5>
+            <span class=''>{{about.text}}</span>
           </li>
         </ul>
 
