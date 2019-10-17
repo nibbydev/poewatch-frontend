@@ -17,4 +17,8 @@ export class HeaderComponent implements OnInit {
   private getFilteredRoutes(): Route[] {
     return this.router.config.filter((route) => route.data.enabled);
   }
+
+  private isCurrentRoute(currentRoute: string, path: string): boolean {
+    return currentRoute.substr(1) === path;
+  }
 }
