@@ -1,0 +1,599 @@
+[
+  {
+    "url": "https://api.poe.watch/id",
+    "id": "id",
+    "description": "Latest change ID from the top of the river and the time it was fetched.",
+    "request": null,
+    "reply": [
+      {
+        "param": "id",
+        "condition": null,
+        "dataType": "string",
+        "description": "The change ID"
+      },
+      {
+        "param": "time",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the change ID was fetched"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/leagues",
+    "id": "leagues",
+    "description": "List of current leagues. Entries are sorted such that event leagues appear first, followed by the challenge leagues and then the permanent leagues. SSF and private leagues are omitted.",
+    "request": null,
+    "reply": [
+      {
+        "param": "id",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Unique ID of the league"
+      },
+      {
+        "param": "name",
+        "condition": null,
+        "dataType": "string",
+        "description": "Unique name of the league (as it appears in the official API)"
+      },
+      {
+        "param": "display",
+        "condition": "If available",
+        "dataType": "string",
+        "description": "Formatted league name for display, usually shortened"
+      },
+      {
+        "param": "hardcore",
+        "condition": null,
+        "dataType": "bool",
+        "description": "The league is hardcore"
+      },
+      {
+        "param": "upcoming",
+        "condition": null,
+        "dataType": "bool",
+        "description": "The league has not started yet"
+      },
+      {
+        "param": "active",
+        "condition": null,
+        "dataType": "bool",
+        "description": "The league is currently ongoing"
+      },
+      {
+        "param": "event",
+        "condition": null,
+        "dataType": "bool",
+        "description": "The league is an event league (eg Flashback)"
+      },
+      {
+        "param": "challenge",
+        "condition": null,
+        "dataType": "bool",
+        "description": "The league is a challenge league (eg Incursion)"
+      },
+      {
+        "param": "start",
+        "condition": "If available",
+        "dataType": "ISO 8601 UTC time",
+        "description": "Start date of the league"
+      },
+      {
+        "param": "end",
+        "condition": "If available",
+        "dataType": "ISO 8601 UTC time",
+        "description": "End date of the league"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/itemdata",
+    "id": "itemdata",
+    "description": "All items found in the stash API and their defining properties.",
+    "request": null,
+    "reply": [
+      {
+        "param": "id",
+        "alwaysPresent": true,
+        "condition": null,
+        "dataType": "uint",
+        "description": "Unique ID"
+      },
+      {
+        "param": "name",
+        "alwaysPresent": true,
+        "condition": null,
+        "dataType": "string",
+        "description": "Name of the item"
+      },
+      {
+        "param": "type",
+        "alwaysPresent": false,
+        "condition": "Situational",
+        "dataType": "string",
+        "description": "Additional base type field"
+      },
+      {
+        "param": "category",
+        "alwaysPresent": true,
+        "condition": null,
+        "dataType": "string",
+        "description": "Primary category the item belongs to. Categories can be found under the category api."
+      },
+      {
+        "param": "group",
+        "alwaysPresent": true,
+        "condition": null,
+        "dataType": "string",
+        "description": "Secondary category the item belongs to. Groups can be found under the category api."
+      },
+      {
+        "param": "frame",
+        "alwaysPresent": true,
+        "condition": null,
+        "dataType": "uint",
+        "description": "Numeric representation of the item's rarity (eg normal/unique). Same as official usage."
+      },
+      {
+        "param": "mapSeries",
+        "alwaysPresent": false,
+        "condition": "category=map",
+        "dataType": "uint | null",
+        "description": "5 for Synthesis, 1 for Awakening, etc"
+      },
+      {
+        "param": "mapTier",
+        "alwaysPresent": false,
+        "condition": "category=map",
+        "dataType": "uint | null",
+        "description": "Tier of map, if applicable"
+      },
+      {
+        "param": "baseIsShaper",
+        "alwaysPresent": false,
+        "condition": "category=base",
+        "dataType": "bool",
+        "description": "The base has shaper influence"
+      },
+      {
+        "param": "baseIsElder",
+        "alwaysPresent": false,
+        "condition": "category=base",
+        "dataType": "bool",
+        "description": "The base has elder influence"
+      },
+      {
+        "param": "baseItemLevel",
+        "alwaysPresent": false,
+        "condition": "category=base",
+        "dataType": "uint",
+        "description": "Item level of base"
+      },
+      {
+        "param": "gemLevel",
+        "alwaysPresent": false,
+        "condition": "category=gem",
+        "dataType": "uint",
+        "description": "Level of gem (1-21)"
+      },
+      {
+        "param": "gemQuality",
+        "alwaysPresent": false,
+        "condition": "category=gem",
+        "dataType": "uint",
+        "description": "Quality of gem (0-23)"
+      },
+      {
+        "param": "gemIsCorrupted",
+        "alwaysPresent": false,
+        "condition": "category=gem",
+        "dataType": "bool",
+        "description": "The gem is corrupted"
+      },
+      {
+        "param": "enchantMin",
+        "alwaysPresent": false,
+        "condition": "category=enchantment",
+        "dataType": "float | null",
+        "description": "Enchantment's minimum has numeric value"
+      },
+      {
+        "param": "enchantMax",
+        "alwaysPresent": false,
+        "condition": "category=enchantment",
+        "dataType": "float | null",
+        "description": "Enchantment's maximum has numeric value"
+      },
+      {
+        "param": "stackSize",
+        "alwaysPresent": false,
+        "condition": "Item is stackable",
+        "dataType": "uint | null",
+        "description": "Default stack size of item type"
+      },
+      {
+        "param": "linkCount",
+        "alwaysPresent": false,
+        "condition": "Item has significant links",
+        "dataType": "uint | null",
+        "description": "For weapons/armour only (5 or 6)"
+      },
+      {
+        "param": "variation",
+        "alwaysPresent": false,
+        "condition": "There are multiple instances of the same item but with different properties",
+        "dataType": "string",
+        "description": "Certain items (eg Vessel of Vinktar or Doryanis Invitation) tend to have variations, this field is to tell them apart."
+      },
+      {
+        "param": "icon",
+        "alwaysPresent": true,
+        "condition": null,
+        "dataType": "string",
+        "description": "Icon of the item"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/characters?account=novynn",
+    "id": "characters",
+    "description": "Get player character names found through the stash API. If a player has listed an item in a public stash tab, that character name is recorded.",
+    "request": [
+      {
+        "param": "account",
+        "required": true,
+        "description": "Case-insensitive account name"
+      }
+    ],
+    "reply": [
+      {
+        "param": "character",
+        "condition": null,
+        "dataType": "string",
+        "description": "Character name"
+      },
+      {
+        "param": "league",
+        "condition": null,
+        "dataType": "string",
+        "description": "In league"
+      },
+      {
+        "param": "found",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the character was first found"
+      },
+      {
+        "param": "seen",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the character was last seen"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/accounts?character=quillhitman",
+    "id": "accounts",
+    "description": "Get player account names found through the stash API. If a player has listed an item in a public stash tab, that account name is recorded.",
+    "request": [
+      {
+        "param": "character",
+        "required": true,
+        "description": "Case-insensitive character name"
+      }
+    ],
+    "reply": [
+      {
+        "param": "account",
+        "condition": null,
+        "dataType": "string",
+        "description": "Account name"
+      },
+      {
+        "param": "found",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the account was first found"
+      },
+      {
+        "param": "seen",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the account was last seen"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/categories",
+    "id": "categories",
+    "description": "List of categories and groups currently in use.",
+    "request": null,
+    "reply": [
+      {
+        "param": "id",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Unique id of the category"
+      },
+      {
+        "param": "name",
+        "condition": null,
+        "dataType": "string",
+        "description": "Unique name of the category"
+      },
+      {
+        "param": "display",
+        "condition": "If set",
+        "dataType": "string | null",
+        "description": "Display name of the category"
+      },
+      {
+        "param": "groups",
+        "condition": null,
+        "dataType": "list (group)",
+        "description": "List of groups associated with the category. Named separately from categories."
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/get?league=Standard&category=flask",
+    "id": "get",
+    "description": "Returns price and item data for specified league and category. Items are listed in decreasing order from most expensive to least expensive. Request fields are case-insensitive. It's advisable to use a singular request to the compact API, rather than multiple requests to this API.",
+    "request": [
+      {
+        "param": "league",
+        "required": true,
+        "description": "League name"
+      },
+      {
+        "param": "category",
+        "required": true,
+        "description": "Category name (see category API)"
+      }
+    ],
+    "reply": [
+      {
+        "param": "...",
+        "condition": null,
+        "dataType": "...",
+        "description": "< all parameters exactly from itemdata api >"
+      },
+      {
+        "param": "...",
+        "condition": null,
+        "dataType": "...",
+        "description": "< all parameters exactly from compact api >"
+      },
+      {
+        "param": "change",
+        "condition": null,
+        "dataType": "float",
+        "description": "Price compared to 7 days ago as percentage"
+      },
+      {
+        "param": "history",
+        "condition": null,
+        "dataType": "list (float)",
+        "description": "Mean prices from last 7 days. Last element is current mean."
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/compact?league=Standard",
+    "id": "compact",
+    "description": "Return price data (id, mean, median, mode, min, max, total, daily, exalted) of all items of the provided active league. IDs can be found in itemdata API described above.",
+    "request": [
+      {
+        "param": "league",
+        "required": true,
+        "description": "Valid league name"
+      }
+    ],
+    "reply": [
+      {
+        "param": "id",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Unique id of the item (see itemdata api)"
+      },
+      {
+        "param": "mean",
+        "condition": null,
+        "dataType": "float",
+        "description": "Mean average price"
+      },
+      {
+        "param": "median",
+        "condition": null,
+        "dataType": "float",
+        "description": "Median average price"
+      },
+      {
+        "param": "mode",
+        "condition": null,
+        "dataType": "float",
+        "description": "Mode average price"
+      },
+      {
+        "param": "min",
+        "condition": null,
+        "dataType": "float",
+        "description": "Min accepted average price"
+      },
+      {
+        "param": "max",
+        "condition": null,
+        "dataType": "float",
+        "description": "Max accepted average price"
+      },
+      {
+        "param": "exalted",
+        "condition": null,
+        "dataType": "float",
+        "description": "Mean price in exalted"
+      },
+      {
+        "param": "total",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Total nr of items found"
+      },
+      {
+        "param": "daily",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Nr of items found per 24h"
+      },
+      {
+        "param": "current",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Nr of items currently on sale"
+      },
+      {
+        "param": "accepted",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Nr of items accepted for price calculation"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/item?id=259",
+    "id": "item",
+    "description": "Retrieves information about a specific item.",
+    "request": [
+      {
+        "param": "id",
+        "required": true,
+        "description": "Numeric id of an item"
+      }
+    ],
+    "reply": [
+      {
+        "param": "...",
+        "condition": null,
+        "dataType": "...",
+        "description": "< all parameters exactly from itemdata api >"
+      },
+      {
+        "param": "leagues",
+        "condition": null,
+        "dataType": "list",
+        "description": "List of leagues the item has appeared in and its last known prices"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/itemhistory?id=142&league=Synthesis",
+    "id": "itemhistory",
+    "description": "Finds prices from past leagues. Use item api to find list of applicable leagues.",
+    "request": [
+      {
+        "param": "id",
+        "required": true,
+        "description": "Item ID"
+      },
+      {
+        "param": "league",
+        "required": true,
+        "description": "League name"
+      }
+    ],
+    "reply": [
+      {
+        "param": "time",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the price was collected"
+      },
+      {
+        "param": "mean",
+        "condition": null,
+        "dataType": "float",
+        "description": "Mean average price"
+      },
+      {
+        "param": "median",
+        "condition": null,
+        "dataType": "float",
+        "description": "Median average price"
+      },
+      {
+        "param": "mode",
+        "condition": null,
+        "dataType": "float",
+        "description": "Mode average price"
+      },
+      {
+        "param": "daily",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Nr of items found per 24h"
+      },
+      {
+        "param": "current",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Nr of items currently on sale"
+      },
+      {
+        "param": "accepted",
+        "condition": null,
+        "dataType": "uint",
+        "description": "Nr of items accepted for price calculation"
+      }
+    ]
+  },
+  {
+    "url": "https://api.poe.watch/listings?league=Standard&account=Novynn",
+    "id": "listings",
+    "description": "Get all item listings for an account, including the time listed, last updated, how many are listed and how many are priced. Allows filtering out items without a price. Only tracks items that are available through the itemdata api.",
+    "request": [
+      {
+        "param": "league",
+        "required": true,
+        "description": "League name"
+      },
+      {
+        "param": "account",
+        "required": true,
+        "description": "Case-insensitive account name"
+      }
+    ],
+    "reply": [
+      {
+        "param": "...",
+        "condition": null,
+        "dataType": "...",
+        "description": "< all parameters exactly from itemdata api >"
+      },
+      {
+        "param": "discovered",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the item was first discovered"
+      },
+      {
+        "param": "updated",
+        "condition": null,
+        "dataType": "ISO 8601 UTC time",
+        "description": "Time the item was last updated"
+      },
+      {
+        "param": "count",
+        "condition": null,
+        "dataType": "uint",
+        "description": "How many of the item is the user selling"
+      },
+      {
+        "param": "buyout",
+        "condition": null,
+        "dataType": "list (buyout)",
+        "description": "Price listings for the item"
+      }
+    ]
+  }
+]

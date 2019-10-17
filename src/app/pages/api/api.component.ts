@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApiDocService} from '../../services/api-doc.service';
 
 @Component({
   selector: 'app-api',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApiComponent implements OnInit {
 
-  constructor() {
+  constructor(private apiDocService: ApiDocService) {
   }
 
   ngOnInit() {
