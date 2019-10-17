@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { LeagueEntry } from './data/league-entry';
+import { League } from './data/league';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 
@@ -8,10 +8,10 @@ import { shareReplay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LeagueService {
-  public entries$: Observable<LeagueEntry[]>;
+  public entries$: Observable<League[]>;
 
   constructor(private baseService: BaseService) {
-    this.entries$ = this.baseService.get<LeagueEntry[]>('leagues', null, [])
+    this.entries$ = this.baseService.get<League[]>('leagues', null, [])
       .pipe(shareReplay());
   }
 }

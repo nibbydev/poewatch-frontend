@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { LeagueService } from '../../../services/league.service';
 import { CategoryService } from '../../../services/category.service';
-import { LeagueEntry } from '../../../services/data/league-entry';
+import { League } from '../../../services/data/league';
 
 @Component({
   selector: 'app-prices-search',
@@ -38,7 +38,7 @@ export class PricesSearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  private formatLeagueDisplay(league: LeagueEntry): string {
+  private formatLeagueDisplay(league: League): string {
     return (league.active ? '' : '● ') + (league.display || league.name);
   }
 

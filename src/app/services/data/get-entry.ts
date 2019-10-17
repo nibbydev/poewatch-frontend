@@ -1,6 +1,6 @@
-import { ItemdataEntry } from './itemdata-entry';
+import { ItemData } from './item-data';
 
-export class GetEntry extends ItemdataEntry {
+export class GetEntry extends ItemData {
   mean: number;
   median: number;
   mode: number;

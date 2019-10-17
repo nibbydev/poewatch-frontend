@@ -1,4 +1,4 @@
-export class ItemdataEntry {
+export class ItemData {
   id: number;
   name: string;
   type?: string;
