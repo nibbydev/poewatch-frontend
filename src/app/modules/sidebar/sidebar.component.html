@@ -1,13 +1,13 @@
 <div class="card">
   <div class="card-header slim-card-edge"></div>
 
-  <div *ngIf="!(sidebarProviderService.sidebarItems$ | async)" class="text-center">
+  <div *ngIf="!(sidebarService.sidebarItems$ | async)" class="text-center">
     <div class="spinner-border"></div>
   </div>
 
   <ul *ngIf="isVertical()" class="list-group list-group-flush">
-    <li *ngFor="let element of sidebarProviderService.sidebarItems$ | async" class="list-group-item pw-sidebar-item p-0">
-      <a [routerLink]="element.href"
+    <li *ngFor="let element of sidebarService.sidebarItems$ | async" class="list-group-item pw-sidebar-item p-0">
+      <a [routerLink]="['prices']" [queryParams]="{category: element.name}"
          [title]="element.display" class="d-flex align-items-center p-1 text-reset">
         <div class="img-container-sm d-flex justify-content-center align-items-center mr-2">
           <img [src]="element.icon" alt="..." class="img-fluid">
@@ -18,8 +18,8 @@
   </ul>
 
   <div *ngIf="isHorizontal()" class="row no-gutters">
-    <div *ngFor="let element of sidebarProviderService.sidebarItems$ | async" class="col-4 col-sm-3 col-md-2 pw-sidebar-item p-0">
-      <a [routerLink]="element.href"
+    <div *ngFor="let element of sidebarService.sidebarItems$ | async" class="col-4 col-sm-3 col-md-2 pw-sidebar-item p-0">
+      <a [routerLink]="['prices']" [queryParams]="{category: element.name}"
          [title]="element.display" class="d-flex align-items-center p-1 text-reset">
         <div class="img-container-sm d-flex justify-content-center align-items-center mr-2">
           <img [src]="element.icon" alt="..." class="img-fluid">

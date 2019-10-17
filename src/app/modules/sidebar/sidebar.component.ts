@@ -9,7 +9,7 @@ import {SidebarService} from '../../services/sidebar.service';
 export class SidebarComponent implements OnInit {
   @Input() private direction: string;
 
-  constructor(private sidebarProviderService: SidebarService) {
+  constructor(private sidebarService: SidebarService) {
   }
 
   ngOnInit() {
