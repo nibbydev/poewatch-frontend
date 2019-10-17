@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SidebarProviderService} from '../../services/sidebar-provider.service';
+import {SidebarService} from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +9,7 @@ import {SidebarProviderService} from '../../services/sidebar-provider.service';
 export class SidebarComponent implements OnInit {
   @Input() private direction: string;
 
-  constructor(private sidebarProviderService: SidebarProviderService) {
+  constructor(private sidebarProviderService: SidebarService) {
   }
 
   ngOnInit() {

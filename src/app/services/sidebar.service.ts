@@ -7,7 +7,7 @@ import {shareReplay} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class SidebarProviderService {
+export class SidebarService {
   public sidebarItems$: Observable<SidebarItem[]>;
 
   constructor(private http: HttpClient) {
