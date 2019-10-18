@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiDocService} from '../../services/api-doc.service';
+import {AppSettings} from '../../app-settings';
 
 @Component({
   selector: 'app-api',
@@ -7,6 +8,7 @@ import {ApiDocService} from '../../services/api-doc.service';
   styleUrls: ['./api.component.css']
 })
 export class ApiComponent implements OnInit {
+  private appSettings = AppSettings;
 
   constructor(private apiDocService: ApiDocService) {
   }
