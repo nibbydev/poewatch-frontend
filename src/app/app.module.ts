@@ -21,6 +21,9 @@ import {FormsModule} from '@angular/forms';
 import {DetailsModalComponent} from './modules/details-modal/details-modal.component';
 import {ItemPriceboxComponent} from './modules/item/item-pricebox/item-pricebox.component';
 import {ItemSparklineComponent} from './modules/item/item-sparkline/item-sparkline.component';
+import { Pipe } from '../.pipe';
+import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
+import { ActiveLeaguePipe } from './pipes/active-league.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import {ItemSparklineComponent} from './modules/item/item-sparkline/item-sparkli
     PricesTableComponent,
     PricesSearchComponent,
     DetailsModalComponent,
+    Pipe,
+    EnumToArrayPipe,
+    ActiveLeaguePipe,
   ],
   imports: [
     BrowserModule,
