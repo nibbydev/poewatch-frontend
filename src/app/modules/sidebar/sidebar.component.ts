@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SidebarService} from '../../services/sidebar.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,11 +9,16 @@ import {SidebarService} from '../../services/sidebar.service';
 })
 export class SidebarComponent implements OnInit {
   @Input() private direction: string;
+  private category: string;
 
-  constructor(private sidebarService: SidebarService) {
+  constructor(private sidebarService: SidebarService,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.category = params.category;
+    });
   }
 
   private isVertical(): boolean {
