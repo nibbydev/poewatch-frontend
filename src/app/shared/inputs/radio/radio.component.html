@@ -1,0 +1,11 @@
+<h4>{{title}}</h4>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+  <label *ngFor="let option of options | async" class="btn btn-outline-dark nowrap"
+         [class.active]="value === option.value"
+         (change)="onChange()">
+    <input type="radio" [name]="param" [(ngModel)]="value" [value]="option.value">
+    <span>{{option.display}}</span>
+  </label>
+
+</div>

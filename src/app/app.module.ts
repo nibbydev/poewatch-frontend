@@ -21,9 +21,11 @@ import {FormsModule} from '@angular/forms';
 import {DetailsModalComponent} from './modules/details-modal/details-modal.component';
 import {ItemPriceboxComponent} from './modules/item/item-pricebox/item-pricebox.component';
 import {ItemSparklineComponent} from './modules/item/item-sparkline/item-sparkline.component';
-import { Pipe } from '../.pipe';
-import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
-import { ActiveLeaguePipe } from './pipes/active-league.pipe';
+import {EnumToArrayPipe} from './pipes/enum-to-array.pipe';
+import {ActiveLeaguePipe} from './pipes/active-league.pipe';
+import {RadioComponent} from './shared/inputs/radio/radio.component';
+import {DropdownComponent} from './shared/inputs/dropdown/dropdown.component';
+import {InputComponent} from './shared/inputs/input/input.component';
 
 @NgModule({
   declarations: [
@@ -42,9 +44,11 @@ import { ActiveLeaguePipe } from './pipes/active-league.pipe';
     PricesTableComponent,
     PricesSearchComponent,
     DetailsModalComponent,
-    Pipe,
     EnumToArrayPipe,
     ActiveLeaguePipe,
+    RadioComponent,
+    DropdownComponent,
+    InputComponent,
   ],
   imports: [
     BrowserModule,

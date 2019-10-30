@@ -1,149 +1,18 @@
 <div class="px-2">
   <div class='row'>
 
-    <div *ngIf="q.confidence.enabled" class="col-6 col-sm">
-      <h4 class="nowrap">Low confidence</h4>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-        <label *ngFor="let option of q.confidence.options" class="btn btn-outline-dark"
-               [class.active]="q.confidence.value === option.value">
-          <input type="radio" name="rarity" [(ngModel)]="q.confidence.value" [value]="option.value">
-          <span>{{option.display}}</span>
-        </label>
-
-      </div>
-    </div>
-
-
-    <div *ngIf="q.group.enabled" class="col-6 col-sm">
-      <h4 class="nowrap">Group</h4>
-      <label class="w-100">
-        <select class="form-control custom-select" [(ngModel)]="q.group.value">
-          <option [value]="null">All</option>
-          <option *ngFor="let group of groups$ | async" [value]="group.id">
-            {{group.display}}
-          </option>
-        </select>
-      </label>
-    </div>
-
-
-    <div *ngIf="q.league.enabled" class="col-6 col-sm">
-      <h4 class="nowrap">League</h4>
-      <label class="w-100">
-        <select class="form-control custom-select" [(ngModel)]="q.league.value">
-          <option *ngFor="let league of (this.leagueService.entries$ | async)?.reverse()" [value]="league">
-            {{league | activeLeague}}
-          </option>
-        </select>
-      </label>
-    </div>
-
-
-    <div *ngIf="q.search.enabled" class="col-6 col-sm">
-      <h4>Search</h4>
-      <label class="w-100">
-        <input class="form-control" placeholder="Search" type="text" [(ngModel)]="q.search.value">
-      </label>
-    </div>
-
-
-    <div *ngIf="q.rarity.enabled" class="col-6 col-sm">
-      <h4>Rarity</h4>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-        <label *ngFor="let option of q.rarity.options" class="btn btn-outline-dark"
-               [class.active]="q.rarity.value === option.value">
-          <input type="radio" name="rarity" [(ngModel)]="q.rarity.value" [value]="option.value">
-          <span>{{option.display}}</span>
-        </label>
-
-      </div>
-    </div>
-
-    <div *ngIf="q.links.enabled" class="col-6 col-sm">
-      <h4>Links</h4>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-        <label *ngFor="let option of q.links.options" class="btn btn-outline-dark"
-               [class.active]="q.links.value === option.value">
-          <input type="radio" name="rarity" [(ngModel)]="q.links.value" [value]="option.value">
-          <span>{{option.display}}</span>
-        </label>
-
-      </div>
-    </div>
-
-
-    <div *ngIf="q.ilvl.enabled" class="col-6 col-sm">
-      <h4>Item level</h4>
-      <select class="form-control" [(ngModel)]="q.ilvl.value">
-
-        <option *ngFor="let option of q.ilvl.options" [value]="option.value">
-          {{option.display}}
-        </option>
-
-      </select>
-    </div>
-
-    <div *ngIf="q.influence.enabled" class="col-6 col-sm">
-      <h4>Influence</h4>
-      <select class="form-control" [(ngModel)]="q.influence.value">
-
-        <option *ngFor="let option of q.influence.options" [value]="option.value">
-          {{option.display}}
-        </option>
-
-      </select>
-    </div>
-
-
-    <div *ngIf="q.corruption.enabled" class="col-6 col-sm">
-      <h4>Corrupted</h4>
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-        <label *ngFor="let option of q.corruption.options" class="btn btn-outline-dark"
-               [class.active]="q.corruption.value === option.value">
-          <input type="radio" name="rarity" [(ngModel)]="q.corruption.value" [value]="option.value">
-          <span>{{option.display}}</span>
-        </label>
-
-      </div>
-    </div>
-
-
-    <div *ngIf="q.level.enabled" class="col-6 col-sm">
-      <h4>Level</h4>
-      <select class="form-control" [(ngModel)]="q.level.value">
-        <option *ngFor="let option of q.level.options" [value]="option.value">
-          {{option.display}}
-        </option>
-      </select>
-    </div>
-
-
-    <div *ngIf="q.quality.enabled" class="col-6 col-sm">
-      <h4>Quality</h4>
-      <select class="form-control" [(ngModel)]="q.quality.value">
-
-        <option *ngFor="let option of q.quality.options" [value]="option.value">
-          {{option.display}}
-        </option>
-
-      </select>
-    </div>
-
-    <div *ngIf="q.tier.enabled" class="col-6 col-sm">
-      <h4>Tier</h4>
-      <select class="form-control" [(ngModel)]="q.tier.value">
-
-        <option *ngFor="let option of q.tier.options" [value]="option.value">
-          {{option.display}}
-        </option>
-
-      </select>
-    </div>
-
+    <app-radio param="confidence" title="confidence" [options]="q.confidence.options" [value]="q.confidence.value" class="col-6 col-sm"></app-radio>
+    <app-dropdown param="group" title="group" [options]="q.group.options" [value]="q.group.value" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown param="league" title="league" [options]="q.league.options" [value]="q.league.value" class="col-6 col-sm"></app-dropdown>
+    <app-input param="search" title="search" [options]="q.search.options" [value]="q.search.value"></app-input>
+    <app-radio param="rarity" title="rarity" [options]="q.rarity.options" [value]="q.rarity.value" class="col-6 col-sm"></app-radio>
+    <app-radio param="links" title="links" [options]="q.links.options" [value]="q.links.value" class="col-6 col-sm"></app-radio>
+    <app-dropdown param="ilvl" title="ilvl" [options]="q.ilvl.options" [value]="q.ilvl.value" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown param="influence" title="influence" [options]="q.influence.options" [value]="q.influence.value" class="col-6 col-sm"></app-dropdown>
+    <app-radio param="corruption" title="corruption" [options]="q.corruption.options" [value]="q.corruption.value" class="col-6 col-sm"></app-radio>
+    <app-dropdown param="level" title="level" [options]="q.level.options" [value]="q.level.value" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown param="quality" title="quality" [options]="q.quality.options" [value]="q.quality.value" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown param="tier" title="tier" [options]="q.tier.options" [value]="q.tier.value" class="col-6 col-sm"></app-dropdown>
 
   </div>
 </div>

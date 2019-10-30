@@ -1,0 +1,8 @@
+<h4>{{title}}</h4>
+<label>
+  <select class="form-control" [(ngModel)]="value" (change)="onChange()">
+    <option *ngFor="let option of options | async" [ngValue]="option.value">
+      {{option.display}}
+    </option>
+  </select>
+</label>

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
+import {Injectable} from '@angular/core';
+import {BaseService} from './base.service';
 import {Category, Group} from './data/category';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,14 @@ export class CategoryService {
   public entries$: Observable<Category[]>;
 
   constructor(private baseService: BaseService) {
-    this.entries$ = this.baseService.get<Category[]>('categories', null, [])
-      .pipe(shareReplay());
+    this.entries$ = this.get().pipe(shareReplay());
   }
 
-  getGroups(category: string): Observable<Group[]> {
+  public get(): Observable<Category[]> {
+    return this.baseService.get<Category[]>('categories', null, []);
+  }
+
+  public getGroups(category: string): Observable<Group[]> {
     return new Observable(t => {
       this.entries$.subscribe(n => {
         const categoryEntry = n.find((m) => m.name.toLowerCase() === category);

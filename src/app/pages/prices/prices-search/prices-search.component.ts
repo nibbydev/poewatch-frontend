@@ -1,7 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LeagueService} from '../../../services/league.service';
 import {CategoryService} from '../../../services/category.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {SearchTerm} from './search-term';
 
 /*
 
@@ -15,13 +17,14 @@ TODO: This class is an absolute mess
   styleUrls: ['./prices-search.component.css']
 })
 export class PricesSearchComponent implements OnInit {
+  // todo: remove me
   @Output() private readonly searchEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   private q = {
     confidence: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'Hide',
           value: null
@@ -30,17 +33,17 @@ export class PricesSearchComponent implements OnInit {
           display: 'Show',
           value: 'show'
         }
-      ]
+      ])
     },
     group: {
       enabled: true,
       value: null,
-      options: null
+      options: this.getGroupsAsObservableSearchTerms()
     },
     league: {
       enabled: true,
       value: null,
-      options: null
+      options: this.getLeaguesAsObservableSearchTerms()
     },
     search: {
       enabled: true,
@@ -50,7 +53,7 @@ export class PricesSearchComponent implements OnInit {
     rarity: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All',
           value: null
@@ -63,12 +66,12 @@ export class PricesSearchComponent implements OnInit {
           display: 'Relic',
           value: 'relic'
         },
-      ]
+      ])
     },
     links: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All links',
           value: null
@@ -85,12 +88,12 @@ export class PricesSearchComponent implements OnInit {
           display: 'Six links',
           value: '6'
         },
-      ]
+      ])
     },
     ilvl: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All',
           value: null
@@ -115,12 +118,12 @@ export class PricesSearchComponent implements OnInit {
           display: '86+',
           value: '86'
         },
-      ]
+      ])
     },
     influence: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All',
           value: null
@@ -141,12 +144,12 @@ export class PricesSearchComponent implements OnInit {
           display: 'Elder',
           value: 'elder'
         },
-      ]
+      ])
     },
     corruption: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'Either',
           value: null
@@ -159,12 +162,12 @@ export class PricesSearchComponent implements OnInit {
           display: 'No',
           value: 'no'
         },
-      ]
+      ])
     },
     level: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All',
           value: null
@@ -201,12 +204,12 @@ export class PricesSearchComponent implements OnInit {
           display: '21',
           value: '21'
         },
-      ]
+      ])
     },
     quality: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All',
           value: null
@@ -223,12 +226,12 @@ export class PricesSearchComponent implements OnInit {
           display: '23',
           value: '23'
         }
-      ]
+      ])
     },
     tier: {
       enabled: true,
       value: null,
-      options: [
+      options: this.getSearchTermsAsObservable([
         {
           display: 'All',
           value: null
@@ -313,21 +316,51 @@ export class PricesSearchComponent implements OnInit {
           display: '16',
           value: '16'
         }
-      ]
+      ])
     },
   };
 
-  private groups$ = this.categoryService.getGroups('map');
-
   constructor(private leagueService: LeagueService,
               private categoryService: CategoryService,
-              private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
-
-    });
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
 
+  }
+
+  getSearchTermsAsObservable(terms: SearchTerm[]): Observable<SearchTerm[]> {
+    return new Observable(t => {
+      t.next(terms);
+      t.complete();
+    });
+  }
+
+  getGroupsAsObservableSearchTerms(): Observable<SearchTerm[]> {
+    const category = this.activatedRoute.snapshot.queryParamMap.get('category');
+
+    return new Observable(t => {
+      this.categoryService.entries$.subscribe(n => {
+        if (!category) {
+          return;
+        }
+
+        const groups = n.find((m) => m.name.toLowerCase() === category).groups;
+        const searchTerms = groups.map(g => new SearchTerm(g.display, g.name));
+        t.next(searchTerms);
+        t.complete();
+      });
+    });
+  }
+
+  getLeaguesAsObservableSearchTerms(): Observable<SearchTerm[]> {
+    return new Observable(t => {
+      this.leagueService.entries$.subscribe(n => {
+        const searchTerms = n.map(g => new SearchTerm(g.display, g.name));
+        t.next(searchTerms);
+        t.complete();
+      });
+    });
   }
 }
