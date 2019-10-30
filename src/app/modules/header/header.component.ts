@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Route, Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +18,13 @@ export class HeaderComponent implements OnInit {
     return this.router.config.filter((route) => route.data.enabled);
   }
 
-  private isCurrentRoute(currentRoute: string, path: string): boolean {
-    return currentRoute.substr(1) === path;
+  private isCurrentRoute(path: string): boolean {
+    const queryIndex = this.router.url.indexOf('?');
+
+    if (queryIndex < 0) {
+      return this.router.url.substring(1) === path;
+    } else {
+      return this.router.url.substring(1, queryIndex) === path;
+    }
   }
 }
