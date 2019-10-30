@@ -33,6 +33,7 @@ export class PricesComponent implements OnInit {
     const queryLeague = params.league ? params.league.trim() : '';
     const queryCategory = params.category ? params.category.trim() : '';
 
+    // verify league
     this.leagueService.entries$.subscribe(leagues => {
       const defaultLeague = leagues[leagues.length - 1];
 
@@ -58,11 +59,17 @@ export class PricesComponent implements OnInit {
         return;
       }
 
+      // it was already verified
+      if (this.params.league && this.params.league.name === queryLeague) {
+        return;
+      }
+
       // all's good, save the league name
       this.params.league = matchingLeague;
       this.makeRequest();
     });
 
+    // verify category
     this.categoryService.entries$.subscribe(categories => {
       const defaultCategory = categories.find(category => category.name === 'currency');
 
@@ -85,6 +92,11 @@ export class PricesComponent implements OnInit {
       if (matchingCategory.name !== queryCategory) {
         this.params.category = undefined;
         this.navigate({category: defaultCategory.name});
+        return;
+      }
+
+      // it was already verified
+      if (this.params.category && this.params.category.name === queryCategory) {
         return;
       }
 
