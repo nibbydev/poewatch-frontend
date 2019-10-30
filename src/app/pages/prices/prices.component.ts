@@ -30,8 +30,8 @@ export class PricesComponent implements OnInit {
   }
 
   private parseQueryParams(params: Params): void {
-    const queryLeague = params.league.trim();
-    const queryCategory = params.category.trim();
+    const queryLeague = params.league ? params.league.trim() : '';
+    const queryCategory = params.category ? params.category.trim() : '';
 
     this.leagueService.entries$.subscribe(leagues => {
       const defaultLeague = leagues[leagues.length - 1];
