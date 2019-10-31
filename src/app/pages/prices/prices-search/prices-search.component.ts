@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LeagueService} from '../../../services/league.service';
 import {CategoryService} from '../../../services/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -17,16 +17,14 @@ TODO: This class is an absolute mess
   styleUrls: ['./prices-search.component.css']
 })
 export class PricesSearchComponent implements OnInit {
-  // todo: remove me
-  @Output() private readonly searchEmitter: EventEmitter<string> = new EventEmitter<string>();
-
   private searchCriteria: SearchCriteria[] = [
     {
       id: 'confidence',
       title: 'Confidence',
+      type: 'radio',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'Hide',
           value: null
@@ -40,20 +38,23 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'group',
       title: 'Group',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getGroupsAsObservableSearchTerms()
+      options: this.groupsAsObservable()
     },
     {
       id: 'league',
       title: 'League',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getLeaguesAsObservableSearchTerms()
+      options: this.leaguesAsObservable()
     },
     {
       id: 'search',
       title: 'Search',
+      type: 'input',
       enabled: true,
       value: null,
       options: null
@@ -61,9 +62,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'rarity',
       title: 'Rarity',
+      type: 'radio',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All',
           value: null
@@ -81,9 +83,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'links',
       title: 'Links',
+      type: 'radio',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All links',
           value: null
@@ -105,9 +108,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'ilvl',
       title: 'Ilvl',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All',
           value: null
@@ -137,9 +141,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'influence',
       title: 'Influence',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All',
           value: null
@@ -165,9 +170,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'corruption',
       title: 'Corruption',
+      type: 'radio',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'Either',
           value: null
@@ -185,9 +191,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'level',
       title: 'Level',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All',
           value: null
@@ -229,9 +236,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'quality',
       title: 'Quality',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All',
           value: null
@@ -253,9 +261,10 @@ export class PricesSearchComponent implements OnInit {
     {
       id: 'tier',
       title: 'Tier',
+      type: 'dropdown',
       enabled: true,
       value: null,
-      options: this.getSearchTermsAsObservable([
+      options: this.asObservable([
         {
           display: 'All',
           value: null
@@ -354,18 +363,18 @@ export class PricesSearchComponent implements OnInit {
 
   }
 
-  getCriteria(id: string): SearchCriteria {
-    return this.searchCriteria.find(c => c.id === id);
+  getEnabledCriteria(): SearchCriteria[] {
+    return this.searchCriteria.filter(c => c.enabled === true);
   }
 
-  getSearchTermsAsObservable(terms: SearchTerm[]): Observable<SearchTerm[]> {
+  private asObservable(terms: SearchTerm[]): Observable<SearchTerm[]> {
     return new Observable(t => {
       t.next(terms);
       t.complete();
     });
   }
 
-  getGroupsAsObservableSearchTerms(): Observable<SearchTerm[]> {
+  private groupsAsObservable(): Observable<SearchTerm[]> {
     const category = this.activatedRoute.snapshot.queryParamMap.get('category');
 
     return new Observable(t => {
@@ -382,7 +391,7 @@ export class PricesSearchComponent implements OnInit {
     });
   }
 
-  getLeaguesAsObservableSearchTerms(): Observable<SearchTerm[]> {
+  private leaguesAsObservable(): Observable<SearchTerm[]> {
     return new Observable(t => {
       this.leagueService.entries$.subscribe(n => {
         const searchTerms = n.map(g => new SearchTerm(g.display, g.name));

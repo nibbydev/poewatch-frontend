@@ -1,18 +1,11 @@
 <div class="px-2">
   <div class='row'>
+    <div *ngFor="let criteria of getEnabledCriteria()" class="col-6 col-sm">
 
-    <app-radio [criteria]="getCriteria('confidence')" class="col-6 col-sm"></app-radio>
-    <app-dropdown [criteria]="getCriteria('group')" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown [criteria]="getCriteria('league')" class="col-6 col-sm"></app-dropdown>
-    <app-input [criteria]="getCriteria('search')" title="search"></app-input>
-    <app-radio [criteria]="getCriteria('rarity')" class="col-6 col-sm"></app-radio>
-    <app-radio [criteria]="getCriteria('links')" class="col-6 col-sm"></app-radio>
-    <app-dropdown [criteria]="getCriteria('ilvl')" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown [criteria]="getCriteria('influence')" class="col-6 col-sm"></app-dropdown>
-    <app-radio [criteria]="getCriteria('corruption')" class="col-6 col-sm"></app-radio>
-    <app-dropdown [criteria]="getCriteria('level')" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown [criteria]="getCriteria('quality')" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown [criteria]="getCriteria('tier')" class="col-6 col-sm"></app-dropdown>
+      <app-dropdown *ngIf="criteria.type === 'dropdown'" [criteria]="criteria"></app-dropdown>
+      <app-radio *ngIf="criteria.type === 'radio'" [criteria]="criteria"></app-radio>
+      <app-input *ngIf="criteria.type === 'input'" [criteria]="criteria"></app-input>
 
+    </div>
   </div>
 </div>

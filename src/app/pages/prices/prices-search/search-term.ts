@@ -14,6 +14,7 @@ export class SearchCriteria {
   id: string;
   title: string;
   enabled: boolean;
+  type: string;
   value: any;
   options: Observable<SearchTerm[]>;
 }
