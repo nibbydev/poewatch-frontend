@@ -11,10 +11,31 @@ export class SearchTerm {
 }
 
 export class SearchCriteria {
-  id: string;
+  id: CriteriaType;
   title: string;
   enabled: boolean;
-  type: string;
+  type: InputType;
   value: any;
   options: Observable<SearchTerm[]>;
+}
+
+export enum CriteriaType {
+  CONFIDENCE = 'confidence',
+  GROUP = 'group',
+  LEAGUE = 'league',
+  SEARCH = 'search',
+  RARITY = 'rarity',
+  LINKS = 'links',
+  ILVL = 'ilvl',
+  INFLUENCE = 'influence',
+  CORRUPTION = 'corruption',
+  LEVEL = 'level',
+  QUALITY = 'quality',
+  TIER = 'tier'
+}
+
+export enum InputType {
+  RADIO,
+  INPUT,
+  DROPDOWN
 }

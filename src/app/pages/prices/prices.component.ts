@@ -7,6 +7,8 @@ import {forkJoin, Observable} from 'rxjs';
 import {GetEntry} from '../../services/data/get-entry';
 import {League} from '../../services/data/league';
 import {Category} from '../../services/data/category';
+import {SearchCriteria} from './prices-search/search-term';
+import {PriceSearchService} from '../../services/price-search.service';
 
 @Component({
   selector: 'app-prices',
@@ -14,6 +16,7 @@ import {Category} from '../../services/data/category';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
+  private readonly searchCriteria: SearchCriteria[] = this.priceSearchService.getDefaultCriteria();
   private prices$: Observable<GetEntry[]>;
   private params: { league: League, category: Category } = {
     league: undefined,
@@ -24,7 +27,8 @@ export class PricesComponent implements OnInit {
               private categoryService: CategoryService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private pricesService: PriceService) {
+              private pricesService: PriceService,
+              private priceSearchService: PriceSearchService) {
   }
 
   ngOnInit() {
@@ -85,4 +89,5 @@ export class PricesComponent implements OnInit {
         queryParamsHandling: 'merge'
       });
   }
+
 }
