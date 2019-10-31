@@ -1,18 +1,18 @@
 <div class="px-2">
   <div class='row'>
 
-    <app-radio param="confidence" title="confidence" [options]="q.confidence.options" [value]="q.confidence.value" class="col-6 col-sm"></app-radio>
-    <app-dropdown param="group" title="group" [options]="q.group.options" [value]="q.group.value" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown param="league" title="league" [options]="q.league.options" [value]="q.league.value" class="col-6 col-sm"></app-dropdown>
-    <app-input param="search" title="search" [options]="q.search.options" [value]="q.search.value"></app-input>
-    <app-radio param="rarity" title="rarity" [options]="q.rarity.options" [value]="q.rarity.value" class="col-6 col-sm"></app-radio>
-    <app-radio param="links" title="links" [options]="q.links.options" [value]="q.links.value" class="col-6 col-sm"></app-radio>
-    <app-dropdown param="ilvl" title="ilvl" [options]="q.ilvl.options" [value]="q.ilvl.value" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown param="influence" title="influence" [options]="q.influence.options" [value]="q.influence.value" class="col-6 col-sm"></app-dropdown>
-    <app-radio param="corruption" title="corruption" [options]="q.corruption.options" [value]="q.corruption.value" class="col-6 col-sm"></app-radio>
-    <app-dropdown param="level" title="level" [options]="q.level.options" [value]="q.level.value" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown param="quality" title="quality" [options]="q.quality.options" [value]="q.quality.value" class="col-6 col-sm"></app-dropdown>
-    <app-dropdown param="tier" title="tier" [options]="q.tier.options" [value]="q.tier.value" class="col-6 col-sm"></app-dropdown>
+    <app-radio [criteria]="getCriteria('confidence')" class="col-6 col-sm"></app-radio>
+    <app-dropdown [criteria]="getCriteria('group')" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown [criteria]="getCriteria('league')" class="col-6 col-sm"></app-dropdown>
+    <app-input [criteria]="getCriteria('search')" title="search"></app-input>
+    <app-radio [criteria]="getCriteria('rarity')" class="col-6 col-sm"></app-radio>
+    <app-radio [criteria]="getCriteria('links')" class="col-6 col-sm"></app-radio>
+    <app-dropdown [criteria]="getCriteria('ilvl')" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown [criteria]="getCriteria('influence')" class="col-6 col-sm"></app-dropdown>
+    <app-radio [criteria]="getCriteria('corruption')" class="col-6 col-sm"></app-radio>
+    <app-dropdown [criteria]="getCriteria('level')" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown [criteria]="getCriteria('quality')" class="col-6 col-sm"></app-dropdown>
+    <app-dropdown [criteria]="getCriteria('tier')" class="col-6 col-sm"></app-dropdown>
 
   </div>
 </div>

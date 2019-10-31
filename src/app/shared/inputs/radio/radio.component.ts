@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SearchTerm} from '../../../pages/prices/prices-search/search-term';
+import {SearchCriteria} from '../../../pages/prices/prices-search/search-term';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-radio',
@@ -9,24 +8,21 @@ import {Observable} from 'rxjs';
   styleUrls: ['./radio.component.css']
 })
 export class RadioComponent implements OnInit {
-  @Input() private title: string;
-  @Input() private param: string;
-  @Input() private value: any;
-  @Input() private options: Observable<SearchTerm[]>;
+  @Input() private criteria: SearchCriteria;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    if (this.activatedRoute.snapshot.queryParamMap.has(this.param)) {
-      this.value = this.activatedRoute.snapshot.queryParamMap.get(this.param);
+    if (this.activatedRoute.snapshot.queryParamMap.has(this.criteria.id)) {
+      this.criteria.value = this.activatedRoute.snapshot.queryParamMap.get(this.criteria.id);
     }
   }
 
   private onChange() {
     const queryParams = {};
-    queryParams[this.param] = this.value;
+    queryParams[this.criteria.id] = this.criteria.value;
 
     this.router.navigate(
       [],

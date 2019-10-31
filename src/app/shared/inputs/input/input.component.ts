@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SearchTerm} from '../../../pages/prices/prices-search/search-term';
+import {SearchCriteria} from '../../../pages/prices/prices-search/search-term';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -8,29 +8,26 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
-  @Input() private title: string;
-  @Input() private param: string;
-  @Input() private value: string;
-  @Input() private options: SearchTerm[];
+  @Input() private criteria: SearchCriteria;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    if (this.activatedRoute.snapshot.queryParamMap.has(this.param)) {
-      this.value = this.activatedRoute.snapshot.queryParamMap.get(this.param);
+    if (this.activatedRoute.snapshot.queryParamMap.has(this.criteria.id)) {
+      this.criteria.value = this.activatedRoute.snapshot.queryParamMap.get(this.criteria.id);
     }
   }
 
   private onChange() {
-    let val = this.value.trim();
+    let val = this.criteria.value.trim();
     if (!val) {
       val = undefined;
     }
 
     const queryParams = {};
-    queryParams[this.param] = val;
+    queryParams[this.criteria.id] = val;
 
     this.router.navigate(
       [],

@@ -3,7 +3,7 @@ import {LeagueService} from '../../../services/league.service';
 import {CategoryService} from '../../../services/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import {SearchTerm} from './search-term';
+import {SearchCriteria, SearchTerm} from './search-term';
 
 /*
 
@@ -20,8 +20,10 @@ export class PricesSearchComponent implements OnInit {
   // todo: remove me
   @Output() private readonly searchEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  private q = {
-    confidence: {
+  private searchCriteria: SearchCriteria[] = [
+    {
+      id: 'confidence',
+      title: 'Confidence',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -35,22 +37,30 @@ export class PricesSearchComponent implements OnInit {
         }
       ])
     },
-    group: {
+    {
+      id: 'group',
+      title: 'Group',
       enabled: true,
       value: null,
       options: this.getGroupsAsObservableSearchTerms()
     },
-    league: {
+    {
+      id: 'league',
+      title: 'League',
       enabled: true,
       value: null,
       options: this.getLeaguesAsObservableSearchTerms()
     },
-    search: {
+    {
+      id: 'search',
+      title: 'Search',
       enabled: true,
       value: null,
       options: null
     },
-    rarity: {
+    {
+      id: 'rarity',
+      title: 'Rarity',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -68,7 +78,9 @@ export class PricesSearchComponent implements OnInit {
         },
       ])
     },
-    links: {
+    {
+      id: 'links',
+      title: 'Links',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -90,7 +102,9 @@ export class PricesSearchComponent implements OnInit {
         },
       ])
     },
-    ilvl: {
+    {
+      id: 'ilvl',
+      title: 'Ilvl',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -120,7 +134,9 @@ export class PricesSearchComponent implements OnInit {
         },
       ])
     },
-    influence: {
+    {
+      id: 'influence',
+      title: 'Influence',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -146,7 +162,9 @@ export class PricesSearchComponent implements OnInit {
         },
       ])
     },
-    corruption: {
+    {
+      id: 'corruption',
+      title: 'Corruption',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -164,7 +182,9 @@ export class PricesSearchComponent implements OnInit {
         },
       ])
     },
-    level: {
+    {
+      id: 'level',
+      title: 'Level',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -206,7 +226,9 @@ export class PricesSearchComponent implements OnInit {
         },
       ])
     },
-    quality: {
+    {
+      id: 'quality',
+      title: 'Quality',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -228,7 +250,9 @@ export class PricesSearchComponent implements OnInit {
         }
       ])
     },
-    tier: {
+    {
+      id: 'tier',
+      title: 'Tier',
       enabled: true,
       value: null,
       options: this.getSearchTermsAsObservable([
@@ -318,7 +342,7 @@ export class PricesSearchComponent implements OnInit {
         }
       ])
     },
-  };
+  ];
 
   constructor(private leagueService: LeagueService,
               private categoryService: CategoryService,
@@ -328,6 +352,10 @@ export class PricesSearchComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  getCriteria(id: string): SearchCriteria {
+    return this.searchCriteria.find(c => c.id === id);
   }
 
   getSearchTermsAsObservable(terms: SearchTerm[]): Observable<SearchTerm[]> {
