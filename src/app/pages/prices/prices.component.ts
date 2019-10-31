@@ -3,8 +3,10 @@ import {PriceService} from '../../services/price.service';
 import {LeagueService} from '../../services/league.service';
 import {CategoryService} from '../../services/category.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {GetEntry} from '../../services/data/get-entry';
+import {League} from '../../services/data/league';
+import {Category} from '../../services/data/category';
 
 @Component({
   selector: 'app-prices',
@@ -13,7 +15,7 @@ import {GetEntry} from '../../services/data/get-entry';
 })
 export class PricesComponent implements OnInit {
   private prices$: Observable<GetEntry[]>;
-  private params = {
+  private params: { league: League, category: Category } = {
     league: undefined,
     category: undefined
   };
@@ -33,76 +35,44 @@ export class PricesComponent implements OnInit {
     const queryLeague = params.league ? params.league.trim() : '';
     const queryCategory = params.category ? params.category.trim() : '';
 
-    // verify league
-    this.leagueService.entries$.subscribe(leagues => {
-      const defaultLeague = leagues[leagues.length - 1];
+    // get leagues and categories
+    forkJoin([this.leagueService.entries$, this.categoryService.entries$]).subscribe(result => {
+      const leagues = result[0];
+      const categories = result[1];
 
-      // no category was provided, use default
-      if (!queryLeague) {
-        this.params.league = undefined;
-        this.navigate({league: defaultLeague.name});
-        return;
-      }
-
-      // find league corresponding to query param
+      // find entries that match query parameters
       const matchingLeague = leagues.find(league => league.name.toLowerCase() === queryLeague.toLowerCase());
-      if (!matchingLeague) {
-        this.params.league = undefined;
-        this.navigate({league: defaultLeague.name});
-        return;
-      }
+      const matchingCategory = categories.find(category => category.name.toLowerCase() === queryCategory.toLowerCase());
 
-      // if the capitalization does not match
-      if (matchingLeague.name !== queryLeague) {
-        this.params.league = undefined;
-        this.navigate({league: matchingLeague.name});
-        return;
-      }
-
-      // it was already verified
-      if (this.params.league && this.params.league.name === queryLeague) {
-        return;
-      }
-
-      // all's good, save the league name
-      this.params.league = matchingLeague;
-      this.makeRequest();
-    });
-
-    // verify category
-    this.categoryService.entries$.subscribe(categories => {
+      // find default entries
+      const defaultLeague = leagues[leagues.length - 1];
       const defaultCategory = categories.find(category => category.name === 'currency');
 
-      // no category was provided, use default
-      if (!queryCategory) {
-        this.params.category = undefined;
-        this.navigate({category: defaultCategory.name});
+      // use default options if there wasn't a match
+      if (!matchingLeague || !matchingCategory) {
+        this.params.league = undefined;
+        this.navigate({
+          league: (matchingLeague || defaultLeague).name,
+          category: (matchingCategory || defaultCategory).name
+        });
         return;
       }
 
-      // find category corresponding to query param
-      const matchingCategory = categories.find(category => category.name.toLowerCase() === queryCategory.toLowerCase());
-      if (!matchingCategory) {
-        this.params.category = undefined;
-        this.navigate({category: defaultCategory.name});
+      // todo: navigate to match if capitalization does not match
+
+      // don't request prices if params haven't changed
+      if (this.params.league === matchingLeague && this.params.category === matchingCategory) {
         return;
       }
 
-      // if the capitalization does not match
-      if (matchingCategory.name !== queryCategory) {
-        this.params.category = undefined;
-        this.navigate({category: defaultCategory.name});
-        return;
-      }
+      // save current params for the check above
+      this.params = {
+        league: matchingLeague,
+        category: matchingCategory
+      };
 
-      // it was already verified
-      if (this.params.category && this.params.category.name === queryCategory) {
-        return;
-      }
-
-      // all's good, save the league name
-      this.params.category = matchingCategory;
-      this.makeRequest();
+      // request new prices
+      this.prices$ = this.pricesService.get(this.params);
     });
   }
 
@@ -114,13 +84,5 @@ export class PricesComponent implements OnInit {
         queryParams: targetParams,
         queryParamsHandling: 'merge'
       });
-  }
-
-  private makeRequest() {
-    if (!this.params.league || !this.params.category) {
-      return;
-    }
-
-    this.prices$ = this.pricesService.get(this.params.league.name, this.params.category.name);
   }
 }
