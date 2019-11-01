@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from './data/get-entry';
 import {Observable} from 'rxjs';
-import {CriteriaType, InputType, SearchCriteria, SearchOption} from '../pages/prices/prices-search/search-option';
+import {CriteriaType, InputType, SearchCriteria} from '../pages/prices/prices-search/search-option';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class PriceSearchService {
   constructor() {
   }
 
-  public getDefaultCriteria(): SearchCriteria[] {
-    return [
+  public getDefaultCriteria(): Observable<SearchCriteria[]> {
+    const criteria = [
       {
         id: CriteriaType.CONFIDENCE,
         title: 'Confidence',
@@ -348,6 +348,8 @@ export class PriceSearchService {
         ])
       },
     ];
+
+    return this.asObservable(criteria);
   }
 
   public filter(entries$: Observable<GetEntry[]>, criteria: SearchCriteria[]): void {
@@ -398,9 +400,9 @@ export class PriceSearchService {
     return true;
   }
 
-  private asObservable(terms: SearchOption[]): Observable<SearchOption[]> {
+  private asObservable<T>(a: T): Observable<T> {
     return new Observable(t => {
-      t.next(terms);
+      t.next(a);
       t.complete();
     });
   }
