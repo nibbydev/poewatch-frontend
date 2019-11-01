@@ -7,7 +7,7 @@ import {forkJoin, Observable} from 'rxjs';
 import {GetEntry} from '../../services/data/get-entry';
 import {League} from '../../services/data/league';
 import {Category, Group} from '../../services/data/category';
-import {CriteriaType, SearchCriteria, SearchOption} from './prices-search/search-option';
+import {CriteriaType, SearchOption} from './prices-search/search-option';
 import {PriceSearchService} from '../../services/price-search.service';
 
 @Component({
@@ -16,7 +16,6 @@ import {PriceSearchService} from '../../services/price-search.service';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
-  private searchCriteria$: Observable<SearchCriteria[]>;
   private prices$: Observable<GetEntry[]>;
   private params: { league: League, category: Category } = {
     league: undefined,
@@ -32,18 +31,15 @@ export class PricesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchCriteria$ = this.priceSearchService.getDefaultCriteria();
     this.prices$ = this.pricesService.getEntries();
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
 
-    this.searchCriteria$.subscribe((criteria: SearchCriteria[]) => {
-      this.prices$.subscribe((prices: GetEntry[]) => {
-        this.processPriceGroups(criteria, prices);
-      });
+    this.prices$.subscribe((prices: GetEntry[]) => {
+      this.processPriceGroups(prices);
+    });
 
-      this.leagueService.entries$.subscribe((leagues: League[]) => {
-        this.processLeagues(criteria, leagues);
-      });
+    this.leagueService.entries$.subscribe((leagues: League[]) => {
+      this.processLeagues(leagues);
     });
   }
 
@@ -102,7 +98,7 @@ export class PricesComponent implements OnInit {
       });
   }
 
-  private processPriceGroups(criteria: SearchCriteria[], prices: GetEntry[]): void {
+  private processPriceGroups(prices: GetEntry[]): void {
     // find all unique groups from prices as strings and map them to Group objects. categories being present is a
     // prerequisite to prices being requested. so this method will not run unless there's a category present
     const groups: Group[] = prices
@@ -111,7 +107,7 @@ export class PricesComponent implements OnInit {
       .map(gs => this.params.category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = criteria.find(c => c.id === CriteriaType.GROUP);
+    const groupCriteria = this.priceSearchService.getCriteria(CriteriaType.GROUP);
     const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
 
     // set its options to the current groups
@@ -123,9 +119,9 @@ export class PricesComponent implements OnInit {
     groupCriteria.value = searchOptions[0].value;
   }
 
-  private processLeagues(criteria: SearchCriteria[], leagues: League[]): void {
+  private processLeagues(leagues: League[]): void {
     // find criteria that deals with leagues
-    const leagueCriteria = criteria.find(c => c.id === CriteriaType.LEAGUE);
+    const leagueCriteria = this.priceSearchService.getCriteria(CriteriaType.LEAGUE);
     const searchOptions = leagues.map(g => new SearchOption(g.display, g.name)).reverse();
 
     // set its options to the current groups
