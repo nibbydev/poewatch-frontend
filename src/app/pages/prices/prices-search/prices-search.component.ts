@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InputType, SearchCriteria} from './search-term';
+import {InputType, SearchCriteria} from './search-option';
 
 /*
 

@@ -7,7 +7,7 @@ import {forkJoin, Observable} from 'rxjs';
 import {GetEntry} from '../../services/data/get-entry';
 import {League} from '../../services/data/league';
 import {Category} from '../../services/data/category';
-import {SearchCriteria} from './prices-search/search-term';
+import {SearchCriteria} from './prices-search/search-option';
 import {PriceSearchService} from '../../services/price-search.service';
 
 @Component({

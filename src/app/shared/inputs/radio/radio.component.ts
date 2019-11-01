@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SearchCriteria} from '../../../pages/prices/prices-search/search-term';
+import {SearchCriteria} from '../../../pages/prices/prices-search/search-option';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

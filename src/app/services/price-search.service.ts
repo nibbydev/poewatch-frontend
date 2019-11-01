@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from './data/get-entry';
 import {Observable} from 'rxjs';
-import {CriteriaType, InputType, SearchCriteria, SearchTerm} from '../pages/prices/prices-search/search-term';
+import {CriteriaType, InputType, SearchCriteria, SearchOption} from '../pages/prices/prices-search/search-option';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.CONFIDENCE,
         title: 'Confidence',
-        type: InputType.RADIO,
+        inputType: InputType.RADIO,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -34,7 +34,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.GROUP,
         title: 'Group',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: null
@@ -42,7 +42,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.LEAGUE,
         title: 'League',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: null
@@ -50,7 +50,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.SEARCH,
         title: 'Search',
-        type: InputType.INPUT,
+        inputType: InputType.INPUT,
         enabled: true,
         value: null,
         options: null
@@ -58,7 +58,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.RARITY,
         title: 'Rarity',
-        type: InputType.RADIO,
+        inputType: InputType.RADIO,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -79,7 +79,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.LINKS,
         title: 'Links',
-        type: InputType.RADIO,
+        inputType: InputType.RADIO,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -104,7 +104,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.ILVL,
         title: 'Ilvl',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -137,7 +137,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.INFLUENCE,
         title: 'Influence',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -166,7 +166,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.CORRUPTION,
         title: 'Corruption',
-        type: InputType.RADIO,
+        inputType: InputType.RADIO,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -187,7 +187,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.LEVEL,
         title: 'Level',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -232,7 +232,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.QUALITY,
         title: 'Quality',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -257,7 +257,7 @@ export class PriceSearchService {
       {
         id: CriteriaType.TIER,
         title: 'Tier',
-        type: InputType.DROPDOWN,
+        inputType: InputType.DROPDOWN,
         enabled: true,
         value: null,
         options: this.asObservable([
@@ -398,7 +398,7 @@ export class PriceSearchService {
     return true;
   }
 
-  private asObservable(terms: SearchTerm[]): Observable<SearchTerm[]> {
+  private asObservable(terms: SearchOption[]): Observable<SearchOption[]> {
     return new Observable(t => {
       t.next(terms);
       t.complete();

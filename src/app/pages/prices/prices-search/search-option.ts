@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
 
-export class SearchTerm {
+export class SearchOption {
   public display: string;
   public value: any;
 
@@ -14,9 +14,9 @@ export class SearchCriteria {
   id: CriteriaType;
   title: string;
   enabled: boolean;
-  type: InputType;
+  inputType: InputType;
   value: any;
-  options: Observable<SearchTerm[]>;
+  options: Observable<SearchOption[]>;
 }
 
 export enum CriteriaType {
