@@ -40,6 +40,10 @@ export class PricesComponent implements OnInit {
       this.prices$.subscribe((prices: GetEntry[]) => {
         this.processPriceGroups(criteria, prices);
       });
+
+      this.leagueService.entries$.subscribe((leagues: League[]) => {
+        this.processLeagues(criteria, leagues);
+      });
     });
   }
 
@@ -108,12 +112,28 @@ export class PricesComponent implements OnInit {
 
     // find criteria that deals with groups
     const groupCriteria = criteria.find(c => c.id === CriteriaType.GROUP);
+    const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
 
     // set its options to the current groups
     groupCriteria.options = new Observable(o => {
-      const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
       o.next(searchOptions);
       o.complete();
     });
+
+    groupCriteria.value = searchOptions[0].value;
+  }
+
+  private processLeagues(criteria: SearchCriteria[], leagues: League[]): void {
+    // find criteria that deals with leagues
+    const leagueCriteria = criteria.find(c => c.id === CriteriaType.LEAGUE);
+    const searchOptions = leagues.map(g => new SearchOption(g.display, g.name)).reverse();
+
+    // set its options to the current groups
+    leagueCriteria.options = new Observable(o => {
+      o.next(searchOptions);
+      o.complete();
+    });
+
+    leagueCriteria.value = searchOptions[0].value;
   }
 }
