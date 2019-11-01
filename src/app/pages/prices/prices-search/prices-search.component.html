@@ -2,9 +2,9 @@
   <div class='row'>
     <div *ngFor="let criteria of getEnabledCriteria()" class="col-6 col-sm">
 
-      <app-dropdown *ngIf="criteria.inputType === inputType.DROPDOWN" [criteria]="criteria"></app-dropdown>
-      <app-radio *ngIf="criteria.inputType === inputType.RADIO" [criteria]="criteria"></app-radio>
-      <app-input *ngIf="criteria.inputType === inputType.INPUT" [criteria]="criteria"></app-input>
+      <app-dropdown *ngIf="criteria.inputType === getInputTypes().DROPDOWN" [criteria]="criteria"></app-dropdown>
+      <app-radio *ngIf="criteria.inputType === getInputTypes().RADIO" [criteria]="criteria"></app-radio>
+      <app-input *ngIf="criteria.inputType === getInputTypes().INPUT" [criteria]="criteria"></app-input>
 
     </div>
   </div>
