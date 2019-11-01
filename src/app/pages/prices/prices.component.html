@@ -4,13 +4,13 @@
     <div class="card">
       <div class="card-header"></div>
       <div class="card-body">
-        <app-prices-search [searchCriteria]="searchCriteria"></app-prices-search>
+        <app-prices-search [searchCriteria$]="searchCriteria$"></app-prices-search>
       </div>
 
       <hr/>
 
       <div class="card-body pt-0">
-        <div *ngIf="!(prices$ | async)" class="text-center">
+        <div *ngIf="!(pricesService.getEntries() | async)" class="text-center">
           <div class="spinner-border"></div>
         </div>
 

@@ -6,8 +6,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {forkJoin, Observable} from 'rxjs';
 import {GetEntry} from '../../services/data/get-entry';
 import {League} from '../../services/data/league';
-import {Category} from '../../services/data/category';
-import {SearchCriteria} from './prices-search/search-option';
+import {Category, Group} from '../../services/data/category';
+import {CriteriaType, SearchCriteria, SearchOption} from './prices-search/search-option';
 import {PriceSearchService} from '../../services/price-search.service';
 
 @Component({
@@ -16,7 +16,7 @@ import {PriceSearchService} from '../../services/price-search.service';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
-  private readonly searchCriteria: SearchCriteria[] = this.priceSearchService.getDefaultCriteria();
+  private searchCriteria$: Observable<SearchCriteria[]>;
   private prices$: Observable<GetEntry[]>;
   private params: { league: League, category: Category } = {
     league: undefined,
@@ -32,7 +32,15 @@ export class PricesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.searchCriteria$ = this.priceSearchService.getDefaultCriteria();
+    this.prices$ = this.pricesService.getEntries();
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
+
+    this.searchCriteria$.subscribe((criteria: SearchCriteria[]) => {
+      this.prices$.subscribe((prices: GetEntry[]) => {
+        this.processPriceGroups(criteria, prices);
+      });
+    });
   }
 
   private parseQueryParams(params: Params): void {
@@ -76,7 +84,7 @@ export class PricesComponent implements OnInit {
       };
 
       // request new prices
-      this.prices$ = this.pricesService.get(this.params);
+      this.pricesService.makeRequest(this.params);
     });
   }
 
@@ -90,4 +98,22 @@ export class PricesComponent implements OnInit {
       });
   }
 
+  private processPriceGroups(criteria: SearchCriteria[], prices: GetEntry[]): void {
+    // find all unique groups from prices as strings and map them to Group objects. categories being present is a
+    // prerequisite to prices being requested. so this method will not run unless there's a category present
+    const groups: Group[] = prices
+      .map(p => p.group)
+      .filter((g, i, s) => s.indexOf(g) === i)
+      .map(gs => this.params.category.groups.find(g => g.name.toLowerCase() === gs));
+
+    // find criteria that deals with groups
+    const groupCriteria = criteria.find(c => c.id === CriteriaType.GROUP);
+
+    // set its options to the current groups
+    groupCriteria.options = new Observable(o => {
+      const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
+      o.next(searchOptions);
+      o.complete();
+    });
+  }
 }

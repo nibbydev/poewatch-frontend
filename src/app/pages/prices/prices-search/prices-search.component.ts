@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {InputType, SearchCriteria} from './search-option';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-prices-search',
@@ -7,7 +8,7 @@ import {InputType, SearchCriteria} from './search-option';
   styleUrls: ['./prices-search.component.css']
 })
 export class PricesSearchComponent implements OnInit {
-  @Input() searchCriteria: SearchCriteria[];
+  @Input() searchCriteria$: Observable<SearchCriteria[]>;
 
   constructor() {
   }
@@ -16,8 +17,12 @@ export class PricesSearchComponent implements OnInit {
 
   }
 
-  getEnabledCriteria(): SearchCriteria[] {
-    return this.searchCriteria.filter(c => c.enabled === true);
+  getEnabledCriteria(): Observable<SearchCriteria[]> {
+    return new Observable(t => {
+      this.searchCriteria$.subscribe(searchCriteria => {
+        t.next(searchCriteria.filter(c => c.enabled === true));
+      });
+    });
   }
 
   public getInputTypes() {
