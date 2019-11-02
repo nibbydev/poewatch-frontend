@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {GetEntry} from './data/get-entry';
 import {Observable} from 'rxjs';
 import {CriteriaType, InputType, SearchCriteria} from '../pages/prices/prices-search/search-option';
+import {Category} from './data/category';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PriceSearchService {
       inputType: InputType.RADIO,
       enabled: true,
       value: null,
+      categories: null,
       options: this.asObservable([
         {
           display: 'Hide',
@@ -32,6 +34,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: null,
       options: null
     },
     {
@@ -40,6 +43,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: null,
       options: null
     },
     {
@@ -48,6 +52,7 @@ export class PriceSearchService {
       inputType: InputType.INPUT,
       enabled: true,
       value: null,
+      categories: null,
       options: null
     },
     {
@@ -56,6 +61,7 @@ export class PriceSearchService {
       inputType: InputType.RADIO,
       enabled: true,
       value: null,
+      categories: ['accessory', 'weapon', 'armour', 'flask'],
       options: this.asObservable([
         {
           display: 'All',
@@ -77,6 +83,7 @@ export class PriceSearchService {
       inputType: InputType.RADIO,
       enabled: true,
       value: null,
+      categories: ['weapon', 'armour'],
       options: this.asObservable([
         {
           display: 'All links',
@@ -102,6 +109,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: ['base'],
       options: this.asObservable([
         {
           display: 'All',
@@ -135,6 +143,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: ['base'],
       options: this.asObservable([
         {
           display: 'All',
@@ -164,6 +173,7 @@ export class PriceSearchService {
       inputType: InputType.RADIO,
       enabled: true,
       value: null,
+      categories: ['gem'],
       options: this.asObservable([
         {
           display: 'Either',
@@ -185,6 +195,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: ['gem'],
       options: this.asObservable([
         {
           display: 'All',
@@ -230,6 +241,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: ['gem'],
       options: this.asObservable([
         {
           display: 'All',
@@ -255,6 +267,7 @@ export class PriceSearchService {
       inputType: InputType.DROPDOWN,
       enabled: true,
       value: null,
+      categories: ['map'],
       options: this.asObservable([
         {
           display: 'All',
@@ -408,5 +421,11 @@ export class PriceSearchService {
       t.next(a);
       t.complete();
     });
+  }
+
+  public filterCriteria(category: Category): void {
+    this.criteria.forEach(c => c.enabled = false);
+    this.criteria.filter(c => !c.categories || c.categories.includes(category.name.toLowerCase()))
+      .forEach(c => c.enabled = true);
   }
 }

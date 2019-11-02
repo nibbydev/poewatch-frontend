@@ -37,6 +37,10 @@ export class PricesTableComponent implements OnInit {
 
   ngOnInit() {
     this.priceService.getEntries().subscribe(prices => {
+      if (prices) {
+        prices = prices.slice(0, 10);
+      }
+
       this.entries = prices;
     });
   }

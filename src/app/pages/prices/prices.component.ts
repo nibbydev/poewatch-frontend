@@ -32,7 +32,11 @@ export class PricesComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
 
-    this.pricesService.getEntries().subscribe((prices: GetEntry[]) => {
+    this.pricesService.getEntries().subscribe((prices?: GetEntry[]) => {
+      if (!prices) {
+        return;
+      }
+
       this.processPriceGroups(prices);
     });
 
@@ -81,6 +85,7 @@ export class PricesComponent implements OnInit {
         category: matchingCategory
       };
 
+      this.priceSearchService.filterCriteria(matchingCategory);
       // request new prices
       this.pricesService.makeRequest(this.params);
     });

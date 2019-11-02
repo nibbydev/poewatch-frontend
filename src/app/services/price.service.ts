@@ -17,6 +17,8 @@ export class PriceService {
   }
 
   public makeRequest(params: { league: League, category: Category }): void {
+    this.entries$.next(null);
+
     const httpParams = new HttpParams()
       .set('league', params.league.name)
       .set('category', params.category.name);

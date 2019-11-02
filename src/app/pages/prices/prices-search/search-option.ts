@@ -16,6 +16,7 @@ export class SearchCriteria {
   enabled: boolean;
   inputType: InputType;
   value: any;
+  categories: string[];
   options: Observable<SearchOption[]>;
 }
 
