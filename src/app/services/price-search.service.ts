@@ -344,14 +344,6 @@ export class PriceSearchService {
     },
   ];
 
-  public getCriteria(type: CriteriaType): SearchCriteria {
-    return this.criteria.find(c => c.id === type);
-  }
-
-  getEnabledCriteria(): SearchCriteria[] {
-    return this.criteria.filter(c => c.enabled === true);
-  }
-
   constructor() {
   }
 
@@ -401,6 +393,14 @@ export class PriceSearchService {
         break;
     }
     return true;
+  }
+
+  public getCriteria(type: CriteriaType): SearchCriteria {
+    return this.criteria.find(c => c.id === type);
+  }
+
+  public getEnabledCriteria(): SearchCriteria[] {
+    return this.criteria.filter(c => c.enabled === true);
   }
 
   private asObservable<T>(a: T): Observable<T> {

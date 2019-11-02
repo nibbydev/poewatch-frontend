@@ -1,4 +1,4 @@
-<table *ngIf="entries$ | async" class="table table-sm table-hover table-striped mb-0 table-responsive">
+<table *ngIf="entries" class="table table-sm table-hover table-striped mb-0 table-responsive">
   <thead>
   <tr>
     <th class="w-100"><span class="sort-column">Item</span></th>
@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let item of entries$ | async">
+  <tr *ngFor="let item of entries">
     <td class="d-flex align-items-center">
       <app-item [item]="item" [options]="itemNameOptions"></app-item>
     </td>

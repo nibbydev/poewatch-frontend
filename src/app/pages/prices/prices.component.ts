@@ -16,7 +16,6 @@ import {PriceSearchService} from '../../services/price-search.service';
   styleUrls: ['./prices.component.css']
 })
 export class PricesComponent implements OnInit {
-  private prices$: Observable<GetEntry[]>;
   private params: { league: League, category: Category } = {
     league: undefined,
     category: undefined
@@ -31,10 +30,9 @@ export class PricesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.prices$ = this.pricesService.getEntries();
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
 
-    this.prices$.subscribe((prices: GetEntry[]) => {
+    this.pricesService.getEntries().subscribe((prices: GetEntry[]) => {
       this.processPriceGroups(prices);
     });
 

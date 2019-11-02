@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { GetEntry } from '../../../services/data/get-entry';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {PriceService} from '../../../services/price.service';
+import {PriceSearchService} from '../../../services/price-search.service';
+import {GetEntry} from '../../../services/data/get-entry';
 
 @Component({
   selector: 'app-prices-table',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./prices-table.component.css']
 })
 export class PricesTableComponent implements OnInit {
-  @Input() private entries$: Observable<GetEntry[]>;
+  public entries: GetEntry[];
   private readonly itemNameOptions = {
     clickable: false,
     showImg: true,
@@ -30,10 +31,14 @@ export class PricesTableComponent implements OnInit {
   private readonly chaosIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1';
   private readonly exaltedIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&amp;w=1&amp;h=1';
 
-  constructor() {
+  constructor(private priceService: PriceService,
+              private priceSearchService: PriceSearchService) {
   }
 
   ngOnInit() {
+    this.priceService.getEntries().subscribe(prices => {
+      this.entries = prices;
+    });
   }
 
 }
