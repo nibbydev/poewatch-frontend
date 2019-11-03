@@ -6,6 +6,7 @@ import {Category, Group} from './data/category';
 import {PriceService} from './price.service';
 import {League} from './data/league';
 import {LeagueService} from './league.service';
+import {PricePaginationService} from './price-pagination.service';
 
 @Injectable({
   providedIn: 'root'
@@ -365,15 +366,10 @@ export class PriceFilterService {
       ])
     },
   ];
-  public readonly pagination = {
-    pageSize: 5,
-    visiblePageCount: 1,
-    visible: 0,
-    total: 0
-  };
 
   constructor(private leagueService: LeagueService,
-              private priceService: PriceService) {
+              private priceService: PriceService,
+              private paginationService: PricePaginationService) {
     this.leagueService.entries$.subscribe(leagues => this.processLeagues(leagues));
   }
 
@@ -397,7 +393,7 @@ export class PriceFilterService {
     // send null to force loading state on prices table
     this.rawEntries = null;
     this.entries$.next(null);
-    this.resetPagination();
+    this.paginationService.resetPagination();
 
     // request new prices
     this.priceService.makeRequest(league, category).subscribe(entries => {
@@ -411,42 +407,25 @@ export class PriceFilterService {
   }
 
 
-  public resetPagination(): void {
-    this.pagination.visiblePageCount = 1;
-    this.pagination.visible = 0;
-    this.pagination.total = 0;
-  }
-
   public loadNextPage() {
     if (!this.rawEntries) {
       return;
     }
 
-    this.pagination.visiblePageCount++;
+    this.paginationService.incPage();
     this.entries$.next(this.filter(this.rawEntries));
   }
 
 
   public filter(entries: GetEntry[]): GetEntry[] {
-    // save total nr of entries
-    this.pagination.total = entries.length;
-
     // find entries visible after applying search criteria
     const enabledCriteria = this.getEnabledCriteria();
-    let visibleEntries = entries.filter(e => {
+    const visibleEntries = entries.filter(e => {
       return enabledCriteria.some(c => this.isMatch(e, c));
     });
 
-    // if entries should be limited and current entry list is longer than what would fit on page
-    if (this.pagination.visiblePageCount && visibleEntries.length > this.pagination.pageSize * this.pagination.visiblePageCount) {
-      // only take entries that would fit on page
-      visibleEntries = visibleEntries.slice(0, this.pagination.pageSize * this.pagination.visiblePageCount);
-    }
-
-    // save nr of visible entries
-    this.pagination.visible = visibleEntries.length;
-
-    return visibleEntries;
+    // create pages
+    return this.paginationService.page(entries, visibleEntries);
   }
 
   private isMatch(e: GetEntry, c: SearchCriteria): boolean {

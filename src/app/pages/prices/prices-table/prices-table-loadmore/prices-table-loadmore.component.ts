@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {PricePaginationService} from '../../../../services/price-pagination.service';
 import {PriceFilterService} from '../../../../services/price-filter.service';
 
 @Component({
@@ -8,7 +9,8 @@ import {PriceFilterService} from '../../../../services/price-filter.service';
 })
 export class PricesTableLoadmoreComponent implements OnInit {
 
-  constructor(private priceFilterService: PriceFilterService) {
+  constructor(private priceFilterService: PriceFilterService,
+              private paginationService: PricePaginationService) {
   }
 
   ngOnInit() {
