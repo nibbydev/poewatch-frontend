@@ -14,8 +14,4 @@ export class PricesTableLoadmoreComponent implements OnInit {
   ngOnInit() {
   }
 
-  private onClick() {
-
-  }
-
 }

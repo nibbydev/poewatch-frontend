@@ -12,6 +12,8 @@ import {LeagueService} from './league.service';
 })
 export class PriceFilterService {
   private readonly entries$: Subject<GetEntry[]> = new Subject();
+  private rawEntries: GetEntry[] = null;
+
   private readonly params: { league: League, category: Category } = {
     league: undefined,
     category: undefined
@@ -363,8 +365,8 @@ export class PriceFilterService {
       ])
     },
   ];
-  public readonly pageSize = 5;
   public readonly pagination = {
+    pageSize: 5,
     visiblePageCount: 1,
     visible: 0,
     total: 0
@@ -393,17 +395,18 @@ export class PriceFilterService {
     this.filterCriteria(category);
 
     // send null to force loading state on prices table
+    this.rawEntries = null;
     this.entries$.next(null);
     this.resetPagination();
 
     // request new prices
     this.priceService.makeRequest(league, category).subscribe(entries => {
+      // save the current entries
+      this.rawEntries = entries;
       // extract groups from the entries and update criteria
-      this.processPriceGroups(entries);
-      // filter the entries including pagination
-      entries = this.filter(entries);
-      // send filtered entries through the observable
-      this.entries$.next(entries);
+      this.processPriceGroups(this.rawEntries);
+      // filter the entries including pagination and send them to subscribers
+      this.entries$.next(this.filter(this.rawEntries));
     });
   }
 
@@ -413,6 +416,16 @@ export class PriceFilterService {
     this.pagination.visible = 0;
     this.pagination.total = 0;
   }
+
+  public loadNextPage() {
+    if (!this.rawEntries) {
+      return;
+    }
+
+    this.pagination.visiblePageCount++;
+    this.entries$.next(this.filter(this.rawEntries));
+  }
+
 
   public filter(entries: GetEntry[]): GetEntry[] {
     // save total nr of entries
@@ -425,9 +438,9 @@ export class PriceFilterService {
     });
 
     // if entries should be limited and current entry list is longer than what would fit on page
-    if (this.pagination.visiblePageCount && visibleEntries.length > this.pageSize * this.pagination.visiblePageCount) {
+    if (this.pagination.visiblePageCount && visibleEntries.length > this.pagination.pageSize * this.pagination.visiblePageCount) {
       // only take entries that would fit on page
-      visibleEntries = visibleEntries.slice(0, this.pageSize * this.pagination.visiblePageCount);
+      visibleEntries = visibleEntries.slice(0, this.pagination.pageSize * this.pagination.visiblePageCount);
     }
 
     // save nr of visible entries
@@ -509,10 +522,6 @@ export class PriceFilterService {
   }
 
   private processPriceGroups(prices?: GetEntry[]): void {
-    if (!prices) {
-      return;
-    }
-
     // find all unique groups from prices as strings and map them to Group objects. categories being present is a
     // prerequisite to prices being requested. so this method will not run unless there's a category present
     const groups: Group[] = prices
