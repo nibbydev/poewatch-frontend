@@ -4,43 +4,45 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class PricePaginationService {
-  private readonly pagination: { pageSize: number, visiblePageCount: number, visible: number, total: number } = {
-    pageSize: 5,
-    visiblePageCount: 1,
-    visible: 0,
-    total: 0
-  };
+  // default nr of entries per page
+  public readonly pageSize = 100;
+  // nr of currently visible pages
+  public visiblePages = 1;
+  // nr of currently visible entries
+  public visibleEntries = 0;
+  // nr of currently total entries
+  public totalEntries = 0;
 
   constructor() {
   }
 
   public resetPagination(): void {
-    this.pagination.visiblePageCount = 1;
-    this.pagination.visible = 0;
-    this.pagination.total = 0;
-  }
-
-  public getPagination(): { pageSize: number, visiblePageCount: number, visible: number, total: number } {
-    return this.pagination;
+    this.visiblePages = 1;
+    this.visibleEntries = 0;
+    this.totalEntries = 0;
   }
 
   public incPage(): void {
-    this.pagination.visiblePageCount++;
+    this.visiblePages++;
   }
 
   public isPaged(itemCount: number): boolean {
-    return this.pagination.visiblePageCount && itemCount > this.pagination.pageSize * this.pagination.visiblePageCount
+    return itemCount > this.pageSize * this.visiblePages;
   }
 
   public page<T>(allEntries: T[], entries: T[]): T[] {
-    this.pagination.total = allEntries.length;
+    this.totalEntries = allEntries.length;
 
     entries = this.isPaged(entries.length)
-      ? entries.slice(0, this.pagination.pageSize * this.pagination.visiblePageCount)
+      ? entries.slice(0, this.pageSize * this.visiblePages)
       : entries;
 
     // save nr of visible entries
-    this.pagination.visible = entries.length;
+    this.visibleEntries = entries.length;
     return entries;
+  }
+
+  public showButton(): boolean {
+    return this.visibleEntries < this.totalEntries;
   }
 }
