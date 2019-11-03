@@ -7,7 +7,7 @@ import {Category} from './data/category';
 @Injectable({
   providedIn: 'root'
 })
-export class PriceSearchService {
+export class PriceFilterService {
   public readonly criteria: SearchCriteria[] = [
     {
       id: CriteriaType.CONFIDENCE,

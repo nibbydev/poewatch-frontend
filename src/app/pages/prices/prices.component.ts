@@ -8,7 +8,7 @@ import {GetEntry} from '../../services/data/get-entry';
 import {League} from '../../services/data/league';
 import {Category, Group} from '../../services/data/category';
 import {CriteriaType, SearchOption} from './prices-search/search-option';
-import {PriceSearchService} from '../../services/price-search.service';
+import {PriceFilterService} from '../../services/price-filter.service';
 
 @Component({
   selector: 'app-prices',
@@ -26,7 +26,7 @@ export class PricesComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private pricesService: PriceService,
-              private priceSearchService: PriceSearchService) {
+              private priceFilterService: PriceFilterService) {
   }
 
   ngOnInit() {
@@ -85,7 +85,7 @@ export class PricesComponent implements OnInit {
         category: matchingCategory
       };
 
-      this.priceSearchService.filterCriteria(matchingCategory);
+      this.priceFilterService.filterCriteria(matchingCategory);
       // request new prices
       this.pricesService.makeRequest(this.params);
     });
@@ -110,7 +110,7 @@ export class PricesComponent implements OnInit {
       .map(gs => this.params.category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = this.priceSearchService.getCriteria(CriteriaType.GROUP);
+    const groupCriteria = this.priceFilterService.getCriteria(CriteriaType.GROUP);
     const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
 
     // set its options to the current groups
@@ -124,7 +124,7 @@ export class PricesComponent implements OnInit {
 
   private processLeagues(leagues: League[]): void {
     // find criteria that deals with leagues
-    const leagueCriteria = this.priceSearchService.getCriteria(CriteriaType.LEAGUE);
+    const leagueCriteria = this.priceFilterService.getCriteria(CriteriaType.LEAGUE);
     const searchOptions = leagues.map(g => new SearchOption(g.display, g.name)).reverse();
 
     // set its options to the current groups

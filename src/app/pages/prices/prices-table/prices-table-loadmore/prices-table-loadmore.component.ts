@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PriceSearchService} from '../../../../services/price-search.service';
+import {PriceFilterService} from '../../../../services/price-filter.service';
 
 @Component({
   selector: 'app-prices-table-loadmore',
@@ -8,7 +8,7 @@ import {PriceSearchService} from '../../../../services/price-search.service';
 })
 export class PricesTableLoadmoreComponent implements OnInit {
 
-  constructor(private priceSearchService: PriceSearchService) {
+  constructor(private priceFilterService: PriceFilterService) {
   }
 
   ngOnInit() {

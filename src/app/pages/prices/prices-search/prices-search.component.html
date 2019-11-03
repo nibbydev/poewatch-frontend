@@ -1,6 +1,6 @@
 <div class="px-2">
   <div class='row'>
-    <div *ngFor="let criteria of priceSearchService.getEnabledCriteria()" class="col-6 col-sm">
+    <div *ngFor="let criteria of priceFilterService.getEnabledCriteria()" class="col-6 col-sm">
 
       <app-dropdown *ngIf="criteria.inputType === getInputTypes().DROPDOWN" [criteria]="criteria"></app-dropdown>
       <app-radio *ngIf="criteria.inputType === getInputTypes().RADIO" [criteria]="criteria"></app-radio>

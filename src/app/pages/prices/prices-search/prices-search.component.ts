@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InputType} from './search-option';
-import {PriceSearchService} from '../../../services/price-search.service';
+import {PriceFilterService} from '../../../services/price-filter.service';
 
 @Component({
   selector: 'app-prices-search',
@@ -9,7 +9,7 @@ import {PriceSearchService} from '../../../services/price-search.service';
 })
 export class PricesSearchComponent implements OnInit {
 
-  constructor(private priceSearchService: PriceSearchService) {
+  constructor(private priceFilterService: PriceFilterService) {
   }
 
   ngOnInit() {

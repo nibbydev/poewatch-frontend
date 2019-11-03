@@ -5,7 +5,7 @@ import {GetEntry} from './data/get-entry';
 import {Observable, Subject} from 'rxjs';
 import {League} from './data/league';
 import {Category} from './data/category';
-import {PriceSearchService} from './price-search.service';
+import {PriceFilterService} from './price-filter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PriceService {
   private entries$: Subject<GetEntry[]> = new Subject();
 
   constructor(private baseService: BaseService,
-              private priceSearchService: PriceSearchService) {
+              private priceFilterService: PriceFilterService) {
   }
 
   public makeRequest(params: { league: League, category: Category }): void {
@@ -25,8 +25,8 @@ export class PriceService {
       .set('category', params.category.name);
 
     this.baseService.get<GetEntry[]>('get', httpParams, []).subscribe(entries => {
-      this.priceSearchService.reset();
-      entries = this.priceSearchService.filter(entries);
+      this.priceFilterService.reset();
+      entries = this.priceFilterService.filter(entries);
       this.entries$.next(entries);
     });
   }
