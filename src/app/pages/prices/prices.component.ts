@@ -55,10 +55,16 @@ export class PricesComponent implements OnInit {
       // use default options if there wasn't a match
       if (!matchingLeague || !matchingCategory) {
         this.params.league = undefined;
-        this.navigate({
-          league: (matchingLeague || defaultLeague).name,
-          category: (matchingCategory || defaultCategory).name
-        });
+        this.router.navigate(
+          [],
+          {
+            relativeTo: this.activatedRoute,
+            queryParams: {
+              league: (matchingLeague || defaultLeague).name,
+              category: (matchingCategory || defaultCategory).name
+            },
+            queryParamsHandling: 'merge'
+          });
         return;
       }
 
@@ -79,16 +85,6 @@ export class PricesComponent implements OnInit {
       // request new prices
       this.pricesService.makeRequest(this.params);
     });
-  }
-
-  private navigate(targetParams: object): void {
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams: targetParams,
-        queryParamsHandling: 'merge'
-      });
   }
 
   private processPriceGroups(prices?: GetEntry[]): void {
