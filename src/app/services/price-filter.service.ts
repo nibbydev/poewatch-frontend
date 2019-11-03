@@ -34,9 +34,18 @@ export class PriceFilterService {
         },
         {
           display: 'Show',
-          value: 'show'
+          value: true
         }
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value) {
+          // if 'Show' is selected, do not hide any item
+          return false;
+        } else {
+          // otherwise hide if there's a low amount of items
+          return e.daily < 10 || e.current < 10;
+        }
+      },
     },
     {
       id: CriteriaType.GROUP,
@@ -45,7 +54,10 @@ export class PriceFilterService {
       enabled: true,
       value: null,
       categories: null,
-      options: null
+      options: null,
+      checkHideItem(e: GetEntry) {
+        return e.group !== this.value;
+      },
     },
     {
       id: CriteriaType.LEAGUE,
@@ -54,7 +66,10 @@ export class PriceFilterService {
       enabled: true,
       value: null,
       categories: null,
-      options: null
+      options: null,
+      checkHideItem(e: GetEntry) {
+        return true;
+      },
     },
     {
       id: CriteriaType.SEARCH,
@@ -63,7 +78,18 @@ export class PriceFilterService {
       enabled: true,
       value: null,
       categories: null,
-      options: null
+      options: null,
+      checkHideItem(e: GetEntry) {
+        const input = this.value.toLowerCase().trim();
+
+        if (e.name.toLowerCase().indexOf(input) === -1) {
+          return true;
+        }
+
+        if (e.type && e.type.toLowerCase().indexOf(input) === -1) {
+          return true;
+        }
+      },
     },
     {
       id: CriteriaType.RARITY,
@@ -85,7 +111,22 @@ export class PriceFilterService {
           display: 'Relic',
           value: 'relic'
         },
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
+        if (e.frame === 3 && this.value !== 'unique') {
+          return true;
+        }
+
+        if (e.frame === 9 && this.value !== 'relic') {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.LINKS,
@@ -96,22 +137,25 @@ export class PriceFilterService {
       categories: ['weapon', 'armour'],
       options: this.asObservable([
         {
-          display: 'All links',
+          display: 'No links',
           value: null
         },
         {
-          display: 'No links',
-          value: 'none'
-        },
-        {
           display: 'Five links',
-          value: '5'
+          value: 5
         },
         {
           display: 'Six links',
-          value: '6'
+          value: 6
         },
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value !== e.linkCount) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.ILVL,
@@ -127,25 +171,34 @@ export class PriceFilterService {
         },
         {
           display: '82',
-          value: '82'
+          value: 82
         },
         {
           display: '83',
-          value: '83'
+          value: 83
         },
         {
           display: '84',
-          value: '84'
+          value: 84
         },
         {
           display: '85',
-          value: '85'
+          value: 85
         },
         {
           display: '86+',
-          value: '86'
+          value: 86
         },
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        } else if (this.value !== e.baseItemLevel) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.INFLUENCE,
@@ -156,16 +209,12 @@ export class PriceFilterService {
       categories: ['base'],
       options: this.asObservable([
         {
-          display: 'All',
+          display: 'Either',
           value: null
         },
         {
           display: 'None',
           value: 'none'
-        },
-        {
-          display: 'Either',
-          value: 'either'
         },
         {
           display: 'Shaper',
@@ -175,7 +224,26 @@ export class PriceFilterService {
           display: 'Elder',
           value: 'elder'
         },
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
+        if (this.value === 'none' && (e.baseIsElder || e.baseIsShaper)) {
+          return true;
+        }
+
+        if (this.value === 'shaper' && !e.baseIsShaper) {
+          return true;
+        }
+
+        if (this.value === 'elder' && !e.baseIsElder) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.CORRUPTION,
@@ -191,13 +259,28 @@ export class PriceFilterService {
         },
         {
           display: 'Yes',
-          value: 'yes'
+          value: true
         },
         {
           display: 'No',
-          value: 'no'
+          value: false
         },
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
+        if (this.value && !e.gemIsCorrupted) {
+          return true;
+        }
+
+        if (!this.value && e.gemIsCorrupted) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.LEVEL,
@@ -213,37 +296,48 @@ export class PriceFilterService {
         },
         {
           display: '1',
-          value: '1'
+          value: 1
         },
         {
           display: '2',
-          value: '2'
+          value: 2
         },
         {
           display: '3',
-          value: '3'
+          value: 3
         },
         {
           display: '4',
-          value: '4'
+          value: 4
         },
         {
           display: '6',
-          value: '6'
+          value: 5
         },
         {
           display: '7',
-          value: '7'
+          value: 7
         },
         {
           display: '20',
-          value: '20'
+          value: 20
         },
         {
           display: '21',
-          value: '21'
+          value: 21
         },
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
+        if (e.gemLevel !== this.value) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.QUALITY,
@@ -259,17 +353,28 @@ export class PriceFilterService {
         },
         {
           display: '0',
-          value: '0'
+          value: 0
         },
         {
           display: '20',
-          value: '20'
+          value: 20
         },
         {
           display: '23',
-          value: '23'
+          value: 23
         }
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
+        if (e.gemQuality !== this.value) {
+          return true;
+        }
+
+        return false;
+      },
     },
     {
       id: CriteriaType.TIER,
@@ -301,69 +406,96 @@ export class PriceFilterService {
         },
         {
           display: '1',
-          value: '1'
+          value: 1
         },
         {
           display: '2',
-          value: '2'
+          value: 2
         },
         {
           display: '3',
-          value: '3'
+          value: 3
         },
         {
           display: '4',
-          value: '4'
+          value: 4
         },
         {
           display: '5',
-          value: '5'
+          value: 5
         },
         {
           display: '6',
-          value: '6'
+          value: 6
         },
         {
           display: '7',
-          value: '7'
+          value: 7
         },
         {
           display: '8',
-          value: '8'
+          value: 8
         },
         {
           display: '9',
-          value: '9'
+          value: 9
         },
         {
           display: '10',
-          value: '10'
+          value: 10
         },
         {
           display: '11',
-          value: '11'
+          value: 11
         },
         {
           display: '12',
-          value: '12'
+          value: 12
         },
         {
           display: '13',
-          value: '13'
+          value: 13
         },
         {
           display: '14',
-          value: '14'
+          value: 14
         },
         {
           display: '15',
-          value: '15'
+          value: 15
         },
         {
           display: '16',
-          value: '16'
+          value: 16
         }
-      ])
+      ]),
+      checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
+        if (this.value === 'none' && e.mapTier) {
+          return true;
+        }
+
+        if (this.value === 'white' && e.mapTier > 5) {
+          return true;
+        }
+
+        if (this.value === 'yellow' && (e.mapTier < 6 || e.mapTier > 10)) {
+          return true;
+        }
+
+        if (this.value === 'red' && e.mapTier < 11) {
+          return true;
+        }
+
+        if (this.value !== e.mapTier) {
+          return true;
+        }
+
+        return false;
+      },
     },
   ];
 
@@ -421,47 +553,11 @@ export class PriceFilterService {
     // find entries visible after applying search criteria
     const enabledCriteria = this.getEnabledCriteria();
     const visibleEntries = entries.filter(e => {
-      return enabledCriteria.some(c => this.isMatch(e, c));
+      return enabledCriteria.some(c => c.checkHideItem(e));
     });
 
     // create pages
     return this.paginationService.page(entries, visibleEntries);
-  }
-
-  private isMatch(e: GetEntry, c: SearchCriteria): boolean {
-
-    /*if (e.daily < 50) {
-      return false;
-    }*/
-
-
-    switch (c.id) {
-      case CriteriaType.CONFIDENCE:
-        break;
-      case CriteriaType.GROUP:
-        break;
-      case CriteriaType.LEAGUE:
-        break;
-      case CriteriaType.SEARCH:
-        break;
-      case CriteriaType.RARITY:
-        break;
-      case CriteriaType.LINKS:
-        break;
-      case CriteriaType.ILVL:
-        break;
-      case CriteriaType.INFLUENCE:
-        break;
-      case CriteriaType.CORRUPTION:
-        break;
-      case CriteriaType.LEVEL:
-        break;
-      case CriteriaType.QUALITY:
-        break;
-      case CriteriaType.TIER:
-        break;
-    }
-    return true;
   }
 
   public getCriteria(type: CriteriaType): SearchCriteria {

@@ -1,4 +1,16 @@
 import {Observable} from 'rxjs';
+import {GetEntry} from '../../../services/data/get-entry';
+
+export class SearchCriteria {
+  id: CriteriaType;
+  title: string;
+  enabled: boolean;
+  inputType: InputType;
+  categories: string[];
+  options: Observable<SearchOption[]>;
+  value: any;
+  checkHideItem: (e: GetEntry) => boolean;
+}
 
 export class SearchOption {
   public display: string;
@@ -8,16 +20,6 @@ export class SearchOption {
     this.display = display;
     this.value = value;
   }
-}
-
-export class SearchCriteria {
-  id: CriteriaType;
-  title: string;
-  enabled: boolean;
-  inputType: InputType;
-  value: any;
-  categories: string[];
-  options: Observable<SearchOption[]>;
 }
 
 export enum CriteriaType {
