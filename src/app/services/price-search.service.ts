@@ -8,7 +8,6 @@ import {Category} from './data/category';
   providedIn: 'root'
 })
 export class PriceSearchService {
-  private filteredEntries$: Observable<GetEntry[]>;
   public readonly criteria: SearchCriteria[] = [
     {
       id: CriteriaType.CONFIDENCE,
@@ -356,29 +355,51 @@ export class PriceSearchService {
       ])
     },
   ];
+  public readonly pageSize = 5;
+  public readonly pagination = {
+    visiblePageCount: 1,
+    visible: 0,
+    total: 0
+  };
 
   constructor() {
   }
 
-  public filter(entries$: Observable<GetEntry[]>, criteria: SearchCriteria[]): void {
-    const subscription = entries$.subscribe(entries => {
-      this.filteredEntries$ = new Observable(t => {
+  public reset(): void {
+    this.pagination.visiblePageCount = 1;
+    this.pagination.visible = 0;
+    this.pagination.total = 0;
+  }
 
-        const enabledCriteria = criteria.filter(c => c.enabled);
-        const filteredEntries = entries.filter(e => {
-          return enabledCriteria.some(c => {
-            return this.isMatch(e, c);
-          });
-        });
+  public filter(entries: GetEntry[]): GetEntry[] {
+    // save total nr of entries
+    this.pagination.total = entries.length;
 
-        t.next(filteredEntries);
-        t.complete();
-        subscription.unsubscribe();
-      });
+    // find entries visible after applying search criteria
+    const enabledCriteria = this.getEnabledCriteria();
+    let visibleEntries = entries.filter(e => {
+      return enabledCriteria.some(c => this.isMatch(e, c));
     });
+
+    // if entries should be limited and current entry list is longer than what would fit on page
+    if (this.pagination.visiblePageCount && visibleEntries.length > this.pageSize * this.pagination.visiblePageCount) {
+      // only take entries that would fit on page
+      visibleEntries = visibleEntries.slice(0, this.pageSize * this.pagination.visiblePageCount);
+    }
+
+    // save nr of visible entries
+    this.pagination.visible = visibleEntries.length;
+
+    return visibleEntries;
   }
 
   private isMatch(e: GetEntry, c: SearchCriteria): boolean {
+
+    /*if (e.daily < 50) {
+      return false;
+    }*/
+
+
     switch (c.id) {
       case CriteriaType.CONFIDENCE:
         break;

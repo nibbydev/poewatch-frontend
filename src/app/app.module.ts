@@ -26,6 +26,7 @@ import {ActiveLeaguePipe} from './pipes/active-league.pipe';
 import {RadioComponent} from './shared/inputs/radio/radio.component';
 import {DropdownComponent} from './shared/inputs/dropdown/dropdown.component';
 import {InputComponent} from './shared/inputs/input/input.component';
+import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-table-loadmore/prices-table-loadmore.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {InputComponent} from './shared/inputs/input/input.component';
     RadioComponent,
     DropdownComponent,
     InputComponent,
+    PricesTableLoadmoreComponent,
   ],
   imports: [
     BrowserModule,

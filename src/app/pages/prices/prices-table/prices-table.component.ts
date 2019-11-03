@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PriceService} from '../../../services/price.service';
-import {PriceSearchService} from '../../../services/price-search.service';
 import {GetEntry} from '../../../services/data/get-entry';
 
 @Component({
@@ -21,28 +20,15 @@ export class PricesTableComponent implements OnInit {
     yPad: 2,
     radius: 0.2
   };
-  private readonly columns = [
-    {
-      sort: true,
 
-    }
-  ];
 
   private readonly chaosIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1';
   private readonly exaltedIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&amp;w=1&amp;h=1';
 
-  constructor(private priceService: PriceService,
-              private priceSearchService: PriceSearchService) {
+  constructor(private priceService: PriceService) {
   }
 
   ngOnInit() {
-    this.priceService.getEntries().subscribe(prices => {
-      if (prices) {
-        prices = prices.slice(0, 10);
-      }
-
-      this.entries = prices;
-    });
+    this.priceService.getEntries().subscribe(entries => this.entries = entries);
   }
-
 }
