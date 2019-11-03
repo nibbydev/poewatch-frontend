@@ -10,7 +10,7 @@
       <hr/>
 
       <div class="card-body pt-0">
-        <div *ngIf="!(pricesService.getEntries() | async)" class="text-center">
+        <div *ngIf="!(priceFilterService.getEntries() | async)" class="text-center">
           <div class="spinner-border"></div>
         </div>
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PriceService} from '../../../services/price.service';
 import {GetEntry} from '../../../services/data/get-entry';
+import {PriceFilterService} from '../../../services/price-filter.service';
 
 @Component({
   selector: 'app-prices-table',
@@ -25,10 +25,10 @@ export class PricesTableComponent implements OnInit {
   private readonly chaosIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1';
   private readonly exaltedIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&amp;w=1&amp;h=1';
 
-  constructor(private priceService: PriceService) {
+  constructor(private priceFilterService: PriceFilterService) {
   }
 
   ngOnInit() {
-    this.priceService.getEntries().subscribe(entries => this.entries = entries);
+    this.priceFilterService.getEntries().subscribe(entries => this.entries = entries);
   }
 }

@@ -1,13 +1,21 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from './data/get-entry';
-import {Observable} from 'rxjs';
-import {CriteriaType, InputType, SearchCriteria} from '../pages/prices/prices-search/search-option';
-import {Category} from './data/category';
+import {Observable, Subject} from 'rxjs';
+import {CriteriaType, InputType, SearchCriteria, SearchOption} from '../pages/prices/prices-search/search-option';
+import {Category, Group} from './data/category';
+import {PriceService} from './price.service';
+import {League} from './data/league';
+import {LeagueService} from './league.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PriceFilterService {
+  private readonly entries$: Subject<GetEntry[]> = new Subject();
+  private readonly params: { league: League, category: Category } = {
+    league: undefined,
+    category: undefined
+  };
   public readonly criteria: SearchCriteria[] = [
     {
       id: CriteriaType.CONFIDENCE,
@@ -362,10 +370,45 @@ export class PriceFilterService {
     total: 0
   };
 
-  constructor() {
+  constructor(private leagueService: LeagueService,
+              private priceService: PriceService) {
+    this.leagueService.entries$.subscribe(leagues => this.processLeagues(leagues));
   }
 
-  public reset(): void {
+  public getEntries(): Observable<GetEntry[]> {
+    return this.entries$;
+  }
+
+  public requestNewPrices(league: League, category: Category): void {
+    // don't request prices if params haven't changed
+    if (this.params.league === league && this.params.category === category) {
+      return;
+    }
+
+    // save current params
+    this.params.league = league;
+    this.params.category = category;
+
+    // hide certain search options depending on category
+    this.filterCriteria(category);
+
+    // send null to force loading state on prices table
+    this.entries$.next(null);
+    this.resetPagination();
+
+    // request new prices
+    this.priceService.makeRequest(league, category).subscribe(entries => {
+      // extract groups from the entries and update criteria
+      this.processPriceGroups(entries);
+      // filter the entries including pagination
+      entries = this.filter(entries);
+      // send filtered entries through the observable
+      this.entries$.next(entries);
+    });
+  }
+
+
+  public resetPagination(): void {
     this.pagination.visiblePageCount = 1;
     this.pagination.visible = 0;
     this.pagination.total = 0;
@@ -449,4 +492,45 @@ export class PriceFilterService {
     this.criteria.filter(c => !c.categories || c.categories.includes(category.name.toLowerCase()))
       .forEach(c => c.enabled = true);
   }
+
+
+  private processLeagues(leagues: League[]): void {
+    // find criteria that deals with leagues
+    const leagueCriteria = this.getCriteria(CriteriaType.LEAGUE);
+    const searchOptions = leagues.map(g => new SearchOption(g.display, g.name)).reverse();
+
+    // set its options to the current groups
+    leagueCriteria.options = new Observable(o => {
+      o.next(searchOptions);
+      o.complete();
+    });
+
+    leagueCriteria.value = searchOptions[0].value;
+  }
+
+  private processPriceGroups(prices?: GetEntry[]): void {
+    if (!prices) {
+      return;
+    }
+
+    // find all unique groups from prices as strings and map them to Group objects. categories being present is a
+    // prerequisite to prices being requested. so this method will not run unless there's a category present
+    const groups: Group[] = prices
+      .map(p => p.group)
+      .filter((g, i, s) => s.indexOf(g) === i)
+      .map(gs => this.params.category.groups.find(g => g.name.toLowerCase() === gs));
+
+    // find criteria that deals with groups
+    const groupCriteria = this.getCriteria(CriteriaType.GROUP);
+    const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
+
+    // set its options to the current groups
+    groupCriteria.options = new Observable(o => {
+      o.next(searchOptions);
+      o.complete();
+    });
+
+    groupCriteria.value = searchOptions[0].value;
+  }
+
 }
