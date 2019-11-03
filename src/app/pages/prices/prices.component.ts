@@ -31,18 +31,8 @@ export class PricesComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
-
-    this.pricesService.getEntries().subscribe((prices?: GetEntry[]) => {
-      if (!prices) {
-        return;
-      }
-
-      this.processPriceGroups(prices);
-    });
-
-    this.leagueService.entries$.subscribe((leagues: League[]) => {
-      this.processLeagues(leagues);
-    });
+    this.pricesService.getEntries().subscribe(prices => this.processPriceGroups(prices));
+    this.leagueService.entries$.subscribe(leagues => this.processLeagues(leagues));
   }
 
   private parseQueryParams(params: Params): void {
@@ -101,7 +91,11 @@ export class PricesComponent implements OnInit {
       });
   }
 
-  private processPriceGroups(prices: GetEntry[]): void {
+  private processPriceGroups(prices?: GetEntry[]): void {
+    if (!prices) {
+      return;
+    }
+
     // find all unique groups from prices as strings and map them to Group objects. categories being present is a
     // prerequisite to prices being requested. so this method will not run unless there's a category present
     const groups: Group[] = prices
