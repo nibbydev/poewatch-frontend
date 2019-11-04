@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchCriteria} from '../../../pages/prices/prices-search/search-option';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PriceFilterService} from '../../../services/price-filter.service';
 
 @Component({
   selector: 'app-input',
@@ -11,7 +12,8 @@ export class InputComponent implements OnInit {
   @Input() private criteria: SearchCriteria;
 
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private filterService: PriceFilterService) {
   }
 
   ngOnInit() {
@@ -36,5 +38,7 @@ export class InputComponent implements OnInit {
         queryParams,
         queryParamsHandling: 'merge'
       });
+
+    this.filterService.sortEntries();
   }
 }

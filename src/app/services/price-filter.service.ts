@@ -38,13 +38,8 @@ export class PriceFilterService {
         }
       ]),
       checkHideItem(e: GetEntry) {
-        if (this.value) {
-          // if 'Show' is selected, do not hide any item
-          return false;
-        } else {
-          // otherwise hide if there's a low amount of items
-          return e.daily < 10 || e.current < 10;
-        }
+        // if 'Show' is selected, do not hide any item. otherwise hide if there's a low amount of items
+        return this.value ? false : e.daily < 10 || e.current < 10;
       },
     },
     {
@@ -56,6 +51,10 @@ export class PriceFilterService {
       categories: null,
       options: null,
       checkHideItem(e: GetEntry) {
+        if (this.value === null) {
+          return false;
+        }
+
         return e.group !== this.value;
       },
     },
@@ -68,7 +67,7 @@ export class PriceFilterService {
       categories: null,
       options: null,
       checkHideItem(e: GetEntry) {
-        return true;
+        return false;
       },
     },
     {
@@ -80,6 +79,10 @@ export class PriceFilterService {
       categories: null,
       options: null,
       checkHideItem(e: GetEntry) {
+        if (!this.value) {
+          return false;
+        }
+
         const input = this.value.toLowerCase().trim();
 
         if (e.name.toLowerCase().indexOf(input) === -1) {
@@ -89,6 +92,8 @@ export class PriceFilterService {
         if (e.type && e.type.toLowerCase().indexOf(input) === -1) {
           return true;
         }
+
+        return false;
       },
     },
     {
@@ -505,6 +510,7 @@ export class PriceFilterService {
     this.leagueService.entries$.subscribe(leagues => this.processLeagues(leagues));
   }
 
+
   public getEntries(): Observable<GetEntry[]> {
     return this.entries$;
   }
@@ -548,12 +554,19 @@ export class PriceFilterService {
     this.entries$.next(this.filter(this.rawEntries));
   }
 
+  public sortEntries() {
+    if (!this.rawEntries) {
+      return;
+    }
+
+    this.entries$.next(this.filter(this.rawEntries));
+  }
 
   public filter(entries: GetEntry[]): GetEntry[] {
     // find entries visible after applying search criteria
     const enabledCriteria = this.getEnabledCriteria();
     const visibleEntries = entries.filter(e => {
-      return enabledCriteria.some(c => c.checkHideItem(e));
+      return enabledCriteria.every(c => !c.checkHideItem(e));
     });
 
     // create pages
@@ -608,13 +621,14 @@ export class PriceFilterService {
     const groupCriteria = this.getCriteria(CriteriaType.GROUP);
     const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
 
+    // prepend the default value
+    searchOptions.unshift(new SearchOption('All', null));
+
     // set its options to the current groups
     groupCriteria.options = new Observable(o => {
       o.next(searchOptions);
       o.complete();
     });
-
-    groupCriteria.value = searchOptions[0].value;
   }
 
 }
