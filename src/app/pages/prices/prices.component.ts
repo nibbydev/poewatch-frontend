@@ -59,7 +59,7 @@ export class PricesComponent implements OnInit {
       }
 
       // todo: navigate to match if capitalization does not match
-      this.priceFilterService.requestNewPrices(matchingLeague, matchingCategory);
+      this.priceFilterService.onQueryParamChange(matchingLeague, matchingCategory);
     });
   }
 

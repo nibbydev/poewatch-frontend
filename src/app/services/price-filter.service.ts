@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from '../shared/get-entry';
-import {Observable, Subject} from 'rxjs';
+import {Observable, ReplaySubject, Subject} from 'rxjs';
 import {CriteriaType, SearchOption} from '../shared/search-option';
 import {Category, Group} from '../shared/category';
 import {PriceService} from './price.service';
@@ -13,7 +13,7 @@ import {SearchCriteriaService} from './search-criteria.service';
   providedIn: 'root'
 })
 export class PriceFilterService {
-  private readonly entries$: Subject<GetEntry[]> = new Subject();
+  private readonly entries$: Subject<GetEntry[]> = new ReplaySubject();
   private rawEntries: GetEntry[] = null;
 
   private readonly params: { league: League, category: Category } = {
@@ -32,7 +32,7 @@ export class PriceFilterService {
     return this.entries$;
   }
 
-  public requestNewPrices(league: League, category: Category): void {
+  public onQueryParamChange(league: League, category: Category): void {
     // don't request prices if params haven't changed
     if (this.params.league === league && this.params.category === category) {
       return;
