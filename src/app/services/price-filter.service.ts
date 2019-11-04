@@ -37,9 +37,9 @@ export class PriceFilterService {
           value: true
         }
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         // if 'Show' is selected, do not hide any item. otherwise hide if there's a low amount of items
-        return this.value ? false : e.daily < 10 || e.current < 10;
+        return this.value ? true : e.daily >= 10 && e.current >= 10;
       },
     },
     {
@@ -50,12 +50,12 @@ export class PriceFilterService {
       value: null,
       categories: null,
       options: null,
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
+          return true;
         }
 
-        return e.group !== this.value;
+        return e.group === this.value;
       },
     },
     {
@@ -66,8 +66,8 @@ export class PriceFilterService {
       value: null,
       categories: null,
       options: null,
-      checkHideItem(e: GetEntry) {
-        return false;
+      showItem(e: GetEntry) {
+        return true;
       },
     },
     {
@@ -78,18 +78,15 @@ export class PriceFilterService {
       value: null,
       categories: null,
       options: null,
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (!this.value) {
-          return false;
-        }
-
-        const input = this.value.toLowerCase().trim();
-
-        if (e.name.toLowerCase().indexOf(input) === -1) {
           return true;
         }
 
-        if (e.type && e.type.toLowerCase().indexOf(input) === -1) {
+        const input = this.value.toLowerCase().trim();
+        if (e.name.toLowerCase().indexOf(input) !== -1) {
+          return true;
+        } else if (e.type && e.type.toLowerCase().indexOf(input) !== -1) {
           return true;
         }
 
@@ -117,20 +114,20 @@ export class PriceFilterService {
           value: 'relic'
         },
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
+          return true;
         }
 
         if (e.frame === 3 && this.value !== 'unique') {
-          return true;
+          return false;
         }
 
         if (e.frame === 9 && this.value !== 'relic') {
-          return true;
+          return false;
         }
 
-        return false;
+        return true;
       },
     },
     {
@@ -154,12 +151,12 @@ export class PriceFilterService {
           value: 6
         },
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value !== e.linkCount) {
-          return true;
+          return false;
         }
 
-        return false;
+        return true;
       },
     },
     {
@@ -195,14 +192,12 @@ export class PriceFilterService {
           value: 86
         },
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
-        } else if (this.value !== e.baseItemLevel) {
           return true;
         }
 
-        return false;
+        return this.value === e.baseItemLevel;
       },
     },
     {
@@ -230,24 +225,24 @@ export class PriceFilterService {
           value: 'elder'
         },
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
+          return true;
         }
 
         if (this.value === 'none' && (e.baseIsElder || e.baseIsShaper)) {
-          return true;
+          return false;
         }
 
         if (this.value === 'shaper' && !e.baseIsShaper) {
-          return true;
+          return false;
         }
 
         if (this.value === 'elder' && !e.baseIsElder) {
-          return true;
+          return false;
         }
 
-        return false;
+        return true;
       },
     },
     {
@@ -271,20 +266,20 @@ export class PriceFilterService {
           value: false
         },
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
+          return true;
         }
 
         if (this.value && !e.gemIsCorrupted) {
-          return true;
+          return false;
         }
 
         if (!this.value && e.gemIsCorrupted) {
-          return true;
+          return false;
         }
 
-        return false;
+        return true;
       },
     },
     {
@@ -332,16 +327,16 @@ export class PriceFilterService {
           value: 21
         },
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
-        }
-
-        if (e.gemLevel !== this.value) {
           return true;
         }
 
-        return false;
+        if (e.gemLevel !== this.value) {
+          return false;
+        }
+
+        return true;
       },
     },
     {
@@ -369,16 +364,16 @@ export class PriceFilterService {
           value: 23
         }
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
-        }
-
-        if (e.gemQuality !== this.value) {
           return true;
         }
 
-        return false;
+        if (e.gemQuality !== this.value) {
+          return false;
+        }
+
+        return true;
       },
     },
     {
@@ -474,32 +469,32 @@ export class PriceFilterService {
           value: 16
         }
       ]),
-      checkHideItem(e: GetEntry) {
+      showItem(e: GetEntry) {
         if (this.value === null) {
-          return false;
+          return true;
         }
 
         if (this.value === 'none' && e.mapTier) {
-          return true;
+          return false;
         }
 
         if (this.value === 'white' && e.mapTier > 5) {
-          return true;
+          return false;
         }
 
         if (this.value === 'yellow' && (e.mapTier < 6 || e.mapTier > 10)) {
-          return true;
+          return false;
         }
 
         if (this.value === 'red' && e.mapTier < 11) {
-          return true;
+          return false;
         }
 
         if (this.value !== e.mapTier) {
-          return true;
+          return false;
         }
 
-        return false;
+        return true;
       },
     },
   ];
@@ -566,7 +561,7 @@ export class PriceFilterService {
     // find entries visible after applying search criteria
     const enabledCriteria = this.getEnabledCriteria();
     const visibleEntries = entries.filter(e => {
-      return enabledCriteria.every(c => !c.checkHideItem(e));
+      return enabledCriteria.every(c => c.showItem(e));
     });
 
     // create pages

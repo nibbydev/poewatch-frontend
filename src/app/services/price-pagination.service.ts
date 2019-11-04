@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 })
 export class PricePaginationService {
   // default nr of entries per page
-  public readonly pageSize = 10;
+  public readonly pageSize = 50;
   // nr of currently visible pages
   public visiblePages = 1;
   // nr of currently visible entries

@@ -9,7 +9,7 @@ export class SearchCriteria {
   categories: string[];
   options: Observable<SearchOption[]>;
   value: any;
-  checkHideItem: (e: GetEntry) => boolean;
+  showItem: (e: GetEntry) => boolean;
 }
 
 export class SearchOption {
