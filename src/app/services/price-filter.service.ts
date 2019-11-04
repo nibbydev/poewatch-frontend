@@ -43,7 +43,7 @@ export class PriceFilterService {
     this.params.category = category;
 
     // hide certain search options depending on category
-    this.searchCriteriaService.setCriteriaEnabled(category);
+    this.searchCriteriaService.reset(category);
 
     // send null to force loading state on prices table
     this.rawEntries = null;

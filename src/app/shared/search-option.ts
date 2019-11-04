@@ -10,6 +10,7 @@ export class SearchCriteria {
   options: Observable<SearchOption[]>;
   value: any;
   showItem: (e: GetEntry) => boolean;
+  reset: boolean;
 }
 
 export class SearchOption {

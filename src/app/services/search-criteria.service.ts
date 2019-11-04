@@ -13,9 +13,10 @@ export class SearchCriteriaService {
       id: CriteriaType.CONFIDENCE,
       title: 'Confidence',
       inputType: InputType.RADIO,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: null,
+      reset: true,
       options: this.asObservable([
         {
           display: 'Hide',
@@ -35,9 +36,10 @@ export class SearchCriteriaService {
       id: CriteriaType.GROUP,
       title: 'Group',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: null,
+      reset: true,
       options: null,
       showItem(e: GetEntry) {
         if (this.value === null) {
@@ -51,9 +53,10 @@ export class SearchCriteriaService {
       id: CriteriaType.LEAGUE,
       title: 'League',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: null,
+      reset: false,
       options: null,
       showItem(e: GetEntry) {
         return true;
@@ -63,9 +66,10 @@ export class SearchCriteriaService {
       id: CriteriaType.SEARCH,
       title: 'Search',
       inputType: InputType.INPUT,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: null,
+      reset: true,
       options: null,
       showItem(e: GetEntry) {
         if (!this.value) {
@@ -86,9 +90,10 @@ export class SearchCriteriaService {
       id: CriteriaType.RARITY,
       title: 'Rarity',
       inputType: InputType.RADIO,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['accessory', 'weapon', 'armour', 'flask'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -123,9 +128,10 @@ export class SearchCriteriaService {
       id: CriteriaType.LINKS,
       title: 'Links',
       inputType: InputType.RADIO,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['weapon', 'armour'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'No links',
@@ -152,9 +158,10 @@ export class SearchCriteriaService {
       id: CriteriaType.ILVL,
       title: 'Ilvl',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['base'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -193,9 +200,10 @@ export class SearchCriteriaService {
       id: CriteriaType.INFLUENCE,
       title: 'Influence',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['base'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'Either',
@@ -238,9 +246,10 @@ export class SearchCriteriaService {
       id: CriteriaType.CORRUPTION,
       title: 'Corruption',
       inputType: InputType.RADIO,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['gem'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'Either',
@@ -275,9 +284,10 @@ export class SearchCriteriaService {
       id: CriteriaType.LEVEL,
       title: 'Level',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['gem'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -332,9 +342,10 @@ export class SearchCriteriaService {
       id: CriteriaType.QUALITY,
       title: 'Quality',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['gem'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -369,9 +380,10 @@ export class SearchCriteriaService {
       id: CriteriaType.TIER,
       title: 'Tier',
       inputType: InputType.DROPDOWN,
-      enabled: true,
+      enabled: false,
       value: null,
       categories: ['map'],
+      reset: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -506,9 +518,12 @@ export class SearchCriteriaService {
     return this.criteria.filter(c => c.enabled === true);
   }
 
-  public setCriteriaEnabled(category: Category): void {
-    this.criteria.forEach(c => c.enabled = false);
-    this.criteria.filter(c => !c.categories || c.categories.includes(category.name.toLowerCase()))
-      .forEach(c => c.enabled = true);
+  public reset(category: Category): void {
+    this.criteria.forEach(c => {
+      c.enabled = !c.categories || c.categories.includes(category.name.toLowerCase());
+      if (c.reset) {
+        c.value = null;
+      }
+    });
   }
 }
