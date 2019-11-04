@@ -10,26 +10,16 @@ import {Category} from '../shared/category';
 export class SearchCriteriaService {
   public readonly criteria: SearchCriteria[] = [
     {
-      id: 'confidence',
-      title: 'Confidence',
-      inputType: InputType.RADIO,
+      id: 'league',
+      title: 'League',
+      inputType: InputType.DROPDOWN,
       enabled: false,
       value: null,
       categories: null,
-      reset: true,
-      options: this.asObservable([
-        {
-          display: 'Hide',
-          value: null
-        },
-        {
-          display: 'Show',
-          value: true
-        }
-      ]),
+      reset: false,
+      options: null,
       showItem(e: GetEntry) {
-        // if 'Show' is selected, do not hide any item. otherwise hide if there's a low amount of items
-        return this.value ? true : e.daily >= 10 && e.current >= 10;
+        return true;
       },
     },
     {
@@ -47,19 +37,6 @@ export class SearchCriteriaService {
         }
 
         return e.group === this.value;
-      },
-    },
-    {
-      id: 'league',
-      title: 'League',
-      inputType: InputType.DROPDOWN,
-      enabled: false,
-      value: null,
-      categories: null,
-      reset: false,
-      options: null,
-      showItem(e: GetEntry) {
-        return true;
       },
     },
     {
@@ -84,6 +61,29 @@ export class SearchCriteriaService {
         }
 
         return false;
+      },
+    },
+    {
+      id: 'confidence',
+      title: 'Confidence',
+      inputType: InputType.RADIO,
+      enabled: false,
+      value: null,
+      categories: null,
+      reset: true,
+      options: this.asObservable([
+        {
+          display: 'Hide',
+          value: null
+        },
+        {
+          display: 'Show',
+          value: true
+        }
+      ]),
+      showItem(e: GetEntry) {
+        // if 'Show' is selected, do not hide any item. otherwise hide if there's a low amount of items
+        return this.value ? true : e.daily >= 10 && e.current >= 10;
       },
     },
     {
@@ -210,8 +210,12 @@ export class SearchCriteriaService {
       reset: true,
       options: this.asObservable([
         {
-          display: 'Either',
+          display: 'All',
           value: null
+        },
+        {
+          display: 'Either',
+          value: 'either'
         },
         {
           display: 'None',
@@ -229,6 +233,10 @@ export class SearchCriteriaService {
       showItem(e: GetEntry) {
         if (this.value === null) {
           return true;
+        }
+
+        if (this.value === 'either' && !(e.baseIsElder || e.baseIsShaper)) {
+          return false;
         }
 
         if (this.value === 'none' && (e.baseIsElder || e.baseIsShaper)) {
