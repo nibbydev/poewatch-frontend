@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {League} from '../services/data/league';
+import {League} from '../shared/league';
 
 @Pipe({
   name: 'activeLeague'

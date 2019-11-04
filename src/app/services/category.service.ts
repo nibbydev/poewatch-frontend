@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from './base.service';
-import {Category, Group} from './data/category';
+import {Category, Group} from '../shared/category';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
 

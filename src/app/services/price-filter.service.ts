@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {GetEntry} from './data/get-entry';
+import {GetEntry} from '../shared/get-entry';
 import {Observable, Subject} from 'rxjs';
-import {CriteriaType, SearchOption} from '../pages/prices/search-option';
-import {Category, Group} from './data/category';
+import {CriteriaType, SearchOption} from '../shared/search-option';
+import {Category, Group} from '../shared/category';
 import {PriceService} from './price.service';
-import {League} from './data/league';
+import {League} from '../shared/league';
 import {LeagueService} from './league.service';
 import {PricePaginationService} from './price-pagination.service';
 import {SearchCriteriaService} from './search-criteria.service';
