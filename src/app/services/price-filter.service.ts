@@ -114,6 +114,13 @@ export class PriceFilterService {
 
     // find criteria that deals with groups
     const groupCriteria = this.searchCriteriaService.getCriteria(CriteriaType.GROUP);
+
+    // no need to show if there's only one group
+    if (groups.length === 1) {
+      groupCriteria.enabled = false;
+      return;
+    }
+
     const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
 
     // prepend the default value
