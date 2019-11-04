@@ -500,6 +500,44 @@ export class SearchCriteriaService {
         }
 
         return true;
+      }
+    },
+    {
+      id: 'variant',
+      title: 'Has variant',
+      inputType: InputType.RADIO,
+      enabled: false,
+      value: null,
+      categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
+      reset: true,
+      options: this.asObservable([
+        {
+          display: 'Either',
+          value: null
+        },
+        {
+          display: 'Yes',
+          value: true
+        },
+        {
+          display: 'No',
+          value: false
+        },
+      ]),
+      showItem(e: GetEntry) {
+        if (this.value === null) {
+          return true;
+        }
+
+        if (this.value && !e.variation) {
+          return false;
+        }
+
+        if (!this.value && e.variation) {
+          return false;
+        }
+
+        return true;
       },
     },
   ];
