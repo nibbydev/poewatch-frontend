@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {GetEntry} from './get-entry';
 
 export class SearchCriteria {
-  id: CriteriaType;
+  id: string;
   title: string;
   enabled: boolean;
   inputType: InputType;
@@ -21,21 +21,6 @@ export class SearchOption {
     this.display = display;
     this.value = value;
   }
-}
-
-export enum CriteriaType {
-  CONFIDENCE = 'confidence',
-  GROUP = 'group',
-  LEAGUE = 'league',
-  SEARCH = 'search',
-  RARITY = 'rarity',
-  LINKS = 'links',
-  ILVL = 'ilvl',
-  INFLUENCE = 'influence',
-  CORRUPTION = 'corruption',
-  LEVEL = 'level',
-  QUALITY = 'quality',
-  TIER = 'tier'
 }
 
 export enum InputType {

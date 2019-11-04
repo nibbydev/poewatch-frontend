@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CriteriaType, InputType, SearchCriteria} from '../shared/search-option';
+import {InputType, SearchCriteria} from '../shared/search-option';
 import {GetEntry} from '../shared/get-entry';
 import {Observable} from 'rxjs';
 import {Category} from '../shared/category';
@@ -10,7 +10,7 @@ import {Category} from '../shared/category';
 export class SearchCriteriaService {
   public readonly criteria: SearchCriteria[] = [
     {
-      id: CriteriaType.CONFIDENCE,
+      id: 'confidence',
       title: 'Confidence',
       inputType: InputType.RADIO,
       enabled: false,
@@ -33,7 +33,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.GROUP,
+      id: 'group',
       title: 'Group',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -50,7 +50,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.LEAGUE,
+      id: 'league',
       title: 'League',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -63,7 +63,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.SEARCH,
+      id: 'search',
       title: 'Search',
       inputType: InputType.INPUT,
       enabled: false,
@@ -87,7 +87,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.RARITY,
+      id: 'rarity',
       title: 'Rarity',
       inputType: InputType.RADIO,
       enabled: false,
@@ -125,7 +125,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.LINKS,
+      id: 'links',
       title: 'Links',
       inputType: InputType.RADIO,
       enabled: false,
@@ -147,6 +147,10 @@ export class SearchCriteriaService {
         },
       ]),
       showItem(e: GetEntry) {
+        if (this.value === null && !e.linkCount) {
+          return true;
+        }
+
         if (this.value !== e.linkCount) {
           return false;
         }
@@ -155,7 +159,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.ILVL,
+      id: 'ilvl',
       title: 'Ilvl',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -197,7 +201,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.INFLUENCE,
+      id: 'influence',
       title: 'Influence',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -243,7 +247,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.CORRUPTION,
+      id: 'corruption',
       title: 'Corruption',
       inputType: InputType.RADIO,
       enabled: false,
@@ -281,7 +285,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.LEVEL,
+      id: 'level',
       title: 'Level',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -339,7 +343,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.QUALITY,
+      id: 'quality',
       title: 'Quality',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -377,7 +381,7 @@ export class SearchCriteriaService {
       },
     },
     {
-      id: CriteriaType.TIER,
+      id: 'tier',
       title: 'Tier',
       inputType: InputType.DROPDOWN,
       enabled: false,
@@ -510,8 +514,8 @@ export class SearchCriteriaService {
     });
   }
 
-  public getCriteria(type: CriteriaType): SearchCriteria {
-    return this.criteria.find(c => c.id === type);
+  public getCriteria(id: string): SearchCriteria {
+    return this.criteria.find(c => c.id === id);
   }
 
   public getEnabledCriteria(): SearchCriteria[] {

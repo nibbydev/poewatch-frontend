@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from '../shared/get-entry';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {CriteriaType, SearchOption} from '../shared/search-option';
+import {SearchOption} from '../shared/search-option';
 import {Category, Group} from '../shared/category';
 import {PriceService} from './price.service';
 import {League} from '../shared/league';
@@ -92,7 +92,7 @@ export class PriceFilterService {
 
   private processLeagues(leagues: League[]): void {
     // find criteria that deals with leagues
-    const leagueCriteria = this.searchCriteriaService.getCriteria(CriteriaType.LEAGUE);
+    const leagueCriteria = this.searchCriteriaService.getCriteria('league');
     const searchOptions = leagues.map(g => new SearchOption(g.display, g.name)).reverse();
 
     // set its options to the current groups
@@ -113,7 +113,7 @@ export class PriceFilterService {
       .map(gs => this.params.category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = this.searchCriteriaService.getCriteria(CriteriaType.GROUP);
+    const groupCriteria = this.searchCriteriaService.getCriteria('group');
 
     // no need to show if there's only one group
     if (groups.length === 1) {
