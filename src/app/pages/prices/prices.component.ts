@@ -4,6 +4,8 @@ import {CategoryService} from '../../services/category.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
+import {SearchCriteriaService} from '../../services/search-criteria.service';
+import {InputType} from './search-option';
 
 @Component({
   selector: 'app-prices',
@@ -16,7 +18,8 @@ export class PricesComponent implements OnInit {
               private categoryService: CategoryService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private priceFilterService: PriceFilterService) {
+              private priceFilterService: PriceFilterService,
+              private searchCriteriaService: SearchCriteriaService) {
   }
 
   ngOnInit() {
@@ -58,5 +61,9 @@ export class PricesComponent implements OnInit {
       // todo: navigate to match if capitalization does not match
       this.priceFilterService.requestNewPrices(matchingLeague, matchingCategory);
     });
+  }
+
+  public getInputTypes() {
+    return InputType;
   }
 }

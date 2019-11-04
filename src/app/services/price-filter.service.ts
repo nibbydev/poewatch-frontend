@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from './data/get-entry';
 import {Observable, Subject} from 'rxjs';
-import {CriteriaType, SearchOption} from '../pages/prices/prices-search/search-option';
+import {CriteriaType, SearchOption} from '../pages/prices/search-option';
 import {Category, Group} from './data/category';
 import {PriceService} from './price.service';
 import {League} from './data/league';

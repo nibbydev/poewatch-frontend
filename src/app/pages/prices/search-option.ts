@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs';
-import {GetEntry} from '../../../services/data/get-entry';
+import {GetEntry} from '../../services/data/get-entry';
 
 export class SearchCriteria {
   id: CriteriaType;

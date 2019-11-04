@@ -4,7 +4,18 @@
     <div class="card">
       <div class="card-header"></div>
       <div class="card-body">
-        <app-prices-search></app-prices-search>
+        <div class="px-2">
+          <div class='row'>
+            <div *ngFor="let criteria of searchCriteriaService.getEnabledCriteria()" class="col-6 col-sm">
+
+              <app-dropdown *ngIf="criteria.inputType === getInputTypes().DROPDOWN" [criteria]="criteria"></app-dropdown>
+              <app-radio *ngIf="criteria.inputType === getInputTypes().RADIO" [criteria]="criteria"></app-radio>
+              <app-input *ngIf="criteria.inputType === getInputTypes().INPUT" [criteria]="criteria"></app-input>
+
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <hr/>

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CriteriaType, InputType, SearchCriteria} from '../pages/prices/prices-search/search-option';
+import {CriteriaType, InputType, SearchCriteria} from '../pages/prices/search-option';
 import {GetEntry} from './data/get-entry';
 import {Observable} from 'rxjs';
 import {Category} from './data/category';

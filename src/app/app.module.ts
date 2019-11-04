@@ -16,7 +16,6 @@ import {TitleComponent} from './modules/title/title.component';
 import {SidebarComponent} from './modules/sidebar/sidebar.component';
 import {ItemComponent} from './modules/item/item.component';
 import {PricesTableComponent} from './pages/prices/prices-table/prices-table.component';
-import {PricesSearchComponent} from './pages/prices/prices-search/prices-search.component';
 import {FormsModule} from '@angular/forms';
 import {DetailsModalComponent} from './modules/details-modal/details-modal.component';
 import {ItemPriceboxComponent} from './modules/item/item-pricebox/item-pricebox.component';
@@ -43,7 +42,6 @@ import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-t
     ItemPriceboxComponent,
     ItemSparklineComponent,
     PricesTableComponent,
-    PricesSearchComponent,
     DetailsModalComponent,
     EnumToArrayPipe,
     ActiveLeaguePipe,
