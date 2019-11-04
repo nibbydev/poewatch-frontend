@@ -467,7 +467,9 @@ canvas {
 
 
 
-
+.list-group-flush .list-group-item {
+  border-top: 0 !important;
+}
 
 
 

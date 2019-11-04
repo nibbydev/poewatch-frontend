@@ -5,9 +5,7 @@
   </p>
 </div>
 
-<div *ngIf="!(apiDocService.apiDoc$ | async)" class="text-center">
-  <div class="spinner-border"></div>
-</div>
+<app-spinner [observable$]="apiDocService.apiDoc$"></app-spinner>
 
 <div *ngFor="let doc of apiDocService.apiDoc$ | async" class="col-12">
   <div class="card custom-card mb-3">

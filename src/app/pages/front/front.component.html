@@ -4,9 +4,7 @@
       <div class="card-header slim-card-edge"></div>
       <div class="card-body">
 
-        <div *ngIf="!(faqService.faq$ | async)" class="text-center">
-          <div class="spinner-border"></div>
-        </div>
+        <app-spinner [observable$]="faqService.faq$"></app-spinner>
 
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let about of (faqService.faq$ | async)?.about">

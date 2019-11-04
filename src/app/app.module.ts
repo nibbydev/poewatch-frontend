@@ -26,6 +26,7 @@ import {RadioComponent} from './shared/inputs/radio/radio.component';
 import {DropdownComponent} from './shared/inputs/dropdown/dropdown.component';
 import {InputComponent} from './shared/inputs/input/input.component';
 import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-table-loadmore/prices-table-loadmore.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-t
     DropdownComponent,
     InputComponent,
     PricesTableLoadmoreComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

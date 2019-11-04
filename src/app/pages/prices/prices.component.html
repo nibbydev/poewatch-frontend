@@ -21,9 +21,7 @@
       <hr/>
 
       <div class="card-body pt-0">
-        <div *ngIf="!(priceFilterService.getEntries() | async)" class="text-center">
-          <div class="spinner-border"></div>
-        </div>
+        <app-spinner [observable$]="priceFilterService.getEntries()"></app-spinner>
 
         <app-prices-table></app-prices-table>
       </div>
