@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GetEntry } from '../../shared/get-entry';
+import { GetEntry } from '../../shared/data/get-entry';
 
 @Component({
   selector: 'app-item',

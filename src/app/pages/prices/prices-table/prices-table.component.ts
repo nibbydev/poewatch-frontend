@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {GetEntry} from '../../../shared/get-entry';
+import {GetEntry} from '../../../shared/data/get-entry';
 import {PriceFilterService} from '../../../services/price-filter.service';
 
 @Component({

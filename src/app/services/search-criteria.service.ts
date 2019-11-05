@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {InputType, SearchCriteria} from '../shared/search-option';
-import {GetEntry} from '../shared/get-entry';
+import {InputType, SearchCriteria} from '../shared/data/search-option';
+import {GetEntry} from '../shared/data/get-entry';
 import {Observable} from 'rxjs';
-import {Category} from '../shared/category';
+import {Category} from '../shared/data/category';
 
 @Injectable({
   providedIn: 'root'
