@@ -22,11 +22,9 @@ import {ItemPriceboxComponent} from './modules/item/item-pricebox/item-pricebox.
 import {ItemSparklineComponent} from './modules/item/item-sparkline/item-sparkline.component';
 import {EnumToArrayPipe} from './pipes/enum-to-array.pipe';
 import {ActiveLeaguePipe} from './pipes/active-league.pipe';
-import {RadioComponent} from './shared/inputs/radio/radio.component';
-import {DropdownComponent} from './shared/inputs/dropdown/dropdown.component';
-import {InputComponent} from './shared/inputs/input/input.component';
 import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-table-loadmore/prices-table-loadmore.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { ReactiveInputComponent } from './shared/reactive-input/reactive-input.component';
 
 @NgModule({
   declarations: [
@@ -46,11 +44,9 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     DetailsModalComponent,
     EnumToArrayPipe,
     ActiveLeaguePipe,
-    RadioComponent,
-    DropdownComponent,
-    InputComponent,
     PricesTableLoadmoreComponent,
     SpinnerComponent,
+    ReactiveInputComponent,
   ],
   imports: [
     BrowserModule,

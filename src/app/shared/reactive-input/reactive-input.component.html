@@ -1,0 +1,24 @@
+<h4>{{criteria.title}}</h4>
+<div>
+  <label *ngIf="criteria.inputType === 'dropdown'">
+    <select class="form-control" [(ngModel)]="criteria.value" (change)="onChange()">
+      <option *ngFor="let option of criteria.options | async" [ngValue]="option.value">
+        {{option.display}}
+      </option>
+    </select>
+  </label>
+
+  <label *ngIf="criteria.inputType === 'input'" class="w-100">
+    <input class="form-control" placeholder="{{criteria.title}}" type="text" [(ngModel)]="criteria.value"
+           (keyup)="onChange()">
+  </label>
+
+  <div *ngIf="criteria.inputType === 'radio'" class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label *ngFor="let option of criteria.options | async" class="btn btn-outline-dark nowrap"
+           [class.active]="criteria.value === option.value"
+           (change)="onChange()">
+      <input type="radio" [name]="criteria.id" [(ngModel)]="criteria.value" [value]="option.value">
+      <span>{{option.display}}</span>
+    </label>
+  </div>
+</div>

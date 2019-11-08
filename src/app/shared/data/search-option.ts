@@ -5,26 +5,17 @@ export class SearchCriteria {
   id: string;
   title: string;
   enabled: boolean;
-  inputType: InputType;
+  inputType: string;
   categories: string[];
   options: Observable<SearchOption[]>;
-  value: any;
-  showItem: (e: GetEntry) => boolean;
+  value: string | null;
+  showItem?: (e: GetEntry) => boolean;
   reset: boolean;
+  // integer or null if not applicable (eg search input)
+  defaultOptionIndex: number | null;
 }
 
 export class SearchOption {
   public display: string;
-  public value: any;
-
-  constructor(display: string, value: any) {
-    this.display = display;
-    this.value = value;
-  }
-}
-
-export enum InputType {
-  RADIO,
-  INPUT,
-  DROPDOWN
+  public value: string;
 }

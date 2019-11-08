@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from '../shared/data/get-entry';
 import {Observable, ReplaySubject, Subject} from 'rxjs';
-import {SearchOption} from '../shared/data/search-option';
 import {Category, Group} from '../shared/data/category';
 import {PriceService} from './price.service';
 import {League} from '../shared/data/league';
-import {LeagueService} from './league.service';
 import {PricePaginationService} from './price-pagination.service';
 import {SearchCriteriaService} from './search-criteria.service';
 
@@ -21,11 +19,9 @@ export class PriceFilterService {
     category: undefined
   };
 
-  constructor(private leagueService: LeagueService,
-              private priceService: PriceService,
+  constructor(private priceService: PriceService,
               private paginationService: PricePaginationService,
               private searchCriteriaService: SearchCriteriaService) {
-    this.leagueService.entries$.subscribe(leagues => this.processLeagues(leagues));
   }
 
   public getEntries(): Observable<GetEntry[]> {
@@ -90,20 +86,6 @@ export class PriceFilterService {
   }
 
 
-  private processLeagues(leagues: League[]): void {
-    // find criteria that deals with leagues
-    const leagueCriteria = this.searchCriteriaService.getCriteria('league');
-    const searchOptions = leagues.map(g => new SearchOption(g.display, g.name)).reverse();
-
-    // set its options to the current groups
-    leagueCriteria.options = new Observable(o => {
-      o.next(searchOptions);
-      o.complete();
-    });
-
-    leagueCriteria.value = searchOptions[0].value;
-  }
-
   private processPriceGroups(prices?: GetEntry[]): void {
     // find all unique groups from prices as strings and map them to Group objects. categories being present is a
     // prerequisite to prices being requested. so this method will not run unless there's a category present
@@ -121,10 +103,10 @@ export class PriceFilterService {
       return;
     }
 
-    const searchOptions = groups.map(g => new SearchOption(g.display, g.name));
+    const searchOptions = groups.map(g => ({display: g.display, value: g.name}));
 
     // prepend the default value
-    searchOptions.unshift(new SearchOption('All', null));
+    searchOptions.unshift({display: 'All', value: null});
 
     // set its options to the current groups
     groupCriteria.options = new Observable(o => {

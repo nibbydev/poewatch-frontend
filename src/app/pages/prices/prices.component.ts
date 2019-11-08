@@ -5,7 +5,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
 import {SearchCriteriaService} from '../../services/search-criteria.service';
-import {InputType} from '../../shared/data/search-option';
 
 @Component({
   selector: 'app-prices',
@@ -63,7 +62,4 @@ export class PricesComponent implements OnInit {
     });
   }
 
-  public getInputTypes() {
-    return InputType;
-  }
 }

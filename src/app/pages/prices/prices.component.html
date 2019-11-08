@@ -7,15 +7,10 @@
         <div class="px-2">
           <div class='row'>
             <div *ngFor="let criteria of searchCriteriaService.getEnabledCriteria()" class="col-6 col-sm">
-
-              <app-dropdown *ngIf="criteria.inputType === getInputTypes().DROPDOWN" [criteria]="criteria"></app-dropdown>
-              <app-radio *ngIf="criteria.inputType === getInputTypes().RADIO" [criteria]="criteria"></app-radio>
-              <app-input *ngIf="criteria.inputType === getInputTypes().INPUT" [criteria]="criteria"></app-input>
-
+              <app-reactive-input [criteria]="criteria"></app-reactive-input>
             </div>
           </div>
         </div>
-
       </div>
 
       <hr/>
