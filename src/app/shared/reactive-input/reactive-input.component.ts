@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SearchCriteria} from '../data/search-option';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {PriceFilterService} from '../../services/price-filter.service';
-import {SearchCriteriaService} from '../../services/search-criteria.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SearchCriteria } from '../data/search-option';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { PriceFilterService } from '../../services/price-filter.service';
+import { SearchCriteriaService } from '../../services/search-criteria.service';
+import { RouterHelperService } from '../../services/router-helper.service';
 
 @Component({
   selector: 'app-reactive-input',
@@ -12,10 +13,10 @@ import {SearchCriteriaService} from '../../services/search-criteria.service';
 export class ReactiveInputComponent implements OnInit {
   @Input() private criteria: SearchCriteria;
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private filterService: PriceFilterService,
-              private criteriaService: SearchCriteriaService) {
+              private criteriaService: SearchCriteriaService,
+              private routerHelperService: RouterHelperService) {
   }
 
   ngOnInit() {
@@ -50,14 +51,7 @@ export class ReactiveInputComponent implements OnInit {
     const queryParams = {};
     queryParams[this.criteria.id] = val;
 
-    this.router.navigate(
-      [],
-      {
-        relativeTo: this.activatedRoute,
-        queryParams,
-        queryParamsHandling: 'merge'
-      });
-
+    this.routerHelperService.navigate(queryParams);
     this.filterService.sortEntries();
   }
 

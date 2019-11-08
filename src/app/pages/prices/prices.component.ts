@@ -5,6 +5,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
 import {SearchCriteriaService} from '../../services/search-criteria.service';
+import { RouterHelperService } from '../../services/router-helper.service';
 
 @Component({
   selector: 'app-prices',
@@ -15,10 +16,10 @@ export class PricesComponent implements OnInit {
 
   constructor(private leagueService: LeagueService,
               private categoryService: CategoryService,
-              private router: Router,
               private activatedRoute: ActivatedRoute,
               private priceFilterService: PriceFilterService,
-              private searchCriteriaService: SearchCriteriaService) {
+              private searchCriteriaService: SearchCriteriaService,
+              private routerHelperService: RouterHelperService) {
   }
 
   ngOnInit() {
@@ -44,16 +45,10 @@ export class PricesComponent implements OnInit {
 
       // use default options if there wasn't a match
       if (!matchingLeague || !matchingCategory) {
-        this.router.navigate(
-          [],
-          {
-            relativeTo: this.activatedRoute,
-            queryParams: {
-              league: (matchingLeague || defaultLeague).name,
-              category: (matchingCategory || defaultCategory).name
-            },
-            queryParamsHandling: 'merge'
-          });
+        this.routerHelperService.navigate({
+          league: (matchingLeague || defaultLeague).name,
+          category: (matchingCategory || defaultCategory).name
+        });
         return;
       }
 
