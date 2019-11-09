@@ -96,14 +96,12 @@ export class PriceFilterService {
 
     // find criteria that deals with groups
     const groupCriteria = this.searchCriteriaService.getCriteria('group');
-
-    // no need to show if there's only one group
-    if (groups.length === 1) {
-      groupCriteria.enabled = false;
-      return;
-    }
-
     const searchOptions = groups.map(g => ({display: g.display, value: g.name}));
+
+    // disable the input if there's only one group
+    if (groups.length === 1) {
+      groupCriteria.disabled = true;
+    }
 
     // prepend the default value
     searchOptions.unshift({display: 'All', value: null});

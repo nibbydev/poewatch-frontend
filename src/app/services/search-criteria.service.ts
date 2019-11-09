@@ -16,7 +16,8 @@ export class SearchCriteriaService {
       id: 'league',
       title: 'League',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: null,
@@ -38,7 +39,8 @@ export class SearchCriteriaService {
       id: 'group',
       title: 'Group',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: null,
@@ -59,7 +61,8 @@ export class SearchCriteriaService {
       id: 'search',
       title: 'Search',
       inputType: 'input',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: null,
       categories: null,
@@ -85,9 +88,10 @@ export class SearchCriteriaService {
     },
     {
       id: 'confidence',
-      title: 'Confidence',
+      title: 'Low Confidence',
       inputType: 'radio',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: null,
@@ -120,7 +124,8 @@ export class SearchCriteriaService {
       id: 'rarity',
       title: 'Rarity',
       inputType: 'radio',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['accessory', 'weapon', 'armour', 'flask'],
@@ -159,7 +164,8 @@ export class SearchCriteriaService {
       id: 'links',
       title: 'Links',
       inputType: 'radio',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['weapon', 'armour'],
@@ -198,7 +204,8 @@ export class SearchCriteriaService {
       id: 'ilvl',
       title: 'Ilvl',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['base'],
@@ -244,7 +251,8 @@ export class SearchCriteriaService {
       id: 'influence',
       title: 'Influence',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['base'],
@@ -295,7 +303,8 @@ export class SearchCriteriaService {
       id: 'corruption',
       title: 'Corruption',
       inputType: 'radio',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['gem'],
@@ -334,7 +343,8 @@ export class SearchCriteriaService {
       id: 'level',
       title: 'Level',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['gem'],
@@ -392,7 +402,8 @@ export class SearchCriteriaService {
       id: 'quality',
       title: 'Quality',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['gem'],
@@ -430,7 +441,8 @@ export class SearchCriteriaService {
       id: 'tier',
       title: 'Tier',
       inputType: 'dropdown',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['map'],
@@ -544,7 +556,8 @@ export class SearchCriteriaService {
       id: 'variant',
       title: 'Has variant',
       inputType: 'radio',
-      enabled: false,
+      visible: false,
+      disabled: false,
       value: null,
       defaultOptionIndex: 0,
       categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
@@ -584,18 +597,6 @@ export class SearchCriteriaService {
   constructor(private leagueService: LeagueService) {
   }
 
-
-  public setDefaultCriteriaOption(c: SearchCriteria): void {
-    if (!c.options || c.defaultOptionIndex === null) {
-      c.value = null;
-      return;
-    }
-
-    c.options.pipe(first()).subscribe(o => {
-      c.value = o[c.defaultOptionIndex].value;
-    });
-  }
-
   private asObservable<T>(a: T): Observable<T> {
     return new Observable(t => {
       t.next(a);
@@ -608,14 +609,29 @@ export class SearchCriteriaService {
   }
 
   public getEnabledCriteria(): SearchCriteria[] {
-    return this.criteria.filter(c => c.enabled === true);
+    return this.criteria.filter(c => c.visible === true);
   }
 
   public reset(category: Category): void {
     this.criteria.forEach(c => {
-      c.enabled = !c.categories || c.categories.includes(category.name.toLowerCase());
-      this.setDefaultCriteriaOption(c);
+      c.visible = !c.categories || c.categories.includes(category.name.toLowerCase());
+      c.disabled = false;
+
+      // reset to default options when changing category or league
+      if (c.reset) {
+        this.setDefaultCriteriaValue(c);
+      }
     });
   }
 
+  public setDefaultCriteriaValue(c: SearchCriteria): void {
+    if (!c.options || c.defaultOptionIndex === null) {
+      c.value = null;
+      return;
+    }
+
+    c.options.pipe(first()).subscribe(o => {
+      c.value = o[c.defaultOptionIndex].value;
+    });
+  }
 }
