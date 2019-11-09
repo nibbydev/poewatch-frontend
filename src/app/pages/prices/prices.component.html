@@ -3,26 +3,34 @@
 
     <div class="card">
       <div class="card-header"></div>
+
       <div class="card-body">
-        <div class="px-2">
-          <div class='row'>
-            <div *ngFor="let criteria of searchCriteriaService.getEnabledCriteria()" class="col-6 col-sm">
-              <app-reactive-input [criteria]="criteria"></app-reactive-input>
-            </div>
+        <div class='row'>
+          <div *ngFor="let criteria of searchCriteriaService.getEnabledCriteria()" class="col-6 col-sm">
+            <app-reactive-input [criteria]="criteria"></app-reactive-input>
           </div>
         </div>
       </div>
 
+      <div class="card-body py-0 text-center">
+        <app-prices-table-status></app-prices-table-status>
+      </div>
+
       <hr/>
 
-      <div class="card-body pt-0">
+      <div class="card-body py-0">
         <app-spinner [observable$]="priceFilterService.getEntries()"></app-spinner>
-
         <app-prices-table></app-prices-table>
       </div>
 
+      <div class="card-body pt-0">
+        <app-prices-table-loadmore></app-prices-table-loadmore>
+      </div>
+
+
       <div class="card-footer"></div>
     </div>
+
 
   </div>
 </div>

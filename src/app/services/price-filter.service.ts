@@ -74,15 +74,15 @@ export class PriceFilterService {
     this.entries$.next(this.filter(this.rawEntries));
   }
 
-  public filter(entries: GetEntry[]): GetEntry[] {
+  public filter(allEntries: GetEntry[]): GetEntry[] {
     // find entries visible after applying search criteria
     const enabledCriteria = this.searchCriteriaService.getEnabledCriteria();
-    const visibleEntries = entries.filter(e => {
+    const matchingEntries = allEntries.filter(e => {
       return enabledCriteria.every(c => c.showItem(e));
     });
 
     // create pages
-    return this.paginationService.page(entries, visibleEntries);
+    return this.paginationService.page(allEntries, matchingEntries);
   }
 
 

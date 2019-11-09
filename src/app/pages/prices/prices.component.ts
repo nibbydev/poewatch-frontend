@@ -25,7 +25,9 @@ export class PricesComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
-    this.router.events.subscribe((event: NavigationStart) => {
+
+    // todo: this is a bit of a hacky way to detect if the user navigated to this page again
+    this.router.events.subscribe((event: Event) => {
       if (!(event instanceof NavigationStart)) {
         return;
       }

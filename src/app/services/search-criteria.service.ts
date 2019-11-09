@@ -129,7 +129,7 @@ export class SearchCriteriaService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
-      categories: ['accessory', 'weapon', 'armour', 'flask', 'map'],
+      categories: ['accessory', 'weapon', 'armour', 'flask'],
       reset: true,
       showSpinner: true,
       options: this.asObservable([

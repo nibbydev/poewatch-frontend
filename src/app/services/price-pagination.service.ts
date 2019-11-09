@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {GetEntry} from '../shared/data/get-entry';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,8 @@ export class PricePaginationService {
   public visibleEntries = 0;
   // nr of currently total entries
   public totalEntries = 0;
+  // nr of items that match the search
+  public matchingEntries = 0;
 
   constructor() {
   }
@@ -30,16 +33,17 @@ export class PricePaginationService {
     return itemCount > this.pageSize * this.visiblePages;
   }
 
-  public page<T>(allEntries: T[], entries: T[]): T[] {
+  public page(allEntries: GetEntry[], matchingEntries: GetEntry[]): GetEntry[] {
+    this.matchingEntries = matchingEntries.length;
     this.totalEntries = allEntries.length;
 
-    entries = this.isPaged(entries.length)
-      ? entries.slice(0, this.pageSize * this.visiblePages)
-      : entries;
+    const pagedEntries = this.isPaged(matchingEntries.length)
+      ? matchingEntries.slice(0, this.pageSize * this.visiblePages)
+      : matchingEntries;
 
     // save nr of visible entries
-    this.visibleEntries = entries.length;
-    return entries;
+    this.visibleEntries = pagedEntries.length;
+    return pagedEntries;
   }
 
   public showButton(): boolean {

@@ -23,8 +23,9 @@ import {ItemSparklineComponent} from './modules/item/item-sparkline/item-sparkli
 import {EnumToArrayPipe} from './pipes/enum-to-array.pipe';
 import {ActiveLeaguePipe} from './pipes/active-league.pipe';
 import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-table-loadmore/prices-table-loadmore.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { ReactiveInputComponent } from './shared/reactive-input/reactive-input.component';
+import {SpinnerComponent} from './shared/spinner/spinner.component';
+import {ReactiveInputComponent} from './shared/reactive-input/reactive-input.component';
+import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-table-status/prices-table-status.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ReactiveInputComponent } from './shared/reactive-input/reactive-input.c
     PricesTableLoadmoreComponent,
     SpinnerComponent,
     ReactiveInputComponent,
+    PricesTableStatusComponent,
   ],
   imports: [
     BrowserModule,
