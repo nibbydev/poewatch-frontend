@@ -27,7 +27,7 @@ export class ReactiveInputComponent implements OnInit {
       this.criteria.value = this.activatedRoute.snapshot.queryParamMap.get(this.criteria.id);
     }
 
-    this.criteriaService.setDefaultCriteriaOption(this.criteria);
+    // this.criteriaService.setDefaultCriteriaOption(this.criteria);
   }
 
   private onQueryChange(params: Params): void {

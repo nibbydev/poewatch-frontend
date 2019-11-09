@@ -13,6 +13,7 @@ export class SearchCriteria {
   reset: boolean;
   // integer or null if not applicable (eg search input)
   defaultOptionIndex: number | null;
+  showSpinner: boolean;
 }
 
 export class SearchOption {

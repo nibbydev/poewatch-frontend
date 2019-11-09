@@ -1,6 +1,10 @@
 <h4>{{criteria.title}}</h4>
-<div>
-  <label *ngIf="criteria.inputType === 'dropdown'">
+
+<app-spinner *ngIf="criteria.showSpinner" [observable$]="criteria.options" [isSmall]="true"></app-spinner>
+
+<div *ngIf="(criteria.options | async) || !criteria.showSpinner">
+
+  <label *ngIf="criteria.inputType === 'dropdown'" class="w-100">
     <select class="form-control" [(ngModel)]="criteria.value" (change)="onChange()">
       <option *ngFor="let option of criteria.options | async" [ngValue]="option.value">
         {{option.display}}
@@ -13,7 +17,7 @@
            (keyup)="onChange()">
   </label>
 
-  <div *ngIf="criteria.inputType === 'radio'" class="btn-group btn-group-toggle" data-toggle="buttons">
+  <div *ngIf="criteria.inputType === 'radio'" class="btn-group btn-group-toggle w-100" data-toggle="buttons">
     <label *ngFor="let option of criteria.options | async" class="btn btn-outline-dark nowrap"
            [class.active]="criteria.value === option.value"
            (change)="onChange()">
@@ -21,4 +25,5 @@
       <span>{{option.display}}</span>
     </label>
   </div>
+
 </div>

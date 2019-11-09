@@ -21,6 +21,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: null,
       reset: false,
+      showSpinner: true,
       options: new Observable(t => {
         this.leagueService.entries$.pipe(first()).subscribe(leagues => {
           const searchOptions: SearchOption[] = leagues.map(g => ({display: g.display, value: g.name})).reverse();
@@ -42,6 +43,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: null,
       reset: true,
+      showSpinner: true,
       options: null,
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -62,6 +64,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: null,
       categories: null,
       reset: true,
+      showSpinner: false,
       options: null,
       showItem(e: GetEntry) {
         if (!this.value) {
@@ -89,6 +92,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: null,
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'Hide',
@@ -121,6 +125,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['accessory', 'weapon', 'armour', 'flask'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -159,6 +164,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['weapon', 'armour'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'No links',
@@ -197,6 +203,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['base'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -242,6 +249,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['base'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -292,6 +300,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['gem'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'Either',
@@ -330,6 +339,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['gem'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -387,6 +397,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['gem'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -424,6 +435,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['map'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'All',
@@ -537,6 +549,7 @@ export class SearchCriteriaService {
       defaultOptionIndex: 0,
       categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
       reset: true,
+      showSpinner: true,
       options: this.asObservable([
         {
           display: 'Either',
@@ -574,6 +587,7 @@ export class SearchCriteriaService {
 
   public setDefaultCriteriaOption(c: SearchCriteria): void {
     if (!c.options || c.defaultOptionIndex === null) {
+      c.value = null;
       return;
     }
 
@@ -600,9 +614,7 @@ export class SearchCriteriaService {
   public reset(category: Category): void {
     this.criteria.forEach(c => {
       c.enabled = !c.categories || c.categories.includes(category.name.toLowerCase());
-      if (c.reset) {
-        c.value = null;
-      }
+      this.setDefaultCriteriaOption(c);
     });
   }
 

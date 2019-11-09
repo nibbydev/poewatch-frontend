@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class SpinnerComponent implements OnInit {
   @Input() observable$: Observable<any>;
+  @Input() private isSmall: boolean;
 
   constructor() { }
 
