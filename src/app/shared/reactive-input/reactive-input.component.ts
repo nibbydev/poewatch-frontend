@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SearchCriteria } from '../data/search-option';
+import { SearchCriteria } from '../data/search-criteria';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PriceFilterService } from '../../services/price-filter.service';
 import { SearchCriteriaService } from '../../services/search-criteria.service';

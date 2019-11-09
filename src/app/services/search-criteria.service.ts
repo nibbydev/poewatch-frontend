@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SearchCriteria, SearchOption} from '../shared/data/search-option';
+import {SearchCriteria, SearchOption} from '../shared/data/search-criteria';
 import {GetEntry} from '../shared/data/get-entry';
 import {Observable} from 'rxjs';
 import {Category} from '../shared/data/category';
