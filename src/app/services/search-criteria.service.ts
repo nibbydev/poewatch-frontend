@@ -612,12 +612,19 @@ export class SearchCriteriaService {
     return this.criteria.filter(c => c.visible === true);
   }
 
-  public reset(category: Category): void {
+  public resetAll(): void {
+    this.criteria.forEach(c => {
+      c.disabled = false;
+      c.visible = false;
+      this.setDefaultCriteriaValue(c);
+    });
+  }
+
+  public setState(category: Category | null): void {
     this.criteria.forEach(c => {
       c.visible = !c.categories || c.categories.includes(category.name.toLowerCase());
       c.disabled = false;
 
-      // reset to default options when changing category or league
       if (c.reset) {
         this.setDefaultCriteriaValue(c);
       }

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {LeagueService} from '../../services/league.service';
 import {CategoryService} from '../../services/category.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, Event, NavigationStart, Params, Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
 import {SearchCriteriaService} from '../../services/search-criteria.service';
-import { RouterHelperService } from '../../services/router-helper.service';
+import {RouterHelperService} from '../../services/router-helper.service';
 
 @Component({
   selector: 'app-prices',
@@ -19,11 +19,22 @@ export class PricesComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private priceFilterService: PriceFilterService,
               private searchCriteriaService: SearchCriteriaService,
-              private routerHelperService: RouterHelperService) {
+              private routerHelperService: RouterHelperService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
+    this.router.events.subscribe((event: NavigationStart) => {
+      if (!(event instanceof NavigationStart)) {
+        return;
+      }
+      if (event.url !== '/prices') {
+        return;
+      }
+
+      this.searchCriteriaService.resetAll();
+    });
   }
 
   private parseQueryParams(params: Params): void {
