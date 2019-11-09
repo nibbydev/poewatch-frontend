@@ -47,6 +47,11 @@ export class PricePaginationService {
   }
 
   public showButton(): boolean {
-    return this.visibleEntries < this.totalEntries;
+    return this.nextPageSize() > 0;
+  }
+
+  public nextPageSize(): number {
+    const nextPageSize = this.matchingEntries - this.visiblePages * this.pageSize;
+    return nextPageSize <= 0 ? 0 : (nextPageSize >= this.pageSize ? this.pageSize : nextPageSize);
   }
 }

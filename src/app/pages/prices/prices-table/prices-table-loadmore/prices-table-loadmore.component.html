@@ -1,4 +1,4 @@
 <button *ngIf="paginationService.showButton()" type="button" class="btn btn-block btn-outline-dark mt-2"
         (click)="priceFilterService.loadNextPage()">
-  Load {{paginationService.pageSize}} more
+  Load {{paginationService.nextPageSize()}} more
 </button>
