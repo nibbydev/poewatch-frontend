@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LeagueService} from '../../services/league.service';
 import {CategoryService} from '../../services/category.service';
-import {ActivatedRoute, Event, NavigationStart, Params, Router} from '@angular/router';
-import {forkJoin} from 'rxjs';
+import {ActivatedRoute, Params} from '@angular/router';
+import {forkJoin, Subscription} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
 import {SearchCriteriaService} from '../../services/search-criteria.service';
 import {RouterHelperService} from '../../services/router-helper.service';
@@ -12,31 +12,24 @@ import {RouterHelperService} from '../../services/router-helper.service';
   templateUrl: './prices.component.html',
   styleUrls: ['./prices.component.css']
 })
-export class PricesComponent implements OnInit {
+export class PricesComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
 
   constructor(private leagueService: LeagueService,
               private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
               private priceFilterService: PriceFilterService,
               private searchCriteriaService: SearchCriteriaService,
-              private routerHelperService: RouterHelperService,
-              private router: Router) {
+              private routerHelperService: RouterHelperService) {
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
+    this.searchCriteriaService.resetAll();
+    this.subscription = this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
+  }
 
-    // todo: this is a bit of a hacky way to detect if the user navigated to this page again
-    this.router.events.subscribe((event: Event) => {
-      if (!(event instanceof NavigationStart)) {
-        return;
-      }
-      if (event.url !== '/prices') {
-        return;
-      }
-
-      this.searchCriteriaService.resetAll();
-    });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   private parseQueryParams(params: Params): void {

@@ -613,6 +613,9 @@ export class SearchCriteriaService {
     return this.criteria.filter(c => c.visible === true);
   }
 
+  /**
+   * Reset all criteria to default values
+   */
   public resetAll(): void {
     this.criteria.forEach(c => {
       c.disabled = false;
