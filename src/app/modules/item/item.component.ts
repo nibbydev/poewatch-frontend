@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { GetEntry } from '../../shared/data/get-entry';
+import {Component, Input, OnInit} from '@angular/core';
+import {GetEntry} from '../../shared/data/get-entry';
+import {Rarity} from '../../shared/data/rarity';
 
 @Component({
   selector: 'app-item',
@@ -34,20 +35,20 @@ export class ItemComponent implements OnInit {
   private getPrimaryClasses(): any {
     return {
       'cursor-pointer': this.options.clickable,
-      'item-unique': this.item.frame === 3,
-      'item-foil': this.item.frame === 9,
-      'item-prophecy': this.item.frame === 8,
-      'item-gem': this.item.frame === 4,
-      'item-currency': this.item.frame === 5,
-      'item-shaper': this.item.category === 'base' && this.item.baseIsShaper,
-      'item-elder': this.item.category === 'base' && this.item.baseIsElder,
+      'item-unique': this.item.frame === Rarity.UNIQUE,
+      'item-foil': this.item.frame === Rarity.RELIC,
+      'item-prophecy': this.item.frame === Rarity.PROPHECY,
+      'item-gem': this.item.frame === Rarity.GEM,
+      'item-currency': this.item.frame === Rarity.CURRENCY,
+      'item-shaper': this.item.baseIsShaper,
+      'item-elder': this.item.baseIsElder,
     };
   }
 
   private getSecondaryClasses() {
     return {
-      'item-unique-secondary': this.item.frame === 3,
-      'item-foil-secondary': this.item.frame === 9
+      'item-unique-secondary': this.item.frame === Rarity.UNIQUE,
+      'item-foil-secondary': this.item.frame === Rarity.RELIC
     };
   }
 

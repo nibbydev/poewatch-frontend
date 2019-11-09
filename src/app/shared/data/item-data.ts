@@ -1,10 +1,12 @@
+import {Rarity} from './rarity';
+
 export class ItemData {
   id: number;
   name: string;
   type?: string;
   category: string;
   group: string;
-  frame: number;
+  frame: Rarity;
   mapSeries?: number;
   mapTier?: number;
   baseIsShaper?: boolean;

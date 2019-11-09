@@ -6,6 +6,7 @@ import {Category} from '../shared/data/category';
 import {LeagueService} from './league.service';
 import {League} from '../shared/data/league';
 import {first} from 'rxjs/operators';
+import {Rarity} from '../shared/data/rarity';
 
 @Injectable({
   providedIn: 'root'
@@ -128,7 +129,7 @@ export class SearchCriteriaService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
-      categories: ['accessory', 'weapon', 'armour', 'flask'],
+      categories: ['accessory', 'weapon', 'armour', 'flask', 'map'],
       reset: true,
       showSpinner: true,
       options: this.asObservable([
@@ -151,9 +152,9 @@ export class SearchCriteriaService {
           case 'all':
             return true;
           case 'unique':
-            return e.frame === 3;
+            return e.frame === Rarity.UNIQUE;
           case 'relic':
-            return e.frame === 9;
+            return e.frame === Rarity.RELIC;
           default:
             console.log('Invalid option', this, e);
             return true;
