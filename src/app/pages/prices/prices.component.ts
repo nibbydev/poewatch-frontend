@@ -24,6 +24,7 @@ export class PricesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.priceFilterService.resetParams();
     this.searchCriteriaService.resetAll();
     this.subscription = this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
   }

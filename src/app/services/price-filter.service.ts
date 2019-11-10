@@ -28,10 +28,12 @@ export class PriceFilterService {
     return this.entries$;
   }
 
-  public onQueryParamChange(league: League, category: Category): void {
-    // hide certain search options depending on category
-    this.searchCriteriaService.setState(category);
+  public resetParams(): void {
+    this.params.league = undefined;
+    this.params.category = undefined;
+  }
 
+  public onQueryParamChange(league: League, category: Category): void {
     // don't request prices if params haven't changed
     if (this.params.league === league && this.params.category === category) {
       return;
@@ -40,6 +42,9 @@ export class PriceFilterService {
     // save current params
     this.params.league = league;
     this.params.category = category;
+
+    // hide certain search options depending on category
+    this.searchCriteriaService.setState(category);
 
     // send null to force loading state on prices table
     this.rawEntries = null;
