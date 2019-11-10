@@ -6,6 +6,9 @@ import {forkJoin, Subscription} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
 import {SearchCriteriaService} from '../../services/search-criteria.service';
 import {RouterHelperService} from '../../services/router-helper.service';
+import {League} from '../../shared/data/league';
+import {Category} from '../../shared/data/category';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-prices',
@@ -14,6 +17,10 @@ import {RouterHelperService} from '../../services/router-helper.service';
 })
 export class PricesComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
+  private readonly params: { league: League, category: Category } = {
+    league: undefined,
+    category: undefined
+  };
 
   constructor(private leagueService: LeagueService,
               private categoryService: CategoryService,
@@ -24,7 +31,7 @@ export class PricesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.priceFilterService.resetParams();
+    this.resetParams();
     this.searchCriteriaService.resetAll();
     this.subscription = this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
   }
@@ -33,12 +40,17 @@ export class PricesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  public resetParams(): void {
+    this.params.league = undefined;
+    this.params.category = undefined;
+  }
+
   private parseQueryParams(params: Params): void {
     const queryLeague = params.league ? params.league.trim() : '';
     const queryCategory = params.category ? params.category.trim() : '';
 
     // get leagues and categories
-    forkJoin([this.leagueService.entries$, this.categoryService.entries$]).subscribe(result => {
+    forkJoin([this.leagueService.entries$, this.categoryService.entries$]).pipe(first()).subscribe(result => {
       const leagues = result[0];
       const categories = result[1];
 
@@ -58,6 +70,15 @@ export class PricesComponent implements OnInit, OnDestroy {
         });
         return;
       }
+
+      // don't request prices if params haven't changed
+      if (this.params.league === matchingLeague && this.params.category === matchingCategory) {
+        return;
+      }
+
+      // save current params
+      this.params.league = matchingLeague;
+      this.params.category = matchingCategory;
 
       // todo: navigate to match if capitalization does not match
       this.priceFilterService.onQueryParamChange(matchingLeague, matchingCategory);

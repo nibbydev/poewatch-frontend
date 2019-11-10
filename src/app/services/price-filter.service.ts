@@ -14,11 +14,6 @@ export class PriceFilterService {
   private readonly entries$: Subject<GetEntry[]> = new ReplaySubject();
   private rawEntries: GetEntry[] = null;
 
-  private readonly params: { league: League, category: Category } = {
-    league: undefined,
-    category: undefined
-  };
-
   constructor(private priceService: PriceService,
               private paginationService: PricePaginationService,
               private searchCriteriaService: SearchCriteriaService) {
@@ -28,21 +23,7 @@ export class PriceFilterService {
     return this.entries$;
   }
 
-  public resetParams(): void {
-    this.params.league = undefined;
-    this.params.category = undefined;
-  }
-
   public onQueryParamChange(league: League, category: Category): void {
-    // don't request prices if params haven't changed
-    if (this.params.league === league && this.params.category === category) {
-      return;
-    }
-
-    // save current params
-    this.params.league = league;
-    this.params.category = category;
-
     // hide certain search options depending on category
     this.searchCriteriaService.setState(category);
 
@@ -56,7 +37,7 @@ export class PriceFilterService {
       // save the current entries
       this.rawEntries = entries;
       // extract groups from the entries and update criteria
-      this.processPriceGroups(this.rawEntries);
+      this.processPriceGroups(category, this.rawEntries);
       // filter the entries including pagination and send them to subscribers
       this.entries$.next(this.filter(this.rawEntries));
     });
@@ -91,13 +72,13 @@ export class PriceFilterService {
   }
 
 
-  private processPriceGroups(prices?: GetEntry[]): void {
+  private processPriceGroups(category: Category, prices: GetEntry[]): void {
     // find all unique groups from prices as strings and map them to Group objects. categories being present is a
     // prerequisite to prices being requested. so this method will not run unless there's a category present
     const groups: Group[] = prices
       .map(p => p.group)
       .filter((g, i, s) => s.indexOf(g) === i)
-      .map(gs => this.params.category.groups.find(g => g.name.toLowerCase() === gs));
+      .map(gs => category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
     const groupCriteria = this.searchCriteriaService.getCriteria('group');
