@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GetEntry} from '../../shared/data/get-entry';
 import {Rarity} from '../../shared/data/rarity';
+import {ItemData} from '../../shared/data/item-data';
 
 @Component({
   selector: 'app-item',
@@ -8,7 +8,7 @@ import {Rarity} from '../../shared/data/rarity';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
-  @Input() item: GetEntry;
+  @Input() item: ItemData;
   @Input() options = {
     clickable: false,
     showImg: true,

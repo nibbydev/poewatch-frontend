@@ -26,6 +26,7 @@ import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-t
 import {SpinnerComponent} from './shared/spinner/spinner.component';
 import {ReactiveInputComponent} from './shared/reactive-input/reactive-input.component';
 import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-table-status/prices-table-status.component';
+import {ItemPageComponent} from './pages/item/item-page.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-tab
     SpinnerComponent,
     ReactiveInputComponent,
     PricesTableStatusComponent,
+    ItemPageComponent,
   ],
   imports: [
     BrowserModule,

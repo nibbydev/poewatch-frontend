@@ -4,7 +4,7 @@
   </div>
 
   <div class="custom-text-gray-lo">
-    <span [ngClass]="getPrimaryClasses()">
+    <span [ngClass]="getPrimaryClasses()" [queryParams]="{id: item.id}" [routerLink]="['/item']">
       <span>{{getName()}}</span>
       <span *ngIf="item.type" [ngClass]="getSecondaryClasses()">, {{item.type}}</span>
     </span>

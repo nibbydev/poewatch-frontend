@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { FrontComponent } from './pages/front/front.component';
-import { AboutComponent } from './pages/about/about.component';
-import { PricesComponent } from './pages/prices/prices.component';
-import { ApiComponent } from './pages/api/api.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {FrontComponent} from './pages/front/front.component';
+import {AboutComponent} from './pages/about/about.component';
+import {PricesComponent} from './pages/prices/prices.component';
+import {ApiComponent} from './pages/api/api.component';
+import {ItemPageComponent} from './pages/item/item-page.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,16 @@ const routes: Routes = [
       isNew: true,
       enabled: true,
       comment: 'Info about the site'
+    },
+  }, {
+    path: 'item',
+    component: ItemPageComponent,
+    data: {
+      pageTitle: 'Item details',
+      navTitle: null,
+      isNew: false,
+      enabled: false,
+      comment: null
     },
   },
 ];

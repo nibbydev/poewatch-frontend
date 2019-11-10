@@ -10,7 +10,7 @@ import {PriceFilterService} from '../../../services/price-filter.service';
 export class PricesTableComponent implements OnInit {
   public entries: GetEntry[];
   private readonly itemNameOptions = {
-    clickable: false,
+    clickable: true,
     showImg: true,
     imgSize: 'sm'
   };
