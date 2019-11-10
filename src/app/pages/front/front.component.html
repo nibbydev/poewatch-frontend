@@ -4,7 +4,7 @@
       <div class="card-header slim-card-edge"></div>
       <div class="card-body">
 
-        <app-spinner [observable$]="faqService.faq$"></app-spinner>
+        <app-spinner [ifValue]="faqService.faq$"></app-spinner>
 
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let about of (faqService.faq$ | async)?.about">

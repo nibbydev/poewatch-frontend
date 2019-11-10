@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./spinner.component.css']
 })
 export class SpinnerComponent implements OnInit {
-  @Input() observable$: Observable<any>;
+  @Input() private ifValue: any;
   @Input() private isSmall: boolean;
 
   constructor() { }
@@ -15,4 +15,7 @@ export class SpinnerComponent implements OnInit {
   ngOnInit() {
   }
 
+  private isObservable(): boolean {
+    return this.ifValue instanceof Observable;
+  }
 }

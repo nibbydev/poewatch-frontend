@@ -1,4 +1,4 @@
-<div *ngIf="!(observable$ | async)" class="row">
+<div *ngIf="isObservable() ? !(ifValue | async) : !ifValue" class="row">
   <div class="col-12 d-flex justify-content-center" [ngClass]="{'my-5': !isSmall, 'my-2': isSmall}">
     <div class="spinner-border" [class.spinner-border-sm]="isSmall"></div>
   </div>

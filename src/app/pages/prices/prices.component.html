@@ -19,7 +19,7 @@
       <hr/>
 
       <div class="card-body py-0">
-        <app-spinner [observable$]="priceFilterService.getEntries()"></app-spinner>
+        <app-spinner [ifValue]="priceFilterService.getEntries()"></app-spinner>
         <app-prices-table></app-prices-table>
       </div>
 
