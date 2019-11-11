@@ -27,6 +27,7 @@ import {SpinnerComponent} from './shared/spinner/spinner.component';
 import {ReactiveInputComponent} from './shared/reactive-input/reactive-input.component';
 import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-table-status/prices-table-status.component';
 import {ItemPageComponent} from './pages/item/item-page.component';
+import {ItemFormatPipe} from './pipes/item-format.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {ItemPageComponent} from './pages/item/item-page.component';
     ReactiveInputComponent,
     PricesTableStatusComponent,
     ItemPageComponent,
+    ItemFormatPipe,
   ],
   imports: [
     BrowserModule,

@@ -9,30 +9,23 @@ import {ItemData} from '../../shared/data/item-data';
 })
 export class ItemComponent implements OnInit {
   @Input() item: ItemData;
-  @Input() options = {
-    clickable: false,
-    showImg: true,
-    imgSize: 'sm'
+  @Input() options: {
+    clickable: boolean,
+    showImg: boolean,
+    imgSize: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   };
 
   constructor() {
   }
 
   ngOnInit() {
-    this.options.clickable = this.options.clickable || false;
-    this.options.showImg = this.options.showImg || true;
-    this.options.imgSize = this.options.imgSize || 'sm';
-
-    if (!['xs', 'sm', 'md', 'lg', 'xl'].includes(this.options.imgSize)) {
-      throw new Error(`Unknown size provided. Use one of Bootstrap' constraints`);
-    }
   }
 
   private getImgSizeClass(): string {
     return 'img-container-' + this.options.imgSize;
   }
 
-  private getPrimaryClasses(): any {
+  private getPrimaryClasses(): {} {
     return {
       'cursor-pointer': this.options.clickable,
       'item-unique': this.item.frame === Rarity.UNIQUE,
@@ -52,98 +45,32 @@ export class ItemComponent implements OnInit {
     };
   }
 
-  private getName(): string {
-    let name = this.item.name;
-
-    // If item is enchantment, insert enchant values for display purposes
-    if (this.item.category === 'enchantment') {
-      // Min roll
-      if (name.includes('#') && this.item.enchantMin !== null) {
-        name = name.replace('#', this.item.enchantMin.toString());
-      }
-
-      // Max roll
-      if (name.includes('#') && this.item.enchantMax !== null) {
-        name = name.replace('#', this.item.enchantMax.toString());
-      }
-    }
-
-    return name.trim();
-  }
-
   private hasProperties(): boolean {
-    return !!(this.item.variation
-      || this.item.category === 'map' && this.item.mapTier
-      || this.item.category === 'base' && (this.item.baseIsElder || this.item.baseIsElder)
-      || this.item.baseItemLevel
-      || this.item.linkCount
-      || this.item.category === 'gem');
-  }
-
-  /**
-   * Creates formatted properties for the item
-   */
-  private getProperties(): string {
-    // Begin builder
-    let builder = '';
-
     if (this.item.variation) {
-      builder += this.item.variation + ', ';
+      return true;
     }
 
-    if (this.item.category === 'map' && this.item.mapTier) {
-      builder += 'tier ' + this.item.mapTier + ', ';
+    if (this.item.mapTier) {
+      return true;
     }
 
-    if (this.item.category === 'base') {
-      if (this.item.baseIsShaper) {
-        builder += 'shaper, ';
-      } else if (this.item.baseIsElder) {
-        builder += 'elder, ';
-      }
+    if (this.item.baseIsElder || this.item.baseIsElder) {
+      return true;
     }
 
     if (this.item.baseItemLevel) {
-      builder += 'iLvl ' + this.item.baseItemLevel + ', ';
+      return true;
     }
 
     if (this.item.linkCount) {
-      builder += 'links ' + this.item.linkCount + ', ';
+      return true;
     }
 
-    if (this.item.category === 'gem') {
-      builder += 'level ' + this.item.gemLevel + ', ';
-      builder += 'quality ' + this.item.gemQuality + ', ';
-
-      if (this.item.gemIsCorrupted) {
-        builder += 'corrupted, ';
-      }
+    if (this.item.frame === Rarity.GEM) {
+      return true;
     }
 
-    // If the item had properties, remove trailing comma+space and wrap in brackets
-    if (builder) {
-      builder = '(' + builder.substring(0, builder.length - 2) + ')';
-    }
-
-    return builder;
+    return false;
   }
 
-  /**
-   * Formats the icon
-   */
-  private getIcon(): string {
-    // Use TLS for icons for that sweet, sweet secure site badge
-    let icon = this.item.icon.replace('http://', 'https://');
-
-    // If item is base
-    if (this.item.category === 'base') {
-      if (this.item.baseIsShaper) {
-        icon += '&shaper=1';
-      } else if (this.item.baseIsElder) {
-        icon += '&elder=1';
-      }
-    }
-
-    return icon;
-  }
 }

@@ -15,7 +15,7 @@
   <tbody>
   <tr *ngFor="let item of entries">
     <td class="d-flex align-items-center">
-      <app-item [item]="item" [options]="itemNameOptions"></app-item>
+      <app-item [item]="item" [options]="{clickable: true, showImg: true, imgSize: 'sm'}"></app-item>
     </td>
     <td class="d-none d-md-table-cell">
       <app-item-sparkline [history]="item.history" [options]="sparkLineOptions"></app-item-sparkline>
