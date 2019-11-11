@@ -6,6 +6,7 @@ import {PriceService} from './price.service';
 import {League} from '../shared/data/league';
 import {PricePaginationService} from './price-pagination.service';
 import {SearchCriteriaService} from './search-criteria.service';
+import { SearchOption } from '../shared/data/search-criteria';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,10 @@ export class PriceFilterService {
     this.rawEntries = null;
     this.entries$.next(null);
     this.paginationService.resetPagination();
+
+    // send null to force loading state on group input
+    const groupCriteria = this.searchCriteriaService.getCriteria('group');
+    (groupCriteria.options as Subject<SearchOption[]>).next(null);
 
     // request new prices
     this.priceService.makeRequest(league, category).subscribe(entries => {
@@ -93,10 +98,7 @@ export class PriceFilterService {
     searchOptions.unshift({display: 'All', value: null});
 
     // set its options to the current groups
-    groupCriteria.options = new Observable(o => {
-      o.next(searchOptions);
-      o.complete();
-    });
+    (groupCriteria.options as Subject<SearchOption[]>).next(searchOptions);
   }
 
 }

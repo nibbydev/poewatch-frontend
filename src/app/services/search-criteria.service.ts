@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {SearchCriteria, SearchOption} from '../shared/data/search-criteria';
-import {GetEntry} from '../shared/data/get-entry';
-import {Observable} from 'rxjs';
-import {Category} from '../shared/data/category';
-import {LeagueService} from './league.service';
-import {League} from '../shared/data/league';
-import {first} from 'rxjs/operators';
-import {Rarity} from '../shared/data/rarity';
+import { Injectable } from '@angular/core';
+import { SearchCriteria, SearchOption } from '../shared/data/search-criteria';
+import { GetEntry } from '../shared/data/get-entry';
+import { Observable, ReplaySubject } from 'rxjs';
+import { Category } from '../shared/data/category';
+import { LeagueService } from './league.service';
+import { League } from '../shared/data/league';
+import { first } from 'rxjs/operators';
+import { Rarity } from '../shared/data/rarity';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class SearchCriteriaService {
       categories: null,
       reset: true,
       showSpinner: true,
-      options: null,
+      options: new ReplaySubject<SearchOption[]>(),
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -598,13 +598,6 @@ export class SearchCriteriaService {
   constructor(private leagueService: LeagueService) {
   }
 
-  private asObservable<T>(a: T): Observable<T> {
-    return new Observable(t => {
-      t.next(a);
-      t.complete();
-    });
-  }
-
   public getCriteria(id: string): SearchCriteria {
     return this.criteria.find(c => c.id === id);
   }
@@ -642,7 +635,15 @@ export class SearchCriteriaService {
     }
 
     c.options.pipe(first()).subscribe(o => {
-      c.value = o[c.defaultOptionIndex].value;
+      // group sends null to force loading state on input
+      c.value = o ? o[c.defaultOptionIndex].value : null;
+    });
+  }
+
+  private asObservable<T>(a: T): Observable<T> {
+    return new Observable(t => {
+      t.next(a);
+      t.complete();
     });
   }
 }
