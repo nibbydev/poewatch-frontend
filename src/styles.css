@@ -11,6 +11,10 @@ html {
   min-height: 100%;
 }
 
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
 body {
   background-color: #181818;
   color: #ddd;
