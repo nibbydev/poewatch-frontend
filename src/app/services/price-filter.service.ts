@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {GetEntry} from '../shared/data/get-entry';
-import {Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Category, Group} from '../shared/data/category';
 import {PriceService} from './price.service';
 import {League} from '../shared/data/league';
 import {PricePaginationService} from './price-pagination.service';
 import {SearchCriteriaService} from './search-criteria.service';
-import { SearchOption } from '../shared/data/search-criteria';
+import {SearchOption} from '../shared/data/search-criteria';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PriceFilterService {
-  private readonly entries$: Subject<GetEntry[]> = new ReplaySubject();
+  private readonly entries$: BehaviorSubject<GetEntry[]> = new BehaviorSubject(null);
   private rawEntries: GetEntry[] = null;
 
   constructor(private priceService: PriceService,

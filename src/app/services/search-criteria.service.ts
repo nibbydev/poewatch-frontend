@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { SearchCriteria, SearchOption } from '../shared/data/search-criteria';
-import { GetEntry } from '../shared/data/get-entry';
-import { Observable, ReplaySubject } from 'rxjs';
-import { Category } from '../shared/data/category';
-import { LeagueService } from './league.service';
-import { League } from '../shared/data/league';
-import { first } from 'rxjs/operators';
-import { Rarity } from '../shared/data/rarity';
+import {Injectable} from '@angular/core';
+import {SearchCriteria, SearchOption} from '../shared/data/search-criteria';
+import {GetEntry} from '../shared/data/get-entry';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Category} from '../shared/data/category';
+import {LeagueService} from './league.service';
+import {League} from '../shared/data/league';
+import {first} from 'rxjs/operators';
+import {Rarity} from '../shared/data/rarity';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class SearchCriteriaService {
       categories: null,
       reset: true,
       showSpinner: true,
-      options: new ReplaySubject<SearchOption[]>(),
+      options: new BehaviorSubject<SearchOption[]>(null),
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:

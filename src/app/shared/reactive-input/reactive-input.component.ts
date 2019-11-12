@@ -36,18 +36,20 @@ export class ReactiveInputComponent implements OnInit {
     }
 
     // if value is equal to default option, unset the query param
-    if (this.criteria.defaultOptionIndex !== null && this.criteria.options !== null) {
-      this.handleDefaultOption(queryParams);
+    if (this.criteria.defaultOptionIndex === null || this.criteria.options === null) {
+      // todo: calls twice for league. bad for performance?
+      this.routerHelperService.navigate(queryParams);
+      this.filterService.sortEntries();
       return;
     }
 
-    // todo: calls twice for league. bad for performance?
-    this.routerHelperService.navigate(queryParams);
-    this.filterService.sortEntries();
-  }
-
-  private handleDefaultOption(queryParams: {}): void {
+    // get options
     this.criteria.options.pipe(first()).subscribe(o => {
+      // group sends null to force loading state on input
+      if (o === null) {
+        return;
+      }
+
       const defaultOption = o[this.criteria.defaultOptionIndex];
       if (defaultOption && queryParams[this.criteria.id] === defaultOption.value) {
         queryParams[this.criteria.id] = undefined;
