@@ -4,8 +4,11 @@
       <div class="card-header p-2">
 
         <app-spinner [ifValue]="item"></app-spinner>
-        <app-item *ngIf="item" [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></app-item>
 
+        <div class="d-flex justify-content-between align-items-center">
+          <app-item *ngIf="item" [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></app-item>
+          <app-reactive-input [criteria]="criteria"></app-reactive-input>
+        </div>
       </div>
 
       <div class="card-body">
