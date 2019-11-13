@@ -1,0 +1,8 @@
+td {
+  border: 0;
+  vertical-align: middle;
+  padding: 2px 2px 2px 4px;
+  background-color: transparent !important;
+  margin-bottom: 0;
+  color: #ddd;
+}

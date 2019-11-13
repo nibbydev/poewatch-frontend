@@ -14,12 +14,13 @@ export class SearchCriteria {
   categories: string[];
   options: Observable<SearchOption[]>;
   value: string | null;
-  showItem?: (e: GetEntry) => boolean;
+  showItem: (e: GetEntry) => boolean | null;
   // reset to default options when changing category or league
   reset: boolean;
   // integer or null if not applicable (eg search input)
   defaultOptionIndex: number | null;
   showSpinner: boolean;
+  onChange: () => void | null;
 }
 
 export class SearchOption {

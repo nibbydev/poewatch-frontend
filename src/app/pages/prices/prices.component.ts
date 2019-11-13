@@ -4,7 +4,6 @@ import {CategoryService} from '../../services/category.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {forkJoin, Subscription} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
-import {SearchCriteriaService} from '../../services/search-criteria.service';
 import {RouterHelperService} from '../../services/router-helper.service';
 import {League} from '../../shared/data/league';
 import {Category} from '../../shared/data/category';
@@ -26,13 +25,12 @@ export class PricesComponent implements OnInit, OnDestroy {
               private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
               private priceFilterService: PriceFilterService,
-              private searchCriteriaService: SearchCriteriaService,
               private routerHelperService: RouterHelperService) {
   }
 
   ngOnInit() {
     this.resetParams();
-    this.searchCriteriaService.resetAll();
+    this.priceFilterService.resetAll();
     this.subscription = this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
   }
 

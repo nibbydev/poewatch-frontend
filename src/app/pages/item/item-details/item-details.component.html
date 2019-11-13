@@ -1,0 +1,59 @@
+<div class="row m-0">
+  <div class="col-12 col-sm-6 mb-2 mb-sm-0 d-flex">
+    <table class="table table-sm table-striped p-0">
+      <tbody>
+      <tr>
+        <td class="nowrap w-100">Mean</td>
+        <td class="nowrap">
+<span class="img-container img-container-xs d-inline-block text-center mr-1">
+<img src="https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1">
+</span>
+          <span>{{(entryLeague$ | async)?.mean | number:'1.0-2'}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="nowrap w-100">Median</td>
+        <td class="nowrap">
+<span class="img-container img-container-xs d-inline-block text-center mr-1">
+<img src="https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1">
+</span>
+          <span>{{(entryLeague$ | async)?.median | number:'1.0-2'}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="nowrap w-100">Mode</td>
+        <td class="nowrap">
+<span class="img-container img-container-xs d-inline-block text-center mr-1">
+<img src="https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1">
+</span>
+          <span>{{(entryLeague$ | async)?.mode | number:'1.0-2'}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-12 col-sm-6 mt-2 mt-sm-0 d-flex">
+    <table class="table table-sm table-striped p-0">
+      <tbody>
+      <tr>
+        <td class="nowrap pw-100">Total amount listed</td>
+        <td class="nowrap">{{(entryLeague$ | async)?.total | number:'1.0-2'}}</td>
+      </tr>
+      <tr>
+        <td class="nowrap w-100">Listed every 24h</td>
+        <td class="nowrap">{{(entryLeague$ | async)?.daily | number:'1.0-2'}}</td>
+      </tr>
+      <tr>
+        <td class="nowrap w-100">Price in exalted</td>
+        <td class="nowrap">
+<span class="img-container img-container-xs d-inline-block text-center mr-1">
+<img src="https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&amp;w=1&amp;h=1">
+</span>
+          <span>{{(entryLeague$ | async)?.exalted | number:'1.0-2'}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

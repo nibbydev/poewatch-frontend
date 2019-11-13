@@ -28,6 +28,7 @@ import {ReactiveInputComponent} from './shared/reactive-input/reactive-input.com
 import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-table-status/prices-table-status.component';
 import {ItemPageComponent} from './pages/item/item-page.component';
 import {ItemFormatPipe} from './pipes/item-format.pipe';
+import {ItemDetailsComponent} from './pages/item/item-details/item-details.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {ItemFormatPipe} from './pipes/item-format.pipe';
     PricesTableStatusComponent,
     ItemPageComponent,
     ItemFormatPipe,
+    ItemDetailsComponent,
   ],
   imports: [
     BrowserModule,

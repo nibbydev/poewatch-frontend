@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchCriteria} from '../data/search-criteria';
 import {ActivatedRoute} from '@angular/router';
-import {PriceFilterService} from '../../services/price-filter.service';
 import {RouterHelperService} from '../../services/router-helper.service';
 import {first} from 'rxjs/operators';
 
@@ -14,7 +13,6 @@ export class ReactiveInputComponent implements OnInit {
   @Input() private criteria: SearchCriteria;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private filterService: PriceFilterService,
               private routerHelperService: RouterHelperService) {
   }
 
@@ -24,7 +22,16 @@ export class ReactiveInputComponent implements OnInit {
     }
   }
 
-  private onChange() {
+  private onChange(): void {
+    this.updateQueryParams();
+
+    // call the onChange function if it is defined
+    if (this.criteria.onChange) {
+      this.criteria.onChange.call(this.criteria);
+    }
+  }
+
+  private updateQueryParams() {
     const queryParams = {};
     queryParams[this.criteria.id] = this.criteria.value
       ? this.criteria.value.trim()
@@ -39,7 +46,6 @@ export class ReactiveInputComponent implements OnInit {
     if (this.criteria.defaultOptionIndex === null || this.criteria.options === null) {
       // todo: calls twice for league. bad for performance?
       this.routerHelperService.navigate(queryParams);
-      this.filterService.sortEntries();
       return;
     }
 
@@ -57,7 +63,6 @@ export class ReactiveInputComponent implements OnInit {
 
       // todo: calls twice for league. bad for performance?
       this.routerHelperService.navigate(queryParams);
-      this.filterService.sortEntries();
     });
   }
 

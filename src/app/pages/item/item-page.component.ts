@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../../services/item.service';
-import {ItemEntry} from '../../shared/data/item-entry';
+import {ItemEntry, ItemEntryLeague} from '../../shared/data/item-entry';
 import {first} from 'rxjs/operators';
 import {SearchCriteria, SearchOption} from '../../shared/data/search-criteria';
 import {BehaviorSubject, Subject} from 'rxjs';
-import {GetEntry} from '../../shared/data/get-entry';
 
 @Component({
   selector: 'app-item-page',
@@ -15,6 +14,7 @@ import {GetEntry} from '../../shared/data/get-entry';
 export class ItemPageComponent implements OnInit {
   public item: ItemEntry;
   private id: number | undefined;
+  private entryLeague$: Subject<ItemEntryLeague> = new Subject();
   private criteria: SearchCriteria = {
     id: 'league',
     title: null,
@@ -27,8 +27,11 @@ export class ItemPageComponent implements OnInit {
     reset: false,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),
-    showItem(e: GetEntry) {
-      return true;
+    showItem: null,
+    onChange: () => {
+      // find matching league and send it through
+      const entryLeague = this.item.leagues.find(l => l.name === this.criteria.value);
+      this.entryLeague$.next(entryLeague);
     }
   };
 
@@ -52,6 +55,7 @@ export class ItemPageComponent implements OnInit {
 
       (this.criteria.options as Subject<SearchOption[]>).next(options);
       this.criteria.value = options[0].value;
+      this.entryLeague$.next(i.leagues[0]);
       this.item = i;
     });
   }
