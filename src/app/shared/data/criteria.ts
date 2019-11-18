@@ -4,21 +4,27 @@ import {takeUntil} from 'rxjs/operators';
 import {Category} from './category';
 
 export class Criteria {
+  // unique identifier, used as query param key
   id: string;
-  title: string;
-  // should the criteria input be shown to the user for the current category?
+  // title/label of the input
+  title?: string;
+  // should the criteria input be visible
   visible: boolean;
-  // if it is visible, should it be grayed out and not interactive
+  // should it be disabled and grayed out
   disabled: boolean;
   // type of the input (eg radio/input/dropdown)
   inputType: string;
+  // a list of options or null
   options?: Observable<SearchOption[]>;
-  value: string | null;
-  // integer or null if not applicable (eg search input)
+  // current value of the input
+  value?: string;
+  // index of the default option
   defaultOptionIndex?: number;
-  // set query param to default value on input initialization
+  //  on input initialization set query param
   setInitialQueryParam: boolean;
+  // display a spinner when options are undefined
   showSpinner: boolean;
+  // function called after input value changes
   onChange?: () => void;
 
   public static resetAll(criteria: Criteria[]): void {
