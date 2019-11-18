@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SearchCriteria, SearchOption} from '../data/search-criteria';
+import {Criteria, SearchOption} from '../data/criteria';
 import {ActivatedRoute} from '@angular/router';
 import {RouterHelperService} from '../../services/router-helper.service';
 import {first, takeUntil} from 'rxjs/operators';
@@ -11,7 +11,7 @@ import {Subject} from 'rxjs';
   styleUrls: ['./reactive-input.component.css']
 })
 export class ReactiveInputComponent implements OnInit {
-  @Input() private criteria: SearchCriteria;
+  @Input() private criteria: Criteria;
 
   constructor(private activatedRoute: ActivatedRoute,
               private routerHelperService: RouterHelperService) {

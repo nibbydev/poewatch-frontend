@@ -5,7 +5,7 @@ import {Category, Group} from '../shared/data/category';
 import {PriceService} from './price.service';
 import {League} from '../shared/data/league';
 import {PricePaginationService} from './price-pagination.service';
-import { PriceSearchCriteria, SearchCriteria, SearchOption } from '../shared/data/search-criteria';
+import { PriceSearchCriteria, Criteria, SearchOption } from '../shared/data/criteria';
 import {first} from 'rxjs/operators';
 import {Rarity} from '../shared/data/rarity';
 import {LeagueService} from './league.service';
@@ -110,7 +110,7 @@ export class PriceFilterService {
       categories: null,
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'Hide',
           value: 'hide'
@@ -146,7 +146,7 @@ export class PriceFilterService {
       categories: ['accessory', 'weapon', 'armour', 'flask'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -188,7 +188,7 @@ export class PriceFilterService {
       categories: ['weapon', 'armour'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'No links',
           value: 'none'
@@ -230,7 +230,7 @@ export class PriceFilterService {
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -279,7 +279,7 @@ export class PriceFilterService {
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -333,7 +333,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'Either',
           value: 'either'
@@ -375,7 +375,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -436,7 +436,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -477,7 +477,7 @@ export class PriceFilterService {
       categories: ['map'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -594,7 +594,7 @@ export class PriceFilterService {
       categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
       reset: true,
       showSpinner: true,
-      options: SearchCriteria.asObservable([
+      options: Criteria.asObservable([
         {
           display: 'Either',
           value: 'either'
@@ -645,7 +645,7 @@ export class PriceFilterService {
     this.paginationService.resetPagination();
 
     // send null to force loading state on group input
-    const groupCriteria = SearchCriteria.findCriteria(this.criteria, 'group');
+    const groupCriteria = Criteria.findCriteria(this.criteria, 'group');
     (groupCriteria.options as Subject<SearchOption[]>).next(null);
 
     // request new prices
@@ -696,7 +696,7 @@ export class PriceFilterService {
       .map(gs => category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = SearchCriteria.findCriteria(this.criteria, 'group');
+    const groupCriteria = Criteria.findCriteria(this.criteria, 'group');
     const searchOptions = groups.map(g => ({display: g.display, value: g.name}));
 
     // disable the input if there's only one group

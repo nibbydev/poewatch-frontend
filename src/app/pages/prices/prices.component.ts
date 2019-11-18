@@ -8,7 +8,7 @@ import {RouterHelperService} from '../../services/router-helper.service';
 import {League} from '../../shared/data/league';
 import {Category} from '../../shared/data/category';
 import {first} from 'rxjs/operators';
-import { PriceSearchCriteria } from '../../shared/data/search-criteria';
+import { PriceSearchCriteria } from '../../shared/data/criteria';
 
 @Component({
   selector: 'app-prices',

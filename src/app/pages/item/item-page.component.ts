@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../../services/item.service';
 import {ItemEntry, ItemEntryLeague} from '../../shared/data/item-entry';
 import {first} from 'rxjs/operators';
-import {SearchCriteria, SearchOption} from '../../shared/data/search-criteria';
+import {Criteria, SearchOption} from '../../shared/data/criteria';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ItemHistoryFormatPipe} from '../../pipes/item-history-format.pipe';
 import {ItemHistoryService} from '../../services/item-hisotry.service';
@@ -18,7 +18,7 @@ export class ItemPageComponent implements OnInit {
   private id: number;
   public item: ItemEntry;
 
-  private leagueCriteria: SearchCriteria = {
+  private leagueCriteria: Criteria = {
     id: 'league',
     title: null,
     inputType: 'dropdown',
@@ -33,7 +33,7 @@ export class ItemPageComponent implements OnInit {
       this.onLeagueChange();
     }
   };
-  private typeCriteria: SearchCriteria = {
+  private typeCriteria: Criteria = {
     id: 'type',
     title: null,
     inputType: 'radio',

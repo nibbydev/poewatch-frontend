@@ -3,7 +3,7 @@ import {GetEntry} from './get-entry';
 import {takeUntil} from 'rxjs/operators';
 import {Category} from './category';
 
-export class SearchCriteria {
+export class Criteria {
   id: string;
   title: string;
   // should the criteria input be shown to the user for the current category?
@@ -21,7 +21,7 @@ export class SearchCriteria {
   showSpinner: boolean;
   onChange?: () => void;
 
-  public static resetAll(criteria: SearchCriteria[]): void {
+  public static resetAll(criteria: Criteria[]): void {
     criteria.forEach(c => {
       c.disabled = false;
       c.visible = false;
@@ -29,7 +29,7 @@ export class SearchCriteria {
     });
   }
 
-  public static setDefaultCriteriaValue(c: SearchCriteria): void {
+  public static setDefaultCriteriaValue(c: Criteria): void {
     if (!c.options || c.defaultOptionIndex === null) {
       c.value = null;
       return;
@@ -50,7 +50,7 @@ export class SearchCriteria {
     });
   }
 
-  public static findCriteria(criteria: SearchCriteria[], id: string): SearchCriteria {
+  public static findCriteria(criteria: Criteria[], id: string): Criteria {
     return criteria.find(c => c.id === id);
   }
 
@@ -68,7 +68,7 @@ export class SearchOption {
   public value: string;
 }
 
-export class PriceSearchCriteria extends SearchCriteria {
+export class PriceSearchCriteria extends Criteria {
   // list of categories this criteria will be visible under
   categories: string[];
   showItem?: (e: GetEntry) => boolean;
