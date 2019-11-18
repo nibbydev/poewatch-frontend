@@ -12,13 +12,8 @@ export class SearchCriteria {
   disabled: boolean;
   // type of the input (eg radio/input/dropdown)
   inputType: string;
-  // list of categories this criteria will be visible under
-  categories: string[];
   options?: Observable<SearchOption[]>;
   value: string | null;
-  showItem?: (e: GetEntry) => boolean;
-  // reset to default options when changing category or league
-  reset: boolean;
   // integer or null if not applicable (eg search input)
   defaultOptionIndex?: number;
   // set query param to default value on input initialization
@@ -55,23 +50,8 @@ export class SearchCriteria {
     });
   }
 
-  public static getEnabledCriteria(criteria: SearchCriteria[]): SearchCriteria[] {
-    return criteria.filter(c => c.visible === true);
-  }
-
-  public static getCriteria(criteria: SearchCriteria[], id: string): SearchCriteria {
+  public static findCriteria(criteria: SearchCriteria[], id: string): SearchCriteria {
     return criteria.find(c => c.id === id);
-  }
-
-  public static setState(criteria: SearchCriteria[], category: Category | null): void {
-    criteria.forEach(c => {
-      c.visible = !c.categories || c.categories.includes(category.name.toLowerCase());
-      c.disabled = false;
-
-      if (c.reset) {
-        this.setDefaultCriteriaValue(c);
-      }
-    });
   }
 
   public static asObservable<T>(a: T): Observable<T> {
@@ -86,4 +66,27 @@ export class SearchCriteria {
 export class SearchOption {
   public display: string;
   public value: string;
+}
+
+export class PriceSearchCriteria extends SearchCriteria {
+  // list of categories this criteria will be visible under
+  categories: string[];
+  showItem?: (e: GetEntry) => boolean;
+  // reset to default options when changing category or league
+  reset: boolean;
+
+  public static setState(criteria: PriceSearchCriteria[], category: Category | null): void {
+    criteria.forEach(c => {
+      c.visible = !c.categories || c.categories.includes(category.name.toLowerCase());
+      c.disabled = false;
+
+      if (c.reset) {
+        this.setDefaultCriteriaValue(c);
+      }
+    });
+  }
+
+  public static getEnabledCriteria(criteria: PriceSearchCriteria[]): PriceSearchCriteria[] {
+    return criteria.filter(c => c.visible === true);
+  }
 }

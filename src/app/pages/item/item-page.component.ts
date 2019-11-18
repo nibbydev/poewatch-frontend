@@ -27,11 +27,8 @@ export class ItemPageComponent implements OnInit {
     value: null,
     defaultOptionIndex: 0,
     setInitialQueryParam: true,
-    categories: null,
-    reset: false,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),
-    showItem: null,
     onChange: () => {
       this.onLeagueChange();
     }
@@ -45,8 +42,6 @@ export class ItemPageComponent implements OnInit {
     value: null,
     defaultOptionIndex: 0,
     setInitialQueryParam: false,
-    categories: null,
-    reset: false,
     showSpinner: true,
     options: new Observable<SearchOption[]>(o => {
       o.next([
@@ -60,7 +55,6 @@ export class ItemPageComponent implements OnInit {
       ]);
       o.complete();
     }),
-    showItem: null,
     onChange: () => {
       // todo
     }

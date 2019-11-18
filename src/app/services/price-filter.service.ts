@@ -5,7 +5,7 @@ import {Category, Group} from '../shared/data/category';
 import {PriceService} from './price.service';
 import {League} from '../shared/data/league';
 import {PricePaginationService} from './price-pagination.service';
-import {SearchCriteria, SearchOption} from '../shared/data/search-criteria';
+import { PriceSearchCriteria, SearchCriteria, SearchOption } from '../shared/data/search-criteria';
 import {first} from 'rxjs/operators';
 import {Rarity} from '../shared/data/rarity';
 import {LeagueService} from './league.service';
@@ -17,7 +17,7 @@ export class PriceFilterService {
   private readonly entries$: BehaviorSubject<GetEntry[]> = new BehaviorSubject(null);
   private rawEntries: GetEntry[] = null;
 
-  public readonly criteria: SearchCriteria[] = [
+  public readonly criteria: PriceSearchCriteria[] = [
     {
       id: 'league',
       title: 'League',
@@ -637,7 +637,7 @@ export class PriceFilterService {
 
   public onQueryParamChange(league: League, category: Category): void {
     // hide certain search options depending on category
-    SearchCriteria.setState(this.criteria, category);
+    PriceSearchCriteria.setState(this.criteria, category);
 
     // send null to force loading state on prices table
     this.rawEntries = null;
@@ -645,7 +645,7 @@ export class PriceFilterService {
     this.paginationService.resetPagination();
 
     // send null to force loading state on group input
-    const groupCriteria = SearchCriteria.getCriteria(this.criteria, 'group');
+    const groupCriteria = SearchCriteria.findCriteria(this.criteria, 'group');
     (groupCriteria.options as Subject<SearchOption[]>).next(null);
 
     // request new prices
@@ -678,7 +678,7 @@ export class PriceFilterService {
 
   public filter(allEntries: GetEntry[]): GetEntry[] {
     // find entries visible after applying search criteria
-    const enabledCriteria = SearchCriteria.getEnabledCriteria(this.criteria);
+    const enabledCriteria = PriceSearchCriteria.getEnabledCriteria(this.criteria);
     const matchingEntries = allEntries.filter(e => {
       return enabledCriteria.every(c => c.showItem(e));
     });
@@ -696,7 +696,7 @@ export class PriceFilterService {
       .map(gs => category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = SearchCriteria.getCriteria(this.criteria, 'group');
+    const groupCriteria = SearchCriteria.findCriteria(this.criteria, 'group');
     const searchOptions = groups.map(g => ({display: g.display, value: g.name}));
 
     // disable the input if there's only one group

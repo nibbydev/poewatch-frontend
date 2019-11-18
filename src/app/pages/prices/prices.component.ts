@@ -8,7 +8,7 @@ import {RouterHelperService} from '../../services/router-helper.service';
 import {League} from '../../shared/data/league';
 import {Category} from '../../shared/data/category';
 import {first} from 'rxjs/operators';
-import {SearchCriteria} from '../../shared/data/search-criteria';
+import { PriceSearchCriteria } from '../../shared/data/search-criteria';
 
 @Component({
   selector: 'app-prices',
@@ -31,7 +31,7 @@ export class PricesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.resetParams();
-    SearchCriteria.resetAll(this.priceFilterService.criteria);
+    PriceSearchCriteria.resetAll(this.priceFilterService.criteria);
     this.subscription = this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
   }
 
@@ -39,8 +39,8 @@ export class PricesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  public getEnabledCriteria(): SearchCriteria[] {
-    return SearchCriteria.getEnabledCriteria(this.priceFilterService.criteria);
+  public getEnabledCriteria(): PriceSearchCriteria[] {
+    return PriceSearchCriteria.getEnabledCriteria(this.priceFilterService.criteria);
   }
 
   public resetParams(): void {
