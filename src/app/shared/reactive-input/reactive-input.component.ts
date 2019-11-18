@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SearchCriteria} from '../data/search-criteria';
+import {SearchCriteria, SearchOption} from '../data/search-criteria';
 import {ActivatedRoute} from '@angular/router';
 import {RouterHelperService} from '../../services/router-helper.service';
-import {first} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-reactive-input',
@@ -17,10 +18,81 @@ export class ReactiveInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.activatedRoute.snapshot.queryParamMap.has(this.criteria.id)) {
-      this.criteria.value = this.activatedRoute.snapshot.queryParamMap.get(this.criteria.id);
+    // if there are options, subscribe and verify
+    if (this.criteria.options) {
+      const destroy$ = new Subject<boolean>();
+      this.criteria.options.pipe(takeUntil(destroy$)).subscribe(o => {
+        if (o === null) {
+          return;
+        }
+
+        this.onInitLoadOptions(o);
+        destroy$.next(true);
+        destroy$.complete();
+      });
+
+      return;
+    }
+
+
+    // const paramMap = this.activatedRoute.snapshot.queryParamMap;
+    // if (paramMap.has(this.criteria.id)) {
+    //   this.criteria.value = paramMap.get(this.criteria.id);
+    //   return;
+    // }
+    //
+    //
+    // if (this.criteria.setInitialQueryParam && this.criteria.defaultOptionIndex !== null) {
+    //   const destroy$ = new Subject<boolean>();
+    //   this.criteria.options.pipe(takeUntil(destroy$)).subscribe(o => {
+    //     if (o === null) {
+    //       return;
+    //     }
+    //
+    //     const defaultOption = o[this.criteria.defaultOptionIndex];
+    //     this.criteria.value = defaultOption.value;
+    //
+    //     const queryParams = {};
+    //     queryParams[this.criteria.id] = defaultOption.value;
+    //
+    //     this.routerHelperService.navigate(queryParams);
+    //     destroy$.next(true);
+    //     destroy$.complete();
+    //   });
+    // }
+
+  }
+
+  private onInitLoadOptions(options: SearchOption[]): void {
+    // get the initial query param
+    const paramMap = this.activatedRoute.snapshot.queryParamMap;
+    const paramValue = paramMap.has(this.criteria.id) ? paramMap.get(this.criteria.id) : null;
+
+    // find matching and default options
+    const matchingOption = options.find(o => o.value === paramValue);
+    const defaultOption = this.criteria.defaultOptionIndex === null ? null : options[this.criteria.defaultOptionIndex];
+
+    // set the query params
+    const queryParams = {};
+    if (matchingOption) {
+      queryParams[this.criteria.id] = matchingOption.value;
+    } else if (defaultOption) {
+      queryParams[this.criteria.id] = defaultOption.value;
+    } else {
+      console.log('criteria:', this.criteria, 'options:', options, 'query value:', paramValue);
+      throw new Error('Missing a match and a default value for a criteria. See above log for more info');
+    }
+
+    // set criteria value
+    this.criteria.value = queryParams[this.criteria.id];
+
+    // if user provided a query param or if criteria should set a query param on init
+    if (paramValue !== null || this.criteria.setInitialQueryParam) {
+      // navigate to either the default or matching param
+      this.routerHelperService.navigate(queryParams);
     }
   }
+
 
   private onChange(): void {
     this.updateQueryParams();

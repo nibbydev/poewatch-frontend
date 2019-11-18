@@ -29,6 +29,8 @@ import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-tab
 import {ItemPageComponent} from './pages/item/item-page.component';
 import {ItemFormatPipe} from './pipes/item-format.pipe';
 import {ItemDetailsComponent} from './pages/item/item-details/item-details.component';
+import {ChartistModule} from 'ng-chartist';
+import {ItemHistoryFormatPipe} from './pipes/item-history-format.pipe';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import {ItemDetailsComponent} from './pages/item/item-details/item-details.compo
     ItemPageComponent,
     ItemFormatPipe,
     ItemDetailsComponent,
+    ItemHistoryFormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import {ItemDetailsComponent} from './pages/item/item-details/item-details.compo
     BsDropdownModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    ChartistModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

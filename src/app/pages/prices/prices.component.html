@@ -6,7 +6,7 @@
 
       <div class="card-body">
         <div class='row'>
-          <div *ngFor="let criteria of priceFilterService.getEnabledCriteria()" class="col-6 col-sm">
+          <div *ngFor="let criteria of getEnabledCriteria()" class="col-6 col-sm">
             <app-reactive-input [criteria]="criteria"></app-reactive-input>
           </div>
         </div>

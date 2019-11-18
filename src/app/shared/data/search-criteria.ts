@@ -1,5 +1,7 @@
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {GetEntry} from './get-entry';
+import {takeUntil} from 'rxjs/operators';
+import {Category} from './category';
 
 export class SearchCriteria {
   id: string;
@@ -12,15 +14,73 @@ export class SearchCriteria {
   inputType: string;
   // list of categories this criteria will be visible under
   categories: string[];
-  options: Observable<SearchOption[]>;
+  options?: Observable<SearchOption[]>;
   value: string | null;
-  showItem: (e: GetEntry) => boolean | null;
+  showItem?: (e: GetEntry) => boolean;
   // reset to default options when changing category or league
   reset: boolean;
   // integer or null if not applicable (eg search input)
-  defaultOptionIndex: number | null;
+  defaultOptionIndex?: number;
+  // set query param to default value on input initialization
+  setInitialQueryParam: boolean;
   showSpinner: boolean;
-  onChange: () => void | null;
+  onChange?: () => void;
+
+  public static resetAll(criteria: SearchCriteria[]): void {
+    criteria.forEach(c => {
+      c.disabled = false;
+      c.visible = false;
+      this.setDefaultCriteriaValue(c);
+    });
+  }
+
+  public static setDefaultCriteriaValue(c: SearchCriteria): void {
+    if (!c.options || c.defaultOptionIndex === null) {
+      c.value = null;
+      return;
+    }
+
+    const destroy$ = new Subject<boolean>();
+    c.options.pipe(takeUntil(destroy$)).subscribe(o => {
+      if (o === null) {
+        return;
+      }
+
+      // group sends null to force loading state on input
+      c.value = o ? o[c.defaultOptionIndex].value : null;
+
+      // stop the subscription
+      destroy$.next(true);
+      destroy$.complete();
+    });
+  }
+
+  public static getEnabledCriteria(criteria: SearchCriteria[]): SearchCriteria[] {
+    return criteria.filter(c => c.visible === true);
+  }
+
+  public static getCriteria(criteria: SearchCriteria[], id: string): SearchCriteria {
+    return criteria.find(c => c.id === id);
+  }
+
+  public static setState(criteria: SearchCriteria[], category: Category | null): void {
+    criteria.forEach(c => {
+      c.visible = !c.categories || c.categories.includes(category.name.toLowerCase());
+      c.disabled = false;
+
+      if (c.reset) {
+        this.setDefaultCriteriaValue(c);
+      }
+    });
+  }
+
+  public static asObservable<T>(a: T): Observable<T> {
+    return new Observable(t => {
+      t.next(a);
+      t.complete();
+    });
+  }
+
 }
 
 export class SearchOption {

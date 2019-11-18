@@ -26,6 +26,7 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: null,
       reset: false,
       showSpinner: true,
@@ -50,6 +51,7 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: null,
       reset: true,
       showSpinner: true,
@@ -73,6 +75,7 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: null,
+      setInitialQueryParam: false,
       categories: null,
       reset: true,
       showSpinner: false,
@@ -103,10 +106,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: null,
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'Hide',
           value: 'hide'
@@ -138,10 +142,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['accessory', 'weapon', 'armour', 'flask'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -179,10 +184,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['weapon', 'armour'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'No links',
           value: 'none'
@@ -220,10 +226,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -268,10 +275,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -321,10 +329,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'Either',
           value: 'either'
@@ -362,10 +371,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -422,10 +432,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -462,10 +473,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['map'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -578,10 +590,11 @@ export class PriceFilterService {
       disabled: false,
       value: null,
       defaultOptionIndex: 0,
+      setInitialQueryParam: false,
       categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
       reset: true,
       showSpinner: true,
-      options: this.asObservable([
+      options: SearchCriteria.asObservable([
         {
           display: 'Either',
           value: 'either'
@@ -624,7 +637,7 @@ export class PriceFilterService {
 
   public onQueryParamChange(league: League, category: Category): void {
     // hide certain search options depending on category
-    this.setState(category);
+    SearchCriteria.setState(this.criteria, category);
 
     // send null to force loading state on prices table
     this.rawEntries = null;
@@ -632,7 +645,7 @@ export class PriceFilterService {
     this.paginationService.resetPagination();
 
     // send null to force loading state on group input
-    const groupCriteria = this.getCriteria('group');
+    const groupCriteria = SearchCriteria.getCriteria(this.criteria, 'group');
     (groupCriteria.options as Subject<SearchOption[]>).next(null);
 
     // request new prices
@@ -665,52 +678,13 @@ export class PriceFilterService {
 
   public filter(allEntries: GetEntry[]): GetEntry[] {
     // find entries visible after applying search criteria
-    const enabledCriteria = this.getEnabledCriteria();
+    const enabledCriteria = SearchCriteria.getEnabledCriteria(this.criteria);
     const matchingEntries = allEntries.filter(e => {
       return enabledCriteria.every(c => c.showItem(e));
     });
 
     // create pages
     return this.paginationService.page(allEntries, matchingEntries);
-  }
-
-  public getCriteria(id: string): SearchCriteria {
-    return this.criteria.find(c => c.id === id);
-  }
-
-  public getEnabledCriteria(): SearchCriteria[] {
-    return this.criteria.filter(c => c.visible === true);
-  }
-
-  public resetAll(): void {
-    this.criteria.forEach(c => {
-      c.disabled = false;
-      c.visible = false;
-      this.setDefaultCriteriaValue(c);
-    });
-  }
-
-  public setState(category: Category | null): void {
-    this.criteria.forEach(c => {
-      c.visible = !c.categories || c.categories.includes(category.name.toLowerCase());
-      c.disabled = false;
-
-      if (c.reset) {
-        this.setDefaultCriteriaValue(c);
-      }
-    });
-  }
-
-  public setDefaultCriteriaValue(c: SearchCriteria): void {
-    if (!c.options || c.defaultOptionIndex === null) {
-      c.value = null;
-      return;
-    }
-
-    c.options.pipe(first()).subscribe(o => {
-      // group sends null to force loading state on input
-      c.value = o ? o[c.defaultOptionIndex].value : null;
-    });
   }
 
   private processPriceGroups(category: Category, prices: GetEntry[]): void {
@@ -722,7 +696,7 @@ export class PriceFilterService {
       .map(gs => category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = this.getCriteria('group');
+    const groupCriteria = SearchCriteria.getCriteria(this.criteria, 'group');
     const searchOptions = groups.map(g => ({display: g.display, value: g.name}));
 
     // disable the input if there's only one group
@@ -735,13 +709,6 @@ export class PriceFilterService {
 
     // set its options to the current groups
     (groupCriteria.options as Subject<SearchOption[]>).next(searchOptions);
-  }
-
-  private asObservable<T>(a: T): Observable<T> {
-    return new Observable(t => {
-      t.next(a);
-      t.complete();
-    });
   }
 
 }

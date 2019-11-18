@@ -4,7 +4,9 @@ import {ItemService} from '../../services/item.service';
 import {ItemEntry, ItemEntryLeague} from '../../shared/data/item-entry';
 import {first} from 'rxjs/operators';
 import {SearchCriteria, SearchOption} from '../../shared/data/search-criteria';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {ItemHistoryFormatPipe} from '../../pipes/item-history-format.pipe';
+import {ItemHistoryService} from '../../services/item-hisotry.service';
 
 @Component({
   selector: 'app-item-page',
@@ -12,9 +14,9 @@ import {BehaviorSubject, Observable, Subject} from 'rxjs';
   styleUrls: ['./item-page.component.css']
 })
 export class ItemPageComponent implements OnInit {
+  private entryLeague$: BehaviorSubject<ItemEntryLeague> = new BehaviorSubject(null);
+  private id: number;
   public item: ItemEntry;
-  private id: number | undefined;
-  private entryLeague$: Subject<ItemEntryLeague> = new Subject();
 
   private leagueCriteria: SearchCriteria = {
     id: 'league',
@@ -24,15 +26,14 @@ export class ItemPageComponent implements OnInit {
     disabled: false,
     value: null,
     defaultOptionIndex: 0,
+    setInitialQueryParam: true,
     categories: null,
     reset: false,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),
     showItem: null,
     onChange: () => {
-      // find matching league and send it through
-      const entryLeague = this.item.leagues.find(l => l.name === this.leagueCriteria.value);
-      this.entryLeague$.next(entryLeague);
+      this.onLeagueChange();
     }
   };
   private typeCriteria: SearchCriteria = {
@@ -43,6 +44,7 @@ export class ItemPageComponent implements OnInit {
     disabled: false,
     value: null,
     defaultOptionIndex: 0,
+    setInitialQueryParam: false,
     categories: null,
     reset: false,
     showSpinner: true,
@@ -60,31 +62,52 @@ export class ItemPageComponent implements OnInit {
     }),
     showItem: null,
     onChange: () => {
-
+      // todo
     }
   };
 
   constructor(private activatedRoute: ActivatedRoute,
-              private itemService: ItemService) {
+              private itemService: ItemService,
+              private itemHistoryService: ItemHistoryService,
+              private historyFormatPipe: ItemHistoryFormatPipe) {
   }
 
-  ngOnInit() {
-    this.id = parseInt(this.activatedRoute.snapshot.queryParamMap.get('id'), 10);
-    if (isNaN(this.id)) {
-      return;
-    }
 
+  ngOnInit() {
+    const id = parseInt(this.activatedRoute.snapshot.queryParamMap.get('id'), 10);
+    if (!isNaN(id)) {
+      this.id = id;
+      this.requestItem();
+    }
+  }
+
+  private requestItem(): void {
     this.itemService.makeRequest(this.id).pipe(first()).subscribe(i => {
+      this.item = i;
+
+      // create search options from the item's leagues
       const options: SearchOption[] = i.leagues.map(l => {
         const display = l.display ? (l.active ? l.display : '> ' + l.display) : l.name;
         return {display, value: l.name};
       });
 
-      (this.leagueCriteria.options as Subject<SearchOption[]>).next(options);
-      this.leagueCriteria.value = options[0].value;
-      this.entryLeague$.next(i.leagues[0]);
-      this.item = i;
+      // cast to BehaviorSubject and send the options so they'd appear in the selector
+      (this.leagueCriteria.options as BehaviorSubject<SearchOption[]>).next(options);
+
+      // set the initial values
+      this.leagueCriteria.value = i.leagues[0].name;
+      this.onLeagueChange();
     });
   }
 
+  private onLeagueChange(): void {
+    const entryLeague = this.item.leagues.find(l => l.name === this.leagueCriteria.value);
+    this.entryLeague$.next(entryLeague);
+
+    this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
+      // todo
+      console.log(h);
+      console.log(this.historyFormatPipe.formatHistory(entryLeague, h));
+    });
+  }
 }
