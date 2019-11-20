@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Criteria, SearchOption} from '../data/criteria';
+import {Criteria, SearchOption} from '../../shared/criteria';
 import {ActivatedRoute} from '@angular/router';
 import {RouterHelperService} from '../../services/router-helper.service';
 import {first, takeUntil} from 'rxjs/operators';

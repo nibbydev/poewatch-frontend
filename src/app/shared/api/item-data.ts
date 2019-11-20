@@ -1,4 +1,4 @@
-import {Rarity} from './rarity';
+import {Rarity} from '../rarity';
 
 export class ItemData {
   id: number;

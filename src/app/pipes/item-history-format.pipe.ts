@@ -1,6 +1,6 @@
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
-import {ItemEntryLeague} from '../shared/data/item-entry';
-import {ItemHistory} from '../shared/data/item-history';
+import {ItemEntryLeague} from '../shared/api/item-entry';
+import {ItemHistory} from '../shared/api/item-history';
 
 @Pipe({
   name: 'itemHistoryFormat'

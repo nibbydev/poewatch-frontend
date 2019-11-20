@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Rarity} from '../../shared/data/rarity';
-import {ItemData} from '../../shared/data/item-data';
+import {Rarity} from '../../shared/rarity';
+import {ItemData} from '../../shared/api/item-data';
 
 @Component({
   selector: 'app-item',

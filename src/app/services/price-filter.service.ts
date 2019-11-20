@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {GetEntry} from '../shared/data/get-entry';
+import {GetEntry} from '../shared/api/get-entry';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {Category, Group} from '../shared/data/category';
+import {Category, Group} from '../shared/api/category';
 import {PriceService} from './price.service';
-import {League} from '../shared/data/league';
+import {League} from '../shared/api/league';
 import {PricePaginationService} from './price-pagination.service';
-import { PriceSearchCriteria, Criteria, SearchOption } from '../shared/data/criteria';
+import { PriceSearchCriteria, Criteria, SearchOption } from '../shared/criteria';
 import {first} from 'rxjs/operators';
-import {Rarity} from '../shared/data/rarity';
+import {Rarity} from '../shared/rarity';
 import {LeagueService} from './league.service';
 
 @Injectable({

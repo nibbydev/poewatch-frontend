@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {GetEntry} from '../shared/data/get-entry';
+import {GetEntry} from '../shared/api/get-entry';
 
 @Injectable({
   providedIn: 'root'

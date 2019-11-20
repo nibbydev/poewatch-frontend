@@ -1,7 +1,7 @@
 import {Observable, Subject} from 'rxjs';
-import {GetEntry} from './get-entry';
+import {GetEntry} from './api/get-entry';
 import {takeUntil} from 'rxjs/operators';
-import {Category} from './category';
+import {Category} from './api/category';
 
 export class Criteria {
   // unique identifier, used as query param key

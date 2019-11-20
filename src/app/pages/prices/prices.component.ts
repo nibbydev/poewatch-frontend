@@ -5,10 +5,10 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {forkJoin, Subscription} from 'rxjs';
 import {PriceFilterService} from '../../services/price-filter.service';
 import {RouterHelperService} from '../../services/router-helper.service';
-import {League} from '../../shared/data/league';
-import {Category} from '../../shared/data/category';
+import {League} from '../../shared/api/league';
+import {Category} from '../../shared/api/category';
 import {first} from 'rxjs/operators';
-import { PriceSearchCriteria } from '../../shared/data/criteria';
+import { PriceSearchCriteria } from '../../shared/criteria';
 
 @Component({
   selector: 'app-prices',

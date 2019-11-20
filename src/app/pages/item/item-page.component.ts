@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../../services/item.service';
-import {ItemEntry, ItemEntryLeague} from '../../shared/data/item-entry';
+import {ItemEntry, ItemEntryLeague} from '../../shared/api/item-entry';
 import {first} from 'rxjs/operators';
-import {Criteria, SearchOption} from '../../shared/data/criteria';
+import {Criteria, SearchOption} from '../../shared/criteria';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ItemHistoryFormatPipe} from '../../pipes/item-history-format.pipe';
 import {ItemHistoryService} from '../../services/item-hisotry.service';

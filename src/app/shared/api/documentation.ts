@@ -1,19 +1,19 @@
-export class ApiDoc {
+export class Documentation {
   id: string;
   url: string;
   description: string;
-  reply?: ApiDocReply[];
-  request?: ApiDocRequest[];
+  reply?: DocumentationReply[];
+  request?: DocumentationRequest[];
 }
 
-export class ApiDocReply {
+export class DocumentationReply {
   param: string;
   description: string;
   condition: string;
   dataType: string;
 }
 
-export class ApiDocRequest {
+export class DocumentationRequest {
   param: string;
   description: string;
   required: boolean;

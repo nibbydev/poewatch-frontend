@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ItemEntryLeague} from '../../../shared/data/item-entry';
+import {ItemEntryLeague} from '../../../shared/api/item-entry';
 import {Subject} from 'rxjs';
 
 @Component({

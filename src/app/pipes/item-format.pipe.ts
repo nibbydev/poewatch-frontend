@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ItemData} from '../shared/data/item-data';
+import {ItemData} from '../shared/api/item-data';
 
 @Pipe({
   name: 'itemFormat'
