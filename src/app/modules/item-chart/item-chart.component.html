@@ -1,0 +1,42 @@
+<ngx-charts-line-chart [results]="data.results"
+                       [scheme]="colorScheme"
+                       [showGridLines]="true"
+                       [xAxisTickFormatting]="emptyTickFormatting"
+                       [xAxis]="true"
+                       [yAxis]="true">
+  <ng-template #tooltipTemplate let-model="model">
+    <div class="p-2">
+      <h5>{{model.name | date}}</h5>
+      <div>{{model.series | titlecase}}: {{model.value | number:'1.0-2'}}</div>
+    </div>
+  </ng-template>
+
+  <ng-template #seriesTooltipTemplate let-model="model">
+    <div class="p-2">
+      <h5>{{model[0].name | date}}</h5>
+      <div *ngFor="let message of getTimestampSubTexts(model[0].name)" class="custom-text-gray-lo">
+        {{message}}
+      </div>
+
+      <!-- todo: remove me -->
+      <div>{{printOut('series', model[0].extra.sequence, model)}}</div>
+
+      <div *ngIf="!showSeriesToolTip(model)" class="custom-text-gray">
+        League has not progressed this far yet
+      </div>
+
+      <div *ngIf="showSeriesToolTip(model)" class="pt-2">
+        <div *ngFor="let m of model" class="d-flex justify-content-between">
+          <div class="align-items-center">
+            <div [ngStyle]="{'background-color': m.color}" class="colorbox"></div>
+            <div [ngStyle]="{color: m.color}" class="d-inline-block">
+              {{m.series | titlecase}}
+            </div>
+          </div>
+          <div>{{m.value | number:'1.0-2'}}</div>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+</ngx-charts-line-chart>

@@ -1,7 +1,7 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { ItemEntryLeague } from '../shared/api/item-entry';
 import { ItemHistory } from '../shared/api/item-history';
-import { ChartResults, ChartSequence } from '../shared/chart-results';
+import { ChartResult, ChartSequence, ChartSeriesDef } from '../shared/chart-result';
 
 @Pipe({
   name: 'itemHistoryFormat'
@@ -11,22 +11,18 @@ import { ChartResults, ChartSequence } from '../shared/chart-results';
 })
 export class ItemHistoryFormatPipe implements PipeTransform {
   private readonly msInDay = 86400000;
-  private readonly series = ['mean', 'median', 'mode', 'current', 'daily'];
-  private readonly colors = ['#efc3ff', '#f6ffa1', '#99ffa0', '#aaff93', '#93ffe0'];
 
-  transform(value: any[], args?: any): any[] {
-    return null;
-  }
-
-  public formatHistory(il: ItemEntryLeague, h: ItemHistory[]): ChartResults[] {
+  // todo: use service instead of pipe
+  transform(il: ItemEntryLeague, h: ItemHistory[], sd: ChartSeriesDef[]): ChartResult[] {
     const dates = this.calculateDates(il, h);
     const output = [];
 
-    for (const s of this.series) {
+    for (const s of sd) {
       const elem = {
-        name: s,
+        name: s.name,
+        color: s.color,
         series: []
-      };
+      } as ChartResult;
 
       this.padHistory(il, h, dates, elem);
       output.push(elem);
@@ -36,7 +32,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
   }
 
   // null values: https://github.com/swimlane/ngx-charts/issues/799
-  private padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResults): void {
+  private padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResult): void {
     // If entries are missing before the first entry, fill with "No data"
     if (dates.daysMissingStart) {
       const date = new Date(dates.startDate);
@@ -46,7 +42,8 @@ export class ItemHistoryFormatPipe implements PipeTransform {
           name: this.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.A
+            sequence: ChartSequence.A,
+            color: elem.color
           }
         });
       }
@@ -60,7 +57,8 @@ export class ItemHistoryFormatPipe implements PipeTransform {
         name: new Date(entry.time),
         value: entry[elem.name],
         extra: {
-          sequence: ChartSequence.B
+          sequence: ChartSequence.B,
+          color: elem.color
         }
       });
 
@@ -82,7 +80,8 @@ export class ItemHistoryFormatPipe implements PipeTransform {
             name: this.incDate(currentDate, j + 1),
             value: 0,
             extra: {
-              sequence: ChartSequence.C
+              sequence: ChartSequence.C,
+              color: elem.color
             }
           });
         }
@@ -99,7 +98,8 @@ export class ItemHistoryFormatPipe implements PipeTransform {
           name: this.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.D
+            sequence: ChartSequence.D,
+            color: elem.color
           }
         });
       }
@@ -111,7 +111,8 @@ export class ItemHistoryFormatPipe implements PipeTransform {
         name: new Date(),
         value: il[elem.name],
         extra: {
-          sequence: ChartSequence.E
+          sequence: ChartSequence.E,
+          color: elem.color
         }
       });
     }
@@ -125,9 +126,10 @@ export class ItemHistoryFormatPipe implements PipeTransform {
       for (let i = 0; i < dates.startEmptyPadding; i++) {
         elem.series.push({
           name: this.incDate(date, i),
-          value: null,
+          value: 0,
           extra: {
-            sequence: ChartSequence.F
+            sequence: ChartSequence.F,
+            color: elem.color
           }
         });
       }

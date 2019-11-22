@@ -7,7 +7,7 @@ import { Criteria, SearchOption } from '../../shared/criteria';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ItemHistoryFormatPipe } from '../../pipes/item-history-format.pipe';
 import { ItemHistoryService } from '../../services/item-hisotry.service';
-import { ChartResults } from '../../shared/chart-results';
+import { ChartResult, ChartSeriesDef } from '../../shared/chart-result';
 
 @Component({
   selector: 'app-item-page',
@@ -15,11 +15,35 @@ import { ChartResults } from '../../shared/chart-results';
   styleUrls: ['./item-page.component.css']
 })
 export class ItemPageComponent implements OnInit {
-  public multi: ChartResults[];
-  public chart = {
-    colorScheme: {
-      domain: ['#efc3ff', '#f6ffa1', '#99ffa0', '#aaff93', '#93ffe0']
-    }
+  public priceChartData = {
+    seriesDef: [
+      {
+        name: 'mean',
+        color: '#ffc459'
+      },
+      {
+        name: 'median',
+        color: '#f6ffa1'
+      },
+      {
+        name: 'mode',
+        color: '#99ffa0'
+      }
+    ] as ChartSeriesDef[],
+    results: null as ChartResult[],
+  };
+  public countChartData = {
+    seriesDef: [
+      {
+        name: 'daily',
+        color: '#b2f3ff'
+      },
+      {
+        name: 'current',
+        color: '#ff94b3'
+      }
+    ] as ChartSeriesDef[],
+    results: null as ChartResult[]
   };
 
   public item: ItemEntry;
@@ -36,33 +60,7 @@ export class ItemPageComponent implements OnInit {
     setInitialQueryParam: true,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),
-    onChange: this.requestReloadChartData
-  };
-  private typeCriteria: Criteria = {
-    id: 'type',
-    title: null,
-    inputType: 'radio',
-    visible: true,
-    disabled: false,
-    value: null,
-    defaultOptionIndex: 0,
-    setInitialQueryParam: false,
-    showSpinner: true,
-    options: new Observable<SearchOption[]>(o => {
-      o.next([
-        {
-          display: 'Price',
-          value: 'price'
-        }, {
-          display: 'Count',
-          value: 'count'
-        }
-      ]);
-      o.complete();
-    }),
-    onChange: () => {
-      // todo: set chart dataset
-    }
+    onChange: () => this.requestReloadChartData()
   };
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -77,10 +75,6 @@ export class ItemPageComponent implements OnInit {
       this.id = id;
       this.requestItem();
     }
-  }
-
-  public onSelect(e: any) {
-    console.log(e);
   }
 
   private requestItem(): void {
@@ -108,12 +102,8 @@ export class ItemPageComponent implements OnInit {
 
     this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
       console.log(h);
-      this.multi = this.historyFormatPipe.formatHistory(entryLeague, h);
-      console.log(this.multi);
+      this.priceChartData.results = this.historyFormatPipe.transform(entryLeague, h, this.priceChartData.seriesDef);
+      this.countChartData.results = this.historyFormatPipe.transform(entryLeague, h, this.countChartData.seriesDef);
     });
-  }
-
-  private axisTickFormatting(val) {
-    return '';
   }
 }

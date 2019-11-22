@@ -32,6 +32,7 @@ import {ItemDetailsComponent} from './pages/item/item-details/item-details.compo
 import {ItemHistoryFormatPipe} from './pipes/item-history-format.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ItemChartComponent } from './modules/item-chart/item-chart.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ItemFormatPipe,
     ItemDetailsComponent,
     ItemHistoryFormatPipe,
+    ItemChartComponent,
   ],
   imports: [
     BrowserModule,

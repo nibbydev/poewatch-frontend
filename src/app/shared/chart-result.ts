@@ -1,6 +1,7 @@
-export class ChartResults {
+export class ChartResult {
   name: string;
   series: ChartSeries[];
+  color: string;
 }
 
 export class ChartSeries {
@@ -11,6 +12,7 @@ export class ChartSeries {
 
 export class ChartExtra {
   sequence: ChartSequence;
+  color: string;
 }
 
 export enum ChartSequence {
@@ -20,4 +22,9 @@ export enum ChartSequence {
   D,
   E,
   F
+}
+
+export class ChartSeriesDef {
+  name: string;
+  color: string;
 }
