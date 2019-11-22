@@ -1,6 +1,7 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { ItemEntryLeague } from '../shared/api/item-entry';
 import { ItemHistory } from '../shared/api/item-history';
+import { ChartResults, ChartSequence } from '../shared/chart-results';
 
 @Pipe({
   name: 'itemHistoryFormat'
@@ -17,7 +18,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     return null;
   }
 
-  public formatHistory(il: ItemEntryLeague, h: ItemHistory[]): any {
+  public formatHistory(il: ItemEntryLeague, h: ItemHistory[]): ChartResults[] {
     const dates = this.calculateDates(il, h);
     const output = [];
 
@@ -35,7 +36,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
   }
 
   // null values: https://github.com/swimlane/ngx-charts/issues/799
-  private padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: any, elem: { name: string, series: any[] }): void {
+  private padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResults): void {
     // If entries are missing before the first entry, fill with "No data"
     if (dates.daysMissingStart) {
       const date = new Date(dates.startDate);
@@ -45,7 +46,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
           name: this.incDate(date, i),
           value: 0,
           extra: {
-            sequence: 0
+            sequence: ChartSequence.A
           }
         });
       }
@@ -59,7 +60,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
         name: new Date(entry.time),
         value: entry[elem.name],
         extra: {
-          sequence: 1
+          sequence: ChartSequence.B
         }
       });
 
@@ -81,7 +82,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
             name: this.incDate(currentDate, j + 1),
             value: 0,
             extra: {
-              sequence: 2
+              sequence: ChartSequence.C
             }
           });
         }
@@ -98,7 +99,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
           name: this.incDate(date, i),
           value: 0,
           extra: {
-            sequence: 3
+            sequence: ChartSequence.D
           }
         });
       }
@@ -110,7 +111,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
         name: new Date(),
         value: il[elem.name],
         extra: {
-          sequence: 4
+          sequence: ChartSequence.E
         }
       });
     }
@@ -126,25 +127,15 @@ export class ItemHistoryFormatPipe implements PipeTransform {
           name: this.incDate(date, i),
           value: null,
           extra: {
-            sequence: 5
+            sequence: ChartSequence.F
           }
         });
       }
     }
   }
 
-  private calculateDates(il: ItemEntryLeague, h: ItemHistory[]): any {
-    const dates = {
-      firstDate: null,
-      lastDate: null,
-      totalDays: null,
-      elapsedDays: null,
-      startDate: null,
-      endDate: null,
-      daysMissingStart: 0,
-      daysMissingEnd: 0,
-      startEmptyPadding: 0
-    };
+  private calculateDates(il: ItemEntryLeague, h: ItemHistory[]): DateSet {
+    const dates = new DateSet();
 
     // If there are any history entries for this league, find the first and last date
     if (h.length) {
@@ -205,19 +196,21 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     return dates;
   }
 
-  private formatDate(timeStamp: Date): string {
-    const MONTH_NAMES = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
-    const s = new Date(timeStamp);
-    return `${s.getDate()} ${MONTH_NAMES[s.getMonth()]}`;
-  }
-
-  private incDate(date: Date, amount: number = 1) {
+  private incDate(date: Date, amount: number = 1): Date {
     const newDate = new Date(date.valueOf());
     newDate.setDate(newDate.getDate() + amount);
     return newDate;
   }
+}
+
+class DateSet {
+  firstDate: Date;
+  lastDate: Date;
+  totalDays: number;
+  elapsedDays: number;
+  startDate: Date;
+  endDate: Date;
+  daysMissingStart: number;
+  daysMissingEnd: number;
+  startEmptyPadding: number;
 }

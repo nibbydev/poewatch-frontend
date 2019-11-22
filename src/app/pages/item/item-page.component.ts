@@ -7,6 +7,7 @@ import { Criteria, SearchOption } from '../../shared/criteria';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ItemHistoryFormatPipe } from '../../pipes/item-history-format.pipe';
 import { ItemHistoryService } from '../../services/item-hisotry.service';
+import { ChartResults } from '../../shared/chart-results';
 
 @Component({
   selector: 'app-item-page',
@@ -14,7 +15,7 @@ import { ItemHistoryService } from '../../services/item-hisotry.service';
   styleUrls: ['./item-page.component.css']
 })
 export class ItemPageComponent implements OnInit {
-  public multi;
+  public multi: ChartResults[];
   public chart = {
     colorScheme: {
       domain: ['#efc3ff', '#f6ffa1', '#99ffa0', '#aaff93', '#93ffe0']
@@ -106,7 +107,7 @@ export class ItemPageComponent implements OnInit {
     this.entryLeague$.next(entryLeague);
 
     this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
-      console.log(h)
+      console.log(h);
       this.multi = this.historyFormatPipe.formatHistory(entryLeague, h);
       console.log(this.multi);
     });
