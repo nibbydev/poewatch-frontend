@@ -12,7 +12,7 @@ html {
 }
 
 * {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -485,22 +485,20 @@ canvas {
   stroke-width: .5em;
 }
 
-
-
-
 .list-group-flush .list-group-item {
   border-top: 0 !important;
 }
-
-
-
-
-
-
-
 
 .list-group-item {
   background-color: transparent;
 }
 
+
+.ngx-charts line.gridline-path {
+  stroke: rgba(255,255,255,0.1);
+}
+
+.ngx-charts text {
+  fill: rgba(255,255,255,0.3);
+}
 
