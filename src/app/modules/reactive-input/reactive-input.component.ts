@@ -93,7 +93,6 @@ export class ReactiveInputComponent implements OnInit {
     }
   }
 
-
   private onChange(): void {
     this.updateQueryParams();
 

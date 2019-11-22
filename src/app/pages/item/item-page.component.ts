@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ItemService} from '../../services/item.service';
-import {ItemEntry, ItemEntryLeague} from '../../shared/api/item-entry';
-import {first} from 'rxjs/operators';
-import {Criteria, SearchOption} from '../../shared/criteria';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ItemHistoryFormatPipe} from '../../pipes/item-history-format.pipe';
-import {ItemHistoryService} from '../../services/item-hisotry.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ItemService } from '../../services/item.service';
+import { ItemEntry, ItemEntryLeague } from '../../shared/api/item-entry';
+import { first } from 'rxjs/operators';
+import { Criteria, SearchOption } from '../../shared/criteria';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ItemHistoryFormatPipe } from '../../pipes/item-history-format.pipe';
+import { ItemHistoryService } from '../../services/item-hisotry.service';
 
 @Component({
   selector: 'app-item-page',
@@ -14,10 +14,16 @@ import {ItemHistoryService} from '../../services/item-hisotry.service';
   styleUrls: ['./item-page.component.css']
 })
 export class ItemPageComponent implements OnInit {
+  public multi;
+  public chart = {
+    colorScheme: {
+      domain: ['#efc3ff', '#f6ffa1', '#99ffa0', '#aaff93', '#93ffe0']
+    }
+  };
+
+  public item: ItemEntry;
   private entryLeague$: BehaviorSubject<ItemEntryLeague> = new BehaviorSubject(null);
   private id: number;
-  public item: ItemEntry;
-
   private leagueCriteria: Criteria = {
     id: 'league',
     title: null,
@@ -29,9 +35,7 @@ export class ItemPageComponent implements OnInit {
     setInitialQueryParam: true,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),
-    onChange: () => {
-      this.onLeagueChange();
-    }
+    onChange: this.requestReloadChartData
   };
   private typeCriteria: Criteria = {
     id: 'type',
@@ -56,7 +60,7 @@ export class ItemPageComponent implements OnInit {
       o.complete();
     }),
     onChange: () => {
-      // todo
+      // todo: set chart dataset
     }
   };
 
@@ -66,13 +70,16 @@ export class ItemPageComponent implements OnInit {
               private historyFormatPipe: ItemHistoryFormatPipe) {
   }
 
-
   ngOnInit() {
     const id = parseInt(this.activatedRoute.snapshot.queryParamMap.get('id'), 10);
     if (!isNaN(id)) {
       this.id = id;
       this.requestItem();
     }
+  }
+
+  public onSelect(e: any) {
+    console.log(e);
   }
 
   private requestItem(): void {
@@ -90,18 +97,22 @@ export class ItemPageComponent implements OnInit {
 
       // set the initial values
       this.leagueCriteria.value = i.leagues[0].name;
-      this.onLeagueChange();
+      this.requestReloadChartData();
     });
   }
 
-  private onLeagueChange(): void {
+  private requestReloadChartData(): void {
     const entryLeague = this.item.leagues.find(l => l.name === this.leagueCriteria.value);
     this.entryLeague$.next(entryLeague);
 
     this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
-      // todo
-      console.log(h);
-      console.log(this.historyFormatPipe.formatHistory(entryLeague, h));
+      console.log(h)
+      this.multi = this.historyFormatPipe.formatHistory(entryLeague, h);
+      console.log(this.multi);
     });
+  }
+
+  private axisTickFormatting(val) {
+    return '';
   }
 }

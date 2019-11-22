@@ -56,7 +56,42 @@
               </div>
             </div>
 
-            <div class="ct-chart"></div>
+            <div class="d-flex" style="height: 300px">
+              <ngx-charts-line-chart *ngIf="multi"
+                [scheme]="chart.colorScheme"
+                [results]="multi"
+                [xAxis]="true"
+                [yAxis]="true"
+                [showGridLines]="true"
+                [xAxisTickFormatting]="axisTickFormatting"
+                (select)="onSelect($event)">
+                <ng-template #tooltipTemplate let-model="model">
+                  <div class="p-2">
+                    <h5>{{model.name | date}}</h5>
+                    <div>{{model.series | titlecase}}: {{model.value | number:'1.0-2'}}</div>
+                  </div>
+                </ng-template>
+
+                <ng-template #seriesTooltipTemplate let-model="model">
+                  <div class="p-2">
+                    <h5>{{model[0].name | date}}</h5>
+                    <div *ngFor="let m of model">
+                      <div class="d-flex justify-content-between">
+                        <div class="align-items-center">
+                          <div class="colorbox" [ngStyle]="{'background-color': m.color}"></div>
+                          <div class="d-inline-block" [ngStyle]="{color: m.color}">
+                            {{m.series}}
+                          </div>
+                        </div>
+                        <div>{{m.value | number:'1.0-2'}}</div>
+                        <span>{{m?.extra?.sequence}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+
+              </ngx-charts-line-chart>
+            </div>
 
             <div class="d-flex justify-content-center">
               <app-reactive-input [criteria]="typeCriteria"></app-reactive-input>

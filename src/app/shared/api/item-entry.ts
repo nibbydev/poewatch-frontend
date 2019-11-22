@@ -9,8 +9,8 @@ export class ItemEntryLeague {
   public name: string;
   public display?: string;
   public active: boolean;
-  public start?: string;
-  public end?: string;
+  public start?: Date;
+  public end?: Date;
 
   public mean: number;
   public median: number;

@@ -1,6 +1,6 @@
-import {Injectable, Pipe, PipeTransform} from '@angular/core';
-import {ItemEntryLeague} from '../shared/api/item-entry';
-import {ItemHistory} from '../shared/api/item-history';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
+import { ItemEntryLeague } from '../shared/api/item-entry';
+import { ItemHistory } from '../shared/api/item-history';
 
 @Pipe({
   name: 'itemHistoryFormat'
@@ -9,39 +9,45 @@ import {ItemHistory} from '../shared/api/item-history';
   providedIn: 'root'
 })
 export class ItemHistoryFormatPipe implements PipeTransform {
+  private readonly msInDay = 86400000;
+  private readonly series = ['mean', 'median', 'mode', 'current', 'daily'];
+  private readonly colors = ['#efc3ff', '#f6ffa1', '#99ffa0', '#aaff93', '#93ffe0'];
 
   transform(value: any[], args?: any): any[] {
     return null;
   }
 
-  public formatHistory(il: ItemEntryLeague, h: ItemHistory[]): { keys, vals } {
+  public formatHistory(il: ItemEntryLeague, h: ItemHistory[]): any {
     const dates = this.calculateDates(il, h);
-    return this.padHistory(il, h, dates);
+    const output = [];
+
+    for (const s of this.series) {
+      const elem = {
+        name: s,
+        series: []
+      };
+
+      this.padHistory(il, h, dates, elem);
+      output.push(elem);
+    }
+
+    return output;
   }
 
-  private padHistory(il: ItemEntryLeague, h: ItemHistory[], data): { keys, vals } {
-    const output = {
-      keys: [],
-      vals: {
-        mean: [],
-        median: [],
-        mode: [],
-        daily: [],
-        current: [],
-      }
-    };
-
+  // null values: https://github.com/swimlane/ngx-charts/issues/799
+  private padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: any, elem: { name: string, series: any[] }): void {
     // If entries are missing before the first entry, fill with "No data"
-    if (data.daysMissingStart) {
-      const date = new Date(data.startDate);
+    if (dates.daysMissingStart) {
+      const date = new Date(dates.startDate);
 
-      for (let i = 0; i < data.daysMissingStart; i++) {
-        output.vals.mean.push(0);
-        output.vals.median.push(0);
-        output.vals.mode.push(0);
-        output.vals.daily.push(0);
-        output.vals.current.push(0);
-        output.keys.push(this.formatDate(this.incDate(date, i)));
+      for (let i = 0; i < dates.daysMissingStart; i++) {
+        elem.series.push({
+          name: this.incDate(date, i),
+          value: 0,
+          extra: {
+            sequence: 0
+          }
+        });
       }
     }
 
@@ -49,13 +55,13 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     for (let i = 0; i < h.length; i++) {
       const entry = h[i];
 
-      // Add current entry values
-      output.vals.mean.push(Math.round(entry.mean * 100) / 100);
-      output.vals.median.push(Math.round(entry.median * 100) / 100);
-      output.vals.mode.push(Math.round(entry.mode * 100) / 100);
-      output.vals.daily.push(entry.daily);
-      output.vals.current.push(entry.current);
-      output.keys.push(this.formatDate(entry.time));
+      elem.series.push({
+        name: new Date(entry.time),
+        value: entry[elem.name],
+        extra: {
+          sequence: 1
+        }
+      });
 
       // Check if there are any missing entries between the current one and the next one
       if (i + 1 < h.length) {
@@ -71,60 +77,63 @@ export class ItemHistoryFormatPipe implements PipeTransform {
 
         // Fill missing days with "No data" (if any)
         for (let j = 0; j < diffDays; j++) {
-          output.vals.mean.push(0);
-          output.vals.median.push(0);
-          output.vals.mode.push(0);
-          output.vals.daily.push(0);
-          output.vals.current.push(0);
-          output.keys.push(this.formatDate(this.incDate(currentDate, j + 1)));
+          elem.series.push({
+            name: this.incDate(currentDate, j + 1),
+            value: 0,
+            extra: {
+              sequence: 2
+            }
+          });
         }
       }
     }
 
     // If entries are missing after the first entry, fill with "No data"
-    if (data.daysMissingEnd && data.lastDate) {
-      const date = new Date(data.lastDate);
+    if (dates.daysMissingEnd && dates.lastDate) {
+      const date = new Date(dates.lastDate);
       date.setDate(date.getDate() + 1);
 
-      for (let i = 0; i < data.daysMissingEnd; i++) {
-        output.vals.mean.push(0);
-        output.vals.median.push(0);
-        output.vals.mode.push(0);
-        output.vals.daily.push(0);
-        output.vals.current.push(0);
-        output.keys.push(this.formatDate(this.incDate(date, i)));
+      for (let i = 0; i < dates.daysMissingEnd; i++) {
+        elem.series.push({
+          name: this.incDate(date, i),
+          value: 0,
+          extra: {
+            sequence: 3
+          }
+        });
       }
     }
 
     // Add current values
     if (il.active) {
-      output.vals.mean.push(Math.round(il.mean * 100) / 100);
-      output.vals.median.push(Math.round(il.median * 100) / 100);
-      output.vals.mode.push(Math.round(il.mode * 100) / 100);
-      output.vals.daily.push(il.daily);
-      output.vals.current.push(il.current);
-      output.keys.push('Now');
+      elem.series.push({
+        name: new Date(),
+        value: il[elem.name],
+        extra: {
+          sequence: 4
+        }
+      });
     }
 
     // Bloat using 'null's the amount of days that should not have a tooltip.
     // Or in other words the number of days left in the league
-    if (data.startEmptyPadding) {
-      for (let i = 0; i < data.startEmptyPadding; i++) {
-        output.vals.mean.push(null);
-        output.vals.median.push(null);
-        output.vals.mode.push(null);
-        output.vals.daily.push(null);
-        output.vals.current.push(null);
-        output.keys.push('');
+    if (dates.startEmptyPadding) {
+      const date = new Date(elem.series[elem.series.length - 1].name);
+      date.setDate(date.getDate() + 1);
+
+      for (let i = 0; i < dates.startEmptyPadding; i++) {
+        elem.series.push({
+          name: this.incDate(date, i),
+          value: null,
+          extra: {
+            sequence: 5
+          }
+        });
       }
     }
-
-    // Return generated data
-    return output;
   }
 
   private calculateDates(il: ItemEntryLeague, h: ItemHistory[]): any {
-    const msInDay = 86400000;
     const dates = {
       firstDate: null,
       lastDate: null,
@@ -155,10 +164,10 @@ export class ItemHistoryFormatPipe implements PipeTransform {
 
     // Find duration for non-permanent leagues
     if (dates.startDate && dates.endDate) {
-      dates.totalDays = Math.floor(Math.abs(dates.endDate.getTime() - dates.startDate.getTime()) / msInDay);
+      dates.totalDays = Math.floor(Math.abs(dates.endDate.getTime() - dates.startDate.getTime()) / this.msInDay);
 
       if (il.active) {
-        dates.elapsedDays = Math.floor(Math.abs(new Date().getTime() - dates.startDate.getTime()) / msInDay);
+        dates.elapsedDays = Math.floor(Math.abs(new Date().getTime() - dates.startDate.getTime()) / this.msInDay);
       } else {
         dates.elapsedDays = dates.totalDays;
       }
@@ -167,7 +176,7 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     // Find how many days worth of data is missing from the league start
     if (il.id > 2) {
       if (dates.firstDate && dates.startDate) {
-        dates.daysMissingStart = Math.floor(Math.abs(dates.firstDate.getTime() - dates.startDate.getTime()) / msInDay);
+        dates.daysMissingStart = Math.floor(Math.abs(dates.firstDate.getTime() - dates.startDate.getTime()) / this.msInDay);
       }
     }
 
@@ -175,12 +184,12 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     if (il.active) {
       // League is active, compare time of last entry to right now
       if (dates.lastDate) {
-        dates.daysMissingEnd = Math.floor(Math.abs(new Date().getTime() - dates.lastDate.getTime()) / msInDay);
+        dates.daysMissingEnd = Math.floor(Math.abs(new Date().getTime() - dates.lastDate.getTime()) / this.msInDay);
       }
     } else {
       // League has ended, compare time of last entry to time of league end
       if (dates.lastDate && dates.endDate) {
-        dates.daysMissingEnd = Math.floor(Math.abs(dates.lastDate.getTime() - dates.endDate.getTime()) / msInDay);
+        dates.daysMissingEnd = Math.floor(Math.abs(dates.lastDate.getTime() - dates.endDate.getTime()) / this.msInDay);
       }
     }
 
