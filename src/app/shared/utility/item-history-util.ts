@@ -114,11 +114,12 @@ export class ItemHistoryUtil {
 
     // Bloat using 'null's the amount of days that should not have a tooltip.
     // Or in other words the number of days left in the league
-    if (dates.startEmptyPadding) {
-      const date = DateUtil.roundDate(new Date(elem.series[elem.series.length - 1].name));
+    if (dates.emptyPadding) {
+      const lastElem = elem.series[elem.series.length - 1];
+      const date = DateUtil.roundDate(new Date(lastElem.name));
       date.setDate(date.getDate() + 1);
 
-      for (let i = 0; i < dates.startEmptyPadding; i++) {
+      for (let i = 0; i < dates.emptyPadding; i++) {
         elem.series.push({
           name: DateUtil.incDate(date, i),
           value: 0,
@@ -184,10 +185,11 @@ export class ItemHistoryUtil {
     // Find number of ticks the graph should be padded with empty entries on the left
     if (il.id > 2) {
       if (dates.totalDays !== null && dates.elapsedDays !== null) {
-        dates.startEmptyPadding = dates.totalDays - dates.elapsedDays;
+        // todo: either totalDays is 1 too big or elapsedDays is 1 too small
+        dates.emptyPadding = dates.totalDays - dates.elapsedDays - 1;
       }
     } else {
-      dates.startEmptyPadding = 120 - h.length;
+      dates.emptyPadding = 120 - h.length;
     }
 
     return dates;
@@ -204,5 +206,5 @@ class DateSet {
   endDate: Date;
   daysMissingStart: number;
   daysMissingEnd: number;
-  startEmptyPadding: number;
+  emptyPadding: number;
 }

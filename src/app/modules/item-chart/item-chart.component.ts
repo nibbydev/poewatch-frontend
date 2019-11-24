@@ -67,15 +67,15 @@ export class ItemChartComponent implements OnInit, OnDestroy {
     const fourHours = 14400000;
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    console.log(DateUtil.roundDate(date).toISOString(), DateUtil.roundDate(new Date(this.entryLeague.start)).toISOString());
+    console.log(date.toISOString(), DateUtil.roundDate(new Date(this.entryLeague.end)).toISOString());
 
     const startDate = DateUtil.roundDate(new Date(this.entryLeague.start));
-    if (date.getTime() - startDate.getTime() < fourHours) {
+    if (date.getTime() === startDate.getTime()) {
       messages.push('League start');
     }
 
     const endDate = DateUtil.roundDate(new Date(this.entryLeague.end));
-    if (endDate.getTime() - date.getTime() < fourHours) {
+    if (endDate.getTime() === date.getTime()) {
       messages.push('League end');
     }
 
