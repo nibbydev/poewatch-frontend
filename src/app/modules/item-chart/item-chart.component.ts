@@ -1,7 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ChartResult, ChartSequence, ChartSeries, ChartSeriesDef } from '../../shared/chart-result';
-import { Subject, Subscription } from 'rxjs';
-import { ItemEntryLeague } from '../../shared/api/item-entry';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChartResult, ChartSequence, ChartSeries, ChartSeriesDef} from '../../shared/chart-result';
+import {Subject, Subscription} from 'rxjs';
+import {ItemEntryLeague} from '../../shared/api/item-entry';
+import {DateUtil} from '../../shared/utility/date-util';
 
 @Component({
   selector: 'app-item-chart',
@@ -39,10 +40,22 @@ export class ItemChartComponent implements OnInit, OnDestroy {
    */
   public emptyTickFormatting = () => '';
 
-  public showSeriesToolTip(entries: ChartSeries[]): boolean {
-    // contains all entries at the current X-axis tick
-    const e = entries[0];
-    return e.extra.sequence !== ChartSequence.F;
+  public getSequenceWarning(entries: ChartSeries[]): string {
+    switch (entries[0].extra.sequence) {
+      case ChartSequence.LeftPad:
+        return 'Missing for league start';
+      case ChartSequence.CenterFill:
+        return 'Missing data for this day';
+      case ChartSequence.RightPad:
+        return 'Missing data for league end';
+      case ChartSequence.EmptyPad:
+        return 'League has not progressed this far yet';
+    }
+  }
+
+  public isDefaultSequence(entries: ChartSeries[]): boolean {
+    return entries[0].extra.sequence === ChartSequence.Default
+      || entries[0].extra.sequence === ChartSequence.Current;
   }
 
   public getTimestampSubTexts(date: Date): string[] {
@@ -54,27 +67,26 @@ export class ItemChartComponent implements OnInit, OnDestroy {
     const fourHours = 14400000;
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    console.log(date.toISOString(), new Date(this.entryLeague.end).toISOString());
+    console.log(DateUtil.roundDate(date).toISOString(), DateUtil.roundDate(new Date(this.entryLeague.start)).toISOString());
 
-    const startDate = new Date(this.entryLeague.start);
+    const startDate = DateUtil.roundDate(new Date(this.entryLeague.start));
     if (date.getTime() - startDate.getTime() < fourHours) {
-      messages.push('League start day');
+      messages.push('League start');
     }
 
-    const endDate = new Date(this.entryLeague.end);
+    const endDate = DateUtil.roundDate(new Date(this.entryLeague.end));
     if (endDate.getTime() - date.getTime() < fourHours) {
-      messages.push('League end day');
+      messages.push('League end');
     }
 
-
-    const dayNumber = Math.ceil((date.getTime() - startDate.getTime()) / 86400000);
+    const dayNumber = Math.ceil((date.getTime() - startDate.getTime() + 1) / 86400000);
     const weekNumber = Math.ceil(dayNumber / 7);
+
     messages.push('Week ' + weekNumber + ', Day ' + dayNumber);
-
-
     messages.push(days[date.getDay()]);
 
     return messages;
   }
+
 }
 

@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ItemService } from '../../services/item.service';
-import { ItemEntry, ItemEntryLeague } from '../../shared/api/item-entry';
-import { first } from 'rxjs/operators';
-import { Criteria, SearchOption } from '../../shared/criteria';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ItemHistoryFormatPipe } from '../../pipes/item-history-format.pipe';
-import { ItemHistoryService } from '../../services/item-hisotry.service';
-import { ChartResult, ChartSeriesDef } from '../../shared/chart-result';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ItemService} from '../../services/item.service';
+import {ItemEntry, ItemEntryLeague} from '../../shared/api/item-entry';
+import {first} from 'rxjs/operators';
+import {Criteria, SearchOption} from '../../shared/criteria';
+import {BehaviorSubject} from 'rxjs';
+import {ItemHistoryService} from '../../services/item-hisotry.service';
+import {ChartResult, ChartSeriesDef} from '../../shared/chart-result';
+import {ItemHistoryUtil} from '../../shared/utility/item-history-util';
 
 @Component({
   selector: 'app-item-page',
@@ -65,8 +65,7 @@ export class ItemPageComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private itemService: ItemService,
-              private itemHistoryService: ItemHistoryService,
-              private historyFormatPipe: ItemHistoryFormatPipe) {
+              private itemHistoryService: ItemHistoryService) {
   }
 
   ngOnInit() {
@@ -102,8 +101,8 @@ export class ItemPageComponent implements OnInit {
 
     this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
       console.log(h);
-      this.priceChartData.results = this.historyFormatPipe.transform(entryLeague, h, this.priceChartData.seriesDef);
-      this.countChartData.results = this.historyFormatPipe.transform(entryLeague, h, this.countChartData.seriesDef);
+      this.priceChartData.results = ItemHistoryUtil.convert(entryLeague, h, this.priceChartData.seriesDef);
+      this.countChartData.results = ItemHistoryUtil.convert(entryLeague, h, this.countChartData.seriesDef);
     });
   }
 }

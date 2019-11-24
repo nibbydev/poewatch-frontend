@@ -29,10 +29,9 @@ import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-tab
 import {ItemPageComponent} from './pages/item/item-page.component';
 import {ItemFormatPipe} from './pipes/item-format.pipe';
 import {ItemDetailsComponent} from './pages/item/item-details/item-details.component';
-import {ItemHistoryFormatPipe} from './pipes/item-history-format.pipe';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ItemChartComponent } from './modules/item-chart/item-chart.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ItemChartComponent} from './modules/item-chart/item-chart.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import { ItemChartComponent } from './modules/item-chart/item-chart.component';
     ItemPageComponent,
     ItemFormatPipe,
     ItemDetailsComponent,
-    ItemHistoryFormatPipe,
     ItemChartComponent,
   ],
   imports: [

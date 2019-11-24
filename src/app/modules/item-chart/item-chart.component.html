@@ -21,11 +21,11 @@
       <!-- todo: remove me -->
       <div>{{printOut('series', model[0].extra.sequence, model)}}</div>
 
-      <div *ngIf="!showSeriesToolTip(model)" class="custom-text-gray">
-        League has not progressed this far yet
+      <div *ngIf="!isDefaultSequence(model)" class="custom-text-gray">
+        {{getSequenceWarning(model)}}
       </div>
 
-      <div *ngIf="showSeriesToolTip(model)" class="pt-2">
+      <div *ngIf="isDefaultSequence(model)" class="pt-2">
         <div *ngFor="let m of model" class="d-flex justify-content-between">
           <div class="align-items-center">
             <div [ngStyle]="{'background-color': m.color}" class="colorbox"></div>

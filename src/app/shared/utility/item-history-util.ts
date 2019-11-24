@@ -1,19 +1,13 @@
-import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { ItemEntryLeague } from '../shared/api/item-entry';
-import { ItemHistory } from '../shared/api/item-history';
-import { ChartResult, ChartSequence, ChartSeriesDef } from '../shared/chart-result';
+import {ItemEntryLeague} from '../api/item-entry';
+import {ItemHistory} from '../api/item-history';
+import {ChartResult, ChartSequence, ChartSeriesDef} from '../chart-result';
+import {DateUtil} from './date-util';
 
-@Pipe({
-  name: 'itemHistoryFormat'
-})
-@Injectable({
-  providedIn: 'root'
-})
-export class ItemHistoryFormatPipe implements PipeTransform {
-  private readonly msInDay = 86400000;
+export class ItemHistoryUtil {
 
-  // todo: use service instead of pipe
-  transform(il: ItemEntryLeague, h: ItemHistory[], sd: ChartSeriesDef[]): ChartResult[] {
+  private static readonly msInDay = 86400000;
+
+  public static convert(il: ItemEntryLeague, h: ItemHistory[], sd: ChartSeriesDef[]): ChartResult[] {
     const dates = this.calculateDates(il, h);
     const output = [];
 
@@ -32,17 +26,17 @@ export class ItemHistoryFormatPipe implements PipeTransform {
   }
 
   // null values: https://github.com/swimlane/ngx-charts/issues/799
-  private padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResult): void {
+  private static padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResult): void {
     // If entries are missing before the first entry, fill with "No data"
     if (dates.daysMissingStart) {
-      const date = new Date(dates.startDate);
+      const date = DateUtil.roundDate(new Date(dates.startDate));
 
       for (let i = 0; i < dates.daysMissingStart; i++) {
         elem.series.push({
-          name: this.incDate(date, i),
+          name: DateUtil.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.A,
+            sequence: ChartSequence.LeftPad,
             color: elem.color
           }
         });
@@ -54,10 +48,10 @@ export class ItemHistoryFormatPipe implements PipeTransform {
       const entry = h[i];
 
       elem.series.push({
-        name: new Date(entry.time),
+        name: DateUtil.roundDate(new Date(entry.time)),
         value: entry[elem.name],
         extra: {
-          sequence: ChartSequence.B,
+          sequence: ChartSequence.Default,
           color: elem.color
         }
       });
@@ -67,8 +61,8 @@ export class ItemHistoryFormatPipe implements PipeTransform {
         const nextEntry = h[i + 1];
 
         // Get dates
-        const currentDate = new Date(entry.time);
-        const nextDate = new Date(nextEntry.time);
+        const currentDate = DateUtil.roundDate(new Date(entry.time));
+        const nextDate = DateUtil.roundDate(new Date(nextEntry.time));
 
         // Get difference in days between entries
         const timeDiff = Math.abs(nextDate.getTime() - currentDate.getTime());
@@ -77,10 +71,10 @@ export class ItemHistoryFormatPipe implements PipeTransform {
         // Fill missing days with "No data" (if any)
         for (let j = 0; j < diffDays; j++) {
           elem.series.push({
-            name: this.incDate(currentDate, j + 1),
+            name: DateUtil.incDate(currentDate, j + 1),
             value: 0,
             extra: {
-              sequence: ChartSequence.C,
+              sequence: ChartSequence.CenterFill,
               color: elem.color
             }
           });
@@ -90,15 +84,15 @@ export class ItemHistoryFormatPipe implements PipeTransform {
 
     // If entries are missing after the first entry, fill with "No data"
     if (dates.daysMissingEnd && dates.lastDate) {
-      const date = new Date(dates.lastDate);
+      const date = DateUtil.roundDate(new Date(dates.lastDate));
       date.setDate(date.getDate() + 1);
 
       for (let i = 0; i < dates.daysMissingEnd; i++) {
         elem.series.push({
-          name: this.incDate(date, i),
+          name: DateUtil.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.D,
+            sequence: ChartSequence.RightPad,
             color: elem.color
           }
         });
@@ -107,11 +101,12 @@ export class ItemHistoryFormatPipe implements PipeTransform {
 
     // Add current values
     if (il.active) {
+      const date = DateUtil.roundDate(new Date());
       elem.series.push({
-        name: new Date(),
+        name: date,
         value: il[elem.name],
         extra: {
-          sequence: ChartSequence.E,
+          sequence: ChartSequence.Current,
           color: elem.color
         }
       });
@@ -120,15 +115,15 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     // Bloat using 'null's the amount of days that should not have a tooltip.
     // Or in other words the number of days left in the league
     if (dates.startEmptyPadding) {
-      const date = new Date(elem.series[elem.series.length - 1].name);
+      const date = DateUtil.roundDate(new Date(elem.series[elem.series.length - 1].name));
       date.setDate(date.getDate() + 1);
 
       for (let i = 0; i < dates.startEmptyPadding; i++) {
         elem.series.push({
-          name: this.incDate(date, i),
+          name: DateUtil.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.F,
+            sequence: ChartSequence.EmptyPad,
             color: elem.color
           }
         });
@@ -136,23 +131,23 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     }
   }
 
-  private calculateDates(il: ItemEntryLeague, h: ItemHistory[]): DateSet {
+  private static calculateDates(il: ItemEntryLeague, h: ItemHistory[]): DateSet {
     const dates = new DateSet();
 
     // If there are any history entries for this league, find the first and last date
     if (h.length) {
-      dates.firstDate = new Date(h[0].time);
-      dates.lastDate = new Date(h[h.length - 1].time);
+      dates.firstDate = DateUtil.roundDate(new Date(h[0].time));
+      dates.lastDate = DateUtil.roundDate(new Date(h[h.length - 1].time));
     }
 
     // League should always have a start date
     if (il.start) {
-      dates.startDate = new Date(il.start);
+      dates.startDate = DateUtil.roundDate(new Date(il.start));
     }
 
     // Permanent leagues don't have an end date
     if (il.end) {
-      dates.endDate = new Date(il.end);
+      dates.endDate = DateUtil.roundDate(new Date(il.end));
     }
 
     // Find duration for non-permanent leagues
@@ -198,11 +193,6 @@ export class ItemHistoryFormatPipe implements PipeTransform {
     return dates;
   }
 
-  private incDate(date: Date, amount: number = 1): Date {
-    const newDate = new Date(date.valueOf());
-    newDate.setDate(newDate.getDate() + amount);
-    return newDate;
-  }
 }
 
 class DateSet {

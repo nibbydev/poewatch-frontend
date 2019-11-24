@@ -16,12 +16,12 @@ export class ChartExtra {
 }
 
 export enum ChartSequence {
-  A,
-  B,
-  C,
-  D,
-  E,
-  F
+  LeftPad,
+  Default,
+  CenterFill,
+  RightPad,
+  Current,
+  EmptyPad
 }
 
 export class ChartSeriesDef {
