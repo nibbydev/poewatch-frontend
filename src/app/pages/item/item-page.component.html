@@ -5,8 +5,8 @@
 
         <app-spinner [ifValue]="item"></app-spinner>
 
-        <div class="d-flex justify-content-between align-items-center">
-          <app-item *ngIf="item" [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></app-item>
+        <div *ngIf="item" class="d-flex justify-content-between align-items-center">
+          <app-item [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></app-item>
           <app-reactive-input [criteria]="leagueCriteria"></app-reactive-input>
         </div>
       </div>
