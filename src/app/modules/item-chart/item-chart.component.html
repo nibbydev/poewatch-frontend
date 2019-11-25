@@ -5,9 +5,22 @@
                        [xAxis]="true"
                        [yAxis]="true">
   <ng-template #tooltipTemplate let-model="model">
-    <div class="p-2">
+    <div class="tooltip-large p-2">
       <h5>{{model.name | date}}</h5>
-      <div>{{model.series | titlecase}}: {{model.value | number:'1.0-2'}}</div>
+
+      <!-- todo: remove me -->
+      <div>{{printOut(model)}}</div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <div [ngStyle]="{'background-color': model.extra.color}" class="colorbox colorbox-md"></div>
+          <div [ngStyle]="{color: model.extra.color}" class="d-inline-block pr-2">
+            {{model.series | titlecase}}
+          </div>
+        </div>
+        <div>{{model.value | number:'1.0-2'}}</div>
+      </div>
+
     </div>
   </ng-template>
 
@@ -26,10 +39,10 @@
       </div>
 
       <div *ngIf="isDefaultSequence(model)" class="pt-2">
-        <div *ngFor="let m of model" class="d-flex justify-content-between">
-          <div class="align-items-center">
+        <div *ngFor="let m of model" class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
             <div [ngStyle]="{'background-color': m.color}" class="colorbox"></div>
-            <div [ngStyle]="{color: m.color}" class="d-inline-block">
+            <div [ngStyle]="{color: m.color}" class="d-inline-block pr-2">
               {{m.series | titlecase}}
             </div>
           </div>

@@ -7,11 +7,11 @@
   background-color: #fff;
 }
 
-.colorbox-sm {
-  width: 10px;
-  height: 10px;
-}
 .colorbox-md {
   width: 20px;
   height: 20px;
+}
+
+.tooltip-large {
+  font-size: 1rem;
 }
