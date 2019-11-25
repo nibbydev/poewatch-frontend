@@ -97,6 +97,7 @@ export class ItemPageComponent implements OnInit {
     this.entryLeague$.next(entryLeague);
 
     this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
+      // todo: remove me
       console.log(h);
       this.priceChartData.results = ItemHistoryUtil.convert(entryLeague, h, this.priceChartData.seriesDef);
       this.countChartData.results = ItemHistoryUtil.convert(entryLeague, h, this.countChartData.seriesDef);
