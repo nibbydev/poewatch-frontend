@@ -31,6 +31,8 @@ import { ItemDetailsComponent } from './pages/item/item-details/item-details.com
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemChartComponent } from './modules/item-chart/item-chart.component';
+import { LeaguesComponent } from './pages/leagues/leagues.component';
+import { LeaguesElementComponent } from './pages/leagues/leagues-element/leagues-element.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { ItemChartComponent } from './modules/item-chart/item-chart.component';
     ItemFormatPipe,
     ItemDetailsComponent,
     ItemChartComponent,
+    LeaguesComponent,
+    LeaguesElementComponent,
   ],
   imports: [
     BrowserModule,

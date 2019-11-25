@@ -1,10 +1,11 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {FrontComponent} from './pages/front/front.component';
-import {AboutComponent} from './pages/about/about.component';
-import {PricesComponent} from './pages/prices/prices.component';
-import {ApiComponent} from './pages/api/api.component';
-import {ItemPageComponent} from './pages/item/item-page.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { FrontComponent } from './pages/front/front.component';
+import { AboutComponent } from './pages/about/about.component';
+import { PricesComponent } from './pages/prices/prices.component';
+import { ApiComponent } from './pages/api/api.component';
+import { ItemPageComponent } from './pages/item/item-page.component';
+import { LeaguesComponent } from './pages/leagues/leagues.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,16 @@ const routes: Routes = [
       isNew: false,
       enabled: true,
       comment: 'Documentation for developers'
+    },
+  }, {
+    path: 'leagues',
+    component: LeaguesComponent,
+    data: {
+      pageTitle: null,
+      navTitle: 'Leagues',
+      isNew: false,
+      enabled: true,
+      comment: 'Listings and countdowns for leagues'
     },
   }, {
     path: 'about',
