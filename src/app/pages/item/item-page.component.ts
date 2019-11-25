@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ItemService} from '../../services/item.service';
-import {ItemEntry, ItemEntryLeague} from '../../shared/api/item-entry';
-import {first} from 'rxjs/operators';
-import {Criteria, SearchOption} from '../../shared/criteria';
-import {BehaviorSubject} from 'rxjs';
-import {ItemHistoryService} from '../../services/item-hisotry.service';
-import {ChartResult, ChartSeriesDef} from '../../shared/chart-result';
-import {ItemHistoryUtil} from '../../shared/utility/item-history-util';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ItemService } from '../../services/item.service';
+import { ItemEntry, ItemEntryLeague } from '../../shared/api/item-entry';
+import { first } from 'rxjs/operators';
+import { Criteria, SearchOption } from '../../shared/criteria';
+import { BehaviorSubject } from 'rxjs';
+import { ItemHistoryService } from '../../services/item-hisotry.service';
+import { ChartResult, ChartSeriesDef } from '../../shared/chart-result';
+import { ItemHistoryUtil } from '../../shared/utility/item-history-util';
 
 @Component({
   selector: 'app-item-page',
@@ -60,7 +60,8 @@ export class ItemPageComponent implements OnInit {
     setInitialQueryParam: true,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),
-    onChange: () => this.requestReloadChartData()
+    onChange: () => this.requestReloadChartData(),
+    onReady: () => this.requestReloadChartData()
   };
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -88,10 +89,6 @@ export class ItemPageComponent implements OnInit {
 
       // cast to BehaviorSubject and send the options so they'd appear in the selector
       (this.leagueCriteria.options as BehaviorSubject<SearchOption[]>).next(options);
-
-      // set the initial values
-      this.leagueCriteria.value = i.leagues[0].name;
-      this.requestReloadChartData();
     });
   }
 

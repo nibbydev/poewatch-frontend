@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Criteria, SearchOption} from '../../shared/criteria';
-import {ActivatedRoute} from '@angular/router';
-import {RouterHelperService} from '../../services/router-helper.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Criteria, SearchOption } from '../../shared/criteria';
+import { ActivatedRoute } from '@angular/router';
+import { RouterHelperService } from '../../services/router-helper.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-reactive-input',
@@ -27,13 +27,16 @@ export class ReactiveInputComponent implements OnInit {
         }
 
         this.onInitLoadOptions(o);
+        if (this.criteria.onReady) {
+          this.criteria.onReady();
+        }
+
         destroy$.next(true);
         destroy$.complete();
       });
 
       return;
     }
-
 
     // const paramMap = this.activatedRoute.snapshot.queryParamMap;
     // if (paramMap.has(this.criteria.id)) {

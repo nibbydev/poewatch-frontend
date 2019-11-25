@@ -1,7 +1,7 @@
-import {Observable, Subject} from 'rxjs';
-import {GetEntry} from './api/get-entry';
-import {takeUntil} from 'rxjs/operators';
-import {Category} from './api/category';
+import { Observable, Subject } from 'rxjs';
+import { GetEntry } from './api/get-entry';
+import { takeUntil } from 'rxjs/operators';
+import { Category } from './api/category';
 
 export class Criteria {
   // unique identifier, used as query param key
@@ -26,6 +26,8 @@ export class Criteria {
   showSpinner: boolean;
   // function called after input value changes
   onChange?: () => void;
+  // called when the input has loaded options and set query params
+  onReady?: () => void;
 
   public static resetAll(criteria: Criteria[]): void {
     criteria.forEach(c => {
