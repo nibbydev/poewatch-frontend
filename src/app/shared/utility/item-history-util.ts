@@ -1,7 +1,7 @@
-import {ItemEntryLeague} from '../api/item-entry';
-import {ItemHistory} from '../api/item-history';
-import {ChartResult, ChartSequence, ChartSeriesDef} from '../chart-result';
-import {DateUtil} from './date-util';
+import { ItemEntryLeague } from '../api/item-entry';
+import { ItemHistory } from '../api/item-history';
+import { ChartResult, ChartSequence, ChartSeriesDef } from '../chart-result';
+import { DateUtil } from './date-util';
 
 export class ItemHistoryUtil {
 
@@ -101,7 +101,7 @@ export class ItemHistoryUtil {
 
     // Add current values
     if (il.active) {
-      const date = DateUtil.roundDate(new Date());
+      const date = DateUtil.floorDate(new Date());
       elem.series.push({
         name: date,
         value: il[elem.name],
@@ -185,8 +185,10 @@ export class ItemHistoryUtil {
     // Find number of ticks the graph should be padded with empty entries on the left
     if (il.id > 2) {
       if (dates.totalDays !== null && dates.elapsedDays !== null) {
-        // todo: either totalDays is 1 too big or elapsedDays is 1 too small
-        dates.emptyPadding = dates.totalDays - dates.elapsedDays - 1;
+        // todo: rounding errors during certain parts of the day
+        // case 1: totalDays is 1 too big or elapsedDays is 1 too small, pads by 1 too many
+        // case 2: it rounds fine, everything works as intended
+        dates.emptyPadding = dates.totalDays - dates.elapsedDays;
       }
     } else {
       dates.emptyPadding = 120 - h.length;

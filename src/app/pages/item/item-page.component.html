@@ -22,14 +22,18 @@
         <div class="row m-0">
           <div class="col">
 
-            <h4>Item price history</h4>
-            <div *ngIf="priceChartData.results" class="d-flex" style="height: 300px">
-              <app-item-chart [data]="priceChartData" [entryLeague$]="entryLeague$" class="w-100"></app-item-chart>
+            <div>
+              <h4>Item price history</h4>
+              <app-spinner [ifValue]="priceChartData.results"></app-spinner>
+              <app-item-chart *ngIf="priceChartData.results" [data]="priceChartData" [entryLeague$]="entryLeague$"
+                              class="d-flex w-100" style="height: 300px"></app-item-chart>
             </div>
 
-            <h4>Listed daily & currently on sale</h4>
-            <div *ngIf="countChartData.results" class="d-flex" style="height: 300px">
-              <app-item-chart [data]="countChartData" [entryLeague$]="entryLeague$" class="w-100"></app-item-chart>
+            <div>
+              <h4>Listed daily & currently on sale</h4>
+              <app-spinner [ifValue]="countChartData.results"></app-spinner>
+              <app-item-chart *ngIf="countChartData.results" [data]="countChartData" [entryLeague$]="entryLeague$"
+                              class="d-flex w-100" style="height: 300px"></app-item-chart>
             </div>
 
           </div>
