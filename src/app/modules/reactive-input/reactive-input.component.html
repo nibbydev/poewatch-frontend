@@ -1,4 +1,4 @@
-<h4>{{criteria.title}}</h4>
+<h4 *ngIf="criteria.title">{{criteria.title}}</h4>
 
 <app-spinner *ngIf="criteria.showSpinner" [ifValue]="criteria.options" [isSmall]="true"></app-spinner>
 

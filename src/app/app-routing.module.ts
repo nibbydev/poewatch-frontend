@@ -6,6 +6,7 @@ import { PricesComponent } from './pages/prices/prices.component';
 import { ApiComponent } from './pages/api/api.component';
 import { ItemPageComponent } from './pages/item/item-page.component';
 import { LeaguesComponent } from './pages/leagues/leagues.component';
+import { StatsPageComponent } from './pages/stats/stats-page.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,16 @@ const routes: Routes = [
       comment: 'Documentation for developers'
     },
   }, {
+    path: 'stats',
+    component: StatsPageComponent,
+    data: {
+      pageTitle: 'Statistics',
+      navTitle: 'Statistics',
+      isNew: false,
+      enabled: true,
+      comment: 'Site and backend statistics'
+    },
+  }, {
     path: 'leagues',
     component: LeaguesComponent,
     data: {
@@ -54,7 +65,7 @@ const routes: Routes = [
     data: {
       pageTitle: 'About',
       navTitle: 'About',
-      isNew: true,
+      isNew: false,
       enabled: true,
       comment: 'Info about the site'
     },

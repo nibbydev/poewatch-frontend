@@ -1,8 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ChartResult, ChartSequence, ChartSeries, ChartSeriesDef} from '../../shared/chart-result';
-import {Subject, Subscription} from 'rxjs';
-import {ItemEntryLeague} from '../../shared/api/item-entry';
-import {DateUtil} from '../../shared/utility/date-util';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChartResult, ChartSeries, ChartSeriesDef } from '../../shared/chart-result';
+import { Subject, Subscription } from 'rxjs';
+import { ItemEntryLeague } from '../../shared/api/item-entry';
+import { DateUtil } from '../../shared/utility/date-util';
 
 @Component({
   selector: 'app-item-chart',
@@ -42,20 +42,19 @@ export class ItemChartComponent implements OnInit, OnDestroy {
 
   public getSequenceWarning(entries: ChartSeries[]): string {
     switch (entries[0].extra.sequence) {
-      case ChartSequence.LeftPad:
+      case 0:
         return 'Missing for league start';
-      case ChartSequence.CenterFill:
+      case 2:
         return 'Missing data for this day';
-      case ChartSequence.RightPad:
+      case 3:
         return 'Missing data for league end';
-      case ChartSequence.EmptyPad:
+      case 5:
         return 'League has not progressed this far yet';
     }
   }
 
   public isDefaultSequence(entries: ChartSeries[]): boolean {
-    return entries[0].extra.sequence === ChartSequence.Default
-      || entries[0].extra.sequence === ChartSequence.Current;
+    return entries[0].extra.sequence === 1 || entries[0].extra.sequence === 4;
   }
 
   public getTimestampSubTexts(date: Date): string[] {

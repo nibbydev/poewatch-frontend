@@ -1,6 +1,6 @@
 import { ItemEntryLeague } from '../api/item-entry';
 import { ItemHistory } from '../api/item-history';
-import { ChartResult, ChartSequence, ChartSeriesDef } from '../chart-result';
+import { ChartResult, ChartSeriesDef } from '../chart-result';
 import { DateUtil } from './date-util';
 
 export class ItemHistoryUtil {
@@ -36,7 +36,7 @@ export class ItemHistoryUtil {
           name: DateUtil.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.LeftPad,
+            sequence: 0,
             color: elem.color
           }
         });
@@ -51,7 +51,7 @@ export class ItemHistoryUtil {
         name: DateUtil.roundDate(new Date(entry.time)),
         value: entry[elem.name],
         extra: {
-          sequence: ChartSequence.Default,
+          sequence: 1,
           color: elem.color
         }
       });
@@ -74,7 +74,7 @@ export class ItemHistoryUtil {
             name: DateUtil.incDate(currentDate, j + 1),
             value: 0,
             extra: {
-              sequence: ChartSequence.CenterFill,
+              sequence: 2,
               color: elem.color
             }
           });
@@ -92,7 +92,7 @@ export class ItemHistoryUtil {
           name: DateUtil.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.RightPad,
+            sequence: 3,
             color: elem.color
           }
         });
@@ -106,7 +106,7 @@ export class ItemHistoryUtil {
         name: date,
         value: il[elem.name],
         extra: {
-          sequence: ChartSequence.Current,
+          sequence: 4,
           color: elem.color
         }
       });
@@ -124,7 +124,7 @@ export class ItemHistoryUtil {
           name: DateUtil.incDate(date, i),
           value: 0,
           extra: {
-            sequence: ChartSequence.EmptyPad,
+            sequence: 5,
             color: elem.color
           }
         });

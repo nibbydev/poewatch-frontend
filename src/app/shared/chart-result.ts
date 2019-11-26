@@ -11,20 +11,20 @@ export class ChartSeries {
 }
 
 export class ChartExtra {
-  sequence: ChartSequence;
+  sequence: number;
   color: string;
-}
-
-export enum ChartSequence {
-  LeftPad,
-  Default,
-  CenterFill,
-  RightPad,
-  Current,
-  EmptyPad
 }
 
 export class ChartSeriesDef {
   name: string;
   color: string;
+}
+
+// todo: rename me
+export class StatDefinition {
+  id: string;
+  display: string;
+  description: string;
+  color: string;
+  unit: string;
 }

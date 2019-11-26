@@ -33,6 +33,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemChartComponent } from './modules/item-chart/item-chart.component';
 import { LeaguesComponent } from './pages/leagues/leagues.component';
 import { LeaguesElementComponent } from './pages/leagues/leagues-element/leagues-element.component';
+import { StatsPageComponent } from './pages/stats/stats-page.component';
+import { StatsElementComponent } from './pages/stats/stats-element/stats-element.component';
+import { StatsChartComponent } from './modules/stats-chart/stats-chart.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +64,9 @@ import { LeaguesElementComponent } from './pages/leagues/leagues-element/leagues
     ItemChartComponent,
     LeaguesComponent,
     LeaguesElementComponent,
+    StatsPageComponent,
+    StatsElementComponent,
+    StatsChartComponent,
   ],
   imports: [
     BrowserModule,
