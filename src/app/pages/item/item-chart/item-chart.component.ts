@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ChartResult, ChartSeries, ChartSeriesDef } from '../../shared/chart-result';
-import { Subject, Subscription } from 'rxjs';
-import { ItemEntryLeague } from '../../shared/api/item-entry';
-import { DateUtil } from '../../shared/utility/date-util';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChartResult, ChartSeries, ChartSeriesDef} from '../../../shared/chart-result';
+import {Subject, Subscription} from 'rxjs';
+import {ItemEntryLeague} from '../../../shared/api/item-entry';
+import {DateUtil} from '../../../shared/utility/date-util';
 
 @Component({
   selector: 'app-item-chart',

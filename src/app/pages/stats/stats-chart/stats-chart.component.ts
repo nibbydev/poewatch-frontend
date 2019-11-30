@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ChartResult, StatDefinition } from '../../shared/chart-result';
+import {Component, Input, OnInit} from '@angular/core';
+import {ChartResult, StatDefinition} from '../../../shared/chart-result';
 
 @Component({
   selector: 'app-stats-chart',
