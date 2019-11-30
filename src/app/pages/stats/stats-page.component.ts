@@ -3,7 +3,7 @@ import {StatsService} from '../../services/stats.service';
 import {Stat} from '../../shared/api/stat';
 import {first} from 'rxjs/operators';
 import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../shared/chart-result';
-import {DateUtil} from '../../shared/utility/date-util';
+import {DateUtil, DateUtilFunc} from '../../shared/utility/date-util';
 
 @Component({
   selector: 'app-stats-page',
@@ -165,7 +165,7 @@ export class StatsPageComponent implements OnInit {
       const min = DateUtil.getNHoursAgo(this.historySize).toISOString();
       const max = new Date().toISOString();
 
-      const expected = DateUtil.fillDates(min, max, d => d.setHours(d.getHours() + 1), DateUtil.roundToHours);
+      const expected = DateUtil.fillDates(min, max, d => d.setHours(d.getHours() + 1), DateUtilFunc.floorToHours);
       if (expected.length !== this.historySize) {
         throw new Error('Why the fuck isn\'t it equal');
       }
@@ -174,7 +174,7 @@ export class StatsPageComponent implements OnInit {
 
       statGroups.forEach(sg => {
         const filled = this.fillNa(sg.stats, expected);
-        console.log(sg.stats.length, filled.length, sg.id);
+        console.log(sg.id, sg.stats, filled);
         sg.stats = filled;
       });
 
@@ -212,12 +212,13 @@ export class StatsPageComponent implements OnInit {
 
     const output = [] as Stat[];
 
-    for (let i = 0; i < this.historySize; i++) {
-      const stat = stats[i];
-      const exp = expected[i];
+    let statIndex = 0;
+    for (const exp of expected) {
+      const stat = stats[statIndex];
 
-      if (stat && new Date(stat.time) === new Date(exp)) {
+      if (stat && new Date(stat.time).getTime() === new Date(exp).getTime()) {
         output.push(stat);
+        statIndex++;
       } else {
         output.push({
           type: undefined,

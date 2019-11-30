@@ -1,3 +1,8 @@
+export const DateUtilConst = {
+  msInDay: 86400000,
+  msInHour: 3600000
+};
+
 export class DateUtil {
   public static incDate(date: Date, amount: number = 1): Date {
     const newDate = new Date(date.valueOf());
@@ -47,7 +52,19 @@ export class DateUtil {
     return now;
   }
 
-  public static roundToHours(date: Date): Date {
-    return new Date(Math.round(date.getTime() / 3600000) * 3600000);
-  }
 }
+
+export const DateUtilFunc = {
+  roundToHours(date: Date): Date {
+    return new Date(Math.round(date.getTime() / DateUtilConst.msInHour) * DateUtilConst.msInHour);
+  },
+  floorToHours(date: Date): Date {
+    return new Date(Math.floor(date.getTime() / DateUtilConst.msInHour) * DateUtilConst.msInHour);
+  },
+  roundToDays(date: Date): Date {
+    return new Date(Math.round(date.getTime() / DateUtilConst.msInDay) * DateUtilConst.msInDay);
+  },
+  floorToDays(date: Date): Date {
+    return new Date(Math.floor(date.getTime() / DateUtilConst.msInDay) * DateUtilConst.msInDay);
+  }
+};
