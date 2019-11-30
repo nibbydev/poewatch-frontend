@@ -6,24 +6,24 @@ import {AppComponent} from './app.component';
 
 import {BsDropdownModule, ModalModule, TooltipModule} from 'ngx-bootstrap';
 import {FrontComponent} from './pages/front/front.component';
-import {FooterComponent} from './modules/footer/footer.component';
-import {HeaderComponent} from './modules/header/header.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {HeaderComponent} from './components/header/header.component';
 import {AboutComponent} from './pages/about/about.component';
 import {ApiComponent} from './pages/api/api.component';
 import {PricesComponent} from './pages/prices/prices.component';
 import {HttpClientModule} from '@angular/common/http';
-import {TitleComponent} from './modules/title/title.component';
-import {SidebarComponent} from './modules/sidebar/sidebar.component';
-import {ItemComponent} from './modules/item/item.component';
+import {TitleComponent} from './components/title/title.component';
+import {SidebarComponent} from './components/sidebar/sidebar.component';
+import {ItemComponent} from './components/item/item.component';
 import {PricesTableComponent} from './pages/prices/prices-table/prices-table.component';
 import {FormsModule} from '@angular/forms';
-import {ItemPriceboxComponent} from './modules/item/item-pricebox/item-pricebox.component';
-import {ItemSparklineComponent} from './modules/item/item-sparkline/item-sparkline.component';
+import {ItemPriceboxComponent} from './components/item/item-pricebox/item-pricebox.component';
+import {ItemSparklineComponent} from './components/item/item-sparkline/item-sparkline.component';
 import {EnumToArrayPipe} from './pipes/enum-to-array.pipe';
 import {ActiveLeaguePipe} from './pipes/active-league.pipe';
 import {PricesTableLoadmoreComponent} from './pages/prices/prices-table/prices-table-loadmore/prices-table-loadmore.component';
-import {SpinnerComponent} from './modules/spinner/spinner.component';
-import {ReactiveInputComponent} from './modules/reactive-input/reactive-input.component';
+import {SpinnerComponent} from './components/spinner/spinner.component';
+import {ReactiveInputComponent} from './components/reactive-input/reactive-input.component';
 import {PricesTableStatusComponent} from './pages/prices/prices-table/prices-table-status/prices-table-status.component';
 import {ItemPageComponent} from './pages/item/item-page.component';
 import {ItemFormatPipe} from './pipes/item-format.pipe';
@@ -37,7 +37,7 @@ import {StatsPageComponent} from './pages/stats/stats-page.component';
 import {StatsElementComponent} from './pages/stats/stats-element/stats-element.component';
 import {StatsChartComponent} from './pages/stats/stats-chart/stats-chart.component';
 import {HoursAgoPipe} from './pipes/hours-ago.pipe';
-import {SparklineComponent} from './modules/sparkline/sparkline.component';
+import {SparklineComponent} from './components/sparkline/sparkline.component';
 
 @NgModule({
   declarations: [
