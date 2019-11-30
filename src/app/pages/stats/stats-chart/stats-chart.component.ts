@@ -11,15 +11,12 @@ export class StatsChartComponent implements OnInit {
   @Input() definitions: StatDefinition[];
 
   public colorScheme: { domain: string[] };
-  public printOut = console.log; // todo: remove me
 
   constructor() {
   }
 
   ngOnInit() {
     this.colorScheme = {domain: this.definitions.map(s => s.color)};
-    console.log(this.colorScheme);
-    console.log(this.results);
   }
 
   /**

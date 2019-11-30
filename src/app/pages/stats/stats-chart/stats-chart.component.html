@@ -6,14 +6,10 @@
                        [yAxis]="true">
   <ng-template #tooltipTemplate let-model="model">
     <div class="p-2">
-      <h5>{{model.name | date}}</h5>
-
-      <!-- todo: remove me -->
-      <div>{{printOut(model)}}</div>
+      <h5>{{model.name | date:'medium'}}</h5>
 
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-          <div [ngStyle]="{'background-color': model.extra.color}" class="colorbox colorbox-md"></div>
           <div [ngStyle]="{color: model.extra.color}" class="d-inline-block pr-2">
             {{model.series | titlecase}}
           </div>
@@ -28,15 +24,12 @@
     <div class="p-2">
       <h5>{{model[0].name | hoursAgo}}</h5>
 
-      <!-- todo: remove me -->
-      <div>{{printOut('series', model)}}</div>
-
       <div class="pt-2">
         <div *ngFor="let m of model" class="d-flex justify-content-between align-items-center">
           <div class="d-flex align-items-center">
             <div [ngStyle]="{'background-color': m.color}" class="colorbox"></div>
             <div [ngStyle]="{color: m.color}" class="d-inline-block pr-2">
-              {{m.series | titlecase}}
+              {{m.series}}
             </div>
           </div>
           <div>{{m.value | number:'1.0-2'}}</div>

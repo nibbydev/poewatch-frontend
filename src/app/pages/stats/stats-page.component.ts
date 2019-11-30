@@ -135,14 +135,14 @@ export class StatsPageComponent implements OnInit {
           display: 'API process',
           description: 'Stash API reply processing time in milliseconds',
           unit: 'ms',
-          color: '#fca1ff'
+          color: '#ff90b6'
         },
         {
           id: 'TIME_API_TTFB',
           display: 'TTFB',
           description: 'Stash API reply TTFB in milliseconds',
           unit: 'ms',
-          color: '#ff90b6'
+          color: '#fca1ff'
         }
       ],
       results: []
@@ -158,9 +158,7 @@ export class StatsPageComponent implements OnInit {
 
   ngOnInit() {
     this.statsService.makeRequest().pipe(first()).subscribe(stats => {
-      console.log(stats);
       const statGroups = this.groupStats(stats);
-      console.log(statGroups);
 
       const min = DateUtil.getNHoursAgo(this.historySize).toISOString();
       const max = new Date().toISOString();
@@ -170,12 +168,8 @@ export class StatsPageComponent implements OnInit {
         throw new Error('Why the fuck isn\'t it equal');
       }
 
-      console.log(expected);
-
       statGroups.forEach(sg => {
-        const filled = this.fillNa(sg.stats, expected);
-        console.log(sg.id, sg.stats, filled);
-        sg.stats = filled;
+        sg.stats = this.fillNa(sg.stats, expected);
       });
 
       this.statDefinitionGroups.forEach(sdg => {
