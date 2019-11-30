@@ -97,6 +97,7 @@ export class LeaguesElementComponent implements OnInit {
 
     return output;
   }
+
 }
 
 class TimeElem {
