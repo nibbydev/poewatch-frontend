@@ -37,6 +37,7 @@ import {StatsPageComponent} from './pages/stats/stats-page.component';
 import {StatsElementComponent} from './pages/stats/stats-element/stats-element.component';
 import {StatsChartComponent} from './pages/stats/stats-chart/stats-chart.component';
 import {HoursAgoPipe} from './pipes/hours-ago.pipe';
+import {SparklineComponent} from './modules/sparkline/sparkline.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import {HoursAgoPipe} from './pipes/hours-ago.pipe';
     StatsElementComponent,
     StatsChartComponent,
     HoursAgoPipe,
+    SparklineComponent,
   ],
   imports: [
     BrowserModule,
