@@ -7,7 +7,7 @@ import {Criteria, SearchOption} from '../../shared/criteria';
 import {BehaviorSubject} from 'rxjs';
 import {ItemHistoryService} from '../../services/item-hisotry.service';
 import {ChartResult, ChartSeriesDef} from '../../shared/chart-result';
-import {ItemHistoryUtil} from '../../shared/utility/item-history-util';
+import {ItemHistoryUtil} from '../../utility/item-history-util';
 
 @Component({
   selector: 'pw-item-page',

@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ChartResult, ChartSeries, ChartSeriesDef} from '../../../shared/chart-result';
 import {Subject, Subscription} from 'rxjs';
 import {ItemEntryLeague} from '../../../shared/api/item-entry';
-import {DateUtilConst, DateUtilFunc} from '../../../shared/utility/date-util';
+import {DateUtilConst, DateUtilFunc} from '../../../utility/date-util';
 
 @Component({
   selector: 'pw-item-chart',

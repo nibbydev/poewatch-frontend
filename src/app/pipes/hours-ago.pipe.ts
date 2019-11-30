@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {DateUtilConst, DateUtilFunc} from '../shared/utility/date-util';
+import {DateUtilConst, DateUtilFunc} from '../utility/date-util';
 
 @Pipe({
   name: 'hoursAgo'

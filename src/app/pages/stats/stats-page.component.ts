@@ -3,7 +3,7 @@ import {StatsService} from '../../services/stats.service';
 import {Stat} from '../../shared/api/stat';
 import {first} from 'rxjs/operators';
 import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../shared/chart-result';
-import {DateUtil, DateUtilFunc} from '../../shared/utility/date-util';
+import {DateUtil, DateUtilFunc} from '../../utility/date-util';
 
 @Component({
   selector: 'pw-stats-page',
