@@ -3,7 +3,7 @@ import {PricePaginationService} from '../../../../services/price-pagination.serv
 import {PriceFilterService} from '../../../../services/price-filter.service';
 
 @Component({
-  selector: 'app-prices-table-loadmore',
+  selector: 'pw-prices-table-loadmore',
   templateUrl: './prices-table-loadmore.component.html',
   styleUrls: ['./prices-table-loadmore.component.css']
 })

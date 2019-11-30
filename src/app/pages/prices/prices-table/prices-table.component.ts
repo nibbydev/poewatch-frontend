@@ -3,7 +3,7 @@ import {GetEntry} from '../../../shared/api/get-entry';
 import {PriceFilterService} from '../../../services/price-filter.service';
 
 @Component({
-  selector: 'app-prices-table',
+  selector: 'pw-prices-table',
   templateUrl: './prices-table.component.html',
   styleUrls: ['./prices-table.component.css']
 })

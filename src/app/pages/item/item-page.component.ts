@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ItemService } from '../../services/item.service';
-import { ItemEntry, ItemEntryLeague } from '../../shared/api/item-entry';
-import { first } from 'rxjs/operators';
-import { Criteria, SearchOption } from '../../shared/criteria';
-import { BehaviorSubject } from 'rxjs';
-import { ItemHistoryService } from '../../services/item-hisotry.service';
-import { ChartResult, ChartSeriesDef } from '../../shared/chart-result';
-import { ItemHistoryUtil } from '../../shared/utility/item-history-util';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ItemService} from '../../services/item.service';
+import {ItemEntry, ItemEntryLeague} from '../../shared/api/item-entry';
+import {first} from 'rxjs/operators';
+import {Criteria, SearchOption} from '../../shared/criteria';
+import {BehaviorSubject} from 'rxjs';
+import {ItemHistoryService} from '../../services/item-hisotry.service';
+import {ChartResult, ChartSeriesDef} from '../../shared/chart-result';
+import {ItemHistoryUtil} from '../../shared/utility/item-history-util';
 
 @Component({
-  selector: 'app-item-page',
+  selector: 'pw-item-page',
   templateUrl: './item-page.component.html',
   styleUrls: ['./item-page.component.css']
 })

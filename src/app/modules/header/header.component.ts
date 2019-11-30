@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Route, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-header',
+  selector: 'pw-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

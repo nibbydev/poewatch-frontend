@@ -3,7 +3,7 @@ import {PriceFilterService} from '../../../../services/price-filter.service';
 import {PricePaginationService} from '../../../../services/price-pagination.service';
 
 @Component({
-  selector: 'app-prices-table-status',
+  selector: 'pw-prices-table-status',
   templateUrl: './prices-table-status.component.html',
   styleUrls: ['./prices-table-status.component.css']
 })

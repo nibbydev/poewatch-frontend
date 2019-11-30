@@ -3,19 +3,19 @@
     <div class="card">
       <div class="card-header p-2">
 
-        <app-spinner [ifValue]="item"></app-spinner>
+        <pw-spinner [ifValue]="item"></pw-spinner>
 
         <div *ngIf="item" class="d-flex justify-content-between align-items-center">
-          <app-item [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></app-item>
-          <app-reactive-input [criteria]="leagueCriteria"></app-reactive-input>
+          <pw-item [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></pw-item>
+          <pw-reactive-input [criteria]="leagueCriteria"></pw-reactive-input>
         </div>
       </div>
 
-      <app-spinner [ifValue]="item"></app-spinner>
+      <pw-spinner [ifValue]="item"></pw-spinner>
 
       <div *ngIf="item" class="card-body">
 
-        <app-item-details [entryLeague$]="entryLeague$"></app-item-details>
+        <pw-item-details [entryLeague$]="entryLeague$"></pw-item-details>
 
         <hr/>
 
@@ -24,16 +24,16 @@
 
             <div>
               <h4>Item price history</h4>
-              <app-spinner [ifValue]="priceChartData.results"></app-spinner>
-              <app-item-chart *ngIf="priceChartData.results" [data]="priceChartData" [entryLeague$]="entryLeague$"
-                              class="d-flex w-100" style="height: 300px"></app-item-chart>
+              <pw-spinner [ifValue]="priceChartData.results"></pw-spinner>
+              <pw-item-chart *ngIf="priceChartData.results" [data]="priceChartData" [entryLeague$]="entryLeague$"
+                             class="d-flex w-100" style="height: 300px"></pw-item-chart>
             </div>
 
             <div>
               <h4>Listed daily & currently on sale</h4>
-              <app-spinner [ifValue]="countChartData.results"></app-spinner>
-              <app-item-chart *ngIf="countChartData.results" [data]="countChartData" [entryLeague$]="entryLeague$"
-                              class="d-flex w-100" style="height: 300px"></app-item-chart>
+              <pw-spinner [ifValue]="countChartData.results"></pw-spinner>
+              <pw-item-chart *ngIf="countChartData.results" [data]="countChartData" [entryLeague$]="entryLeague$"
+                             class="d-flex w-100" style="height: 300px"></pw-item-chart>
             </div>
 
           </div>

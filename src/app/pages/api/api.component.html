@@ -5,7 +5,7 @@
   </p>
 </div>
 
-<app-spinner [ifValue]="apiDocService.apiDoc$"></app-spinner>
+<pw-spinner [ifValue]="apiDocService.apiDoc$"></pw-spinner>
 
 <div *ngFor="let doc of apiDocService.apiDoc$ | async" class="col-12">
   <div class="card custom-card mb-3">

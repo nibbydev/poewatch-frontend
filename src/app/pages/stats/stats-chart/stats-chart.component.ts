@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ChartResult, StatDefinition} from '../../../shared/chart-result';
 
 @Component({
-  selector: 'app-stats-chart',
+  selector: 'pw-stats-chart',
   templateUrl: './stats-chart.component.html',
   styleUrls: ['./stats-chart.component.css']
 })

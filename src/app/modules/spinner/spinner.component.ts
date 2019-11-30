@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-spinner',
+  selector: 'pw-spinner',
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.css']
 })

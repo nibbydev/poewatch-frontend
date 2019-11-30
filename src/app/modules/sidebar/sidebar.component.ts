@@ -3,7 +3,7 @@ import {SidebarService} from '../../services/sidebar.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'pw-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })

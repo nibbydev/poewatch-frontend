@@ -3,7 +3,7 @@ import {ApiDocService} from '../../services/api-doc.service';
 import {AppSettings} from '../../app-settings';
 
 @Component({
-  selector: 'app-api',
+  selector: 'pw-api',
   templateUrl: './api.component.html',
   styleUrls: ['./api.component.css']
 })

@@ -8,10 +8,10 @@ import {RouterHelperService} from '../../services/router-helper.service';
 import {League} from '../../shared/api/league';
 import {Category} from '../../shared/api/category';
 import {first} from 'rxjs/operators';
-import { PriceSearchCriteria } from '../../shared/criteria';
+import {PriceSearchCriteria} from '../../shared/criteria';
 
 @Component({
-  selector: 'app-prices',
+  selector: 'pw-prices',
   templateUrl: './prices.component.html',
   styleUrls: ['./prices.component.css']
 })

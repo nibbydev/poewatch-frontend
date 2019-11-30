@@ -5,7 +5,7 @@ import {ItemEntryLeague} from '../../../shared/api/item-entry';
 import {DateUtilConst, DateUtilFunc} from '../../../shared/utility/date-util';
 
 @Component({
-  selector: 'app-item-chart',
+  selector: 'pw-item-chart',
   templateUrl: './item-chart.component.html',
   styleUrls: ['./item-chart.component.css']
 })

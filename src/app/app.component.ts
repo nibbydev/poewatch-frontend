@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, RoutesRecognized } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, RoutesRecognized} from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'pw-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

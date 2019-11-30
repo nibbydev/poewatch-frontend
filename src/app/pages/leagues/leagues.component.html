@@ -4,11 +4,11 @@
   </div>
 
   <div class="col-12">
-    <app-spinner [ifValue]="leagueService.entries$"></app-spinner>
+    <pw-spinner [ifValue]="leagueService.entries$"></pw-spinner>
   </div>
   <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.active, true) | async"
        class="col-sm-6 col-12">
-    <app-leagues-element [league]="league"></app-leagues-element>
+    <pw-leagues-element [league]="league"></pw-leagues-element>
   </div>
 </div>
 
@@ -18,10 +18,10 @@
   </div>
 
   <div class="col-12">
-    <app-spinner [ifValue]="leagueService.entries$"></app-spinner>
+    <pw-spinner [ifValue]="leagueService.entries$"></pw-spinner>
   </div>
   <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.inactive, true) | async"
        class="col-lg-4 col-md-6 col-12">
-    <app-leagues-element [league]="league"></app-leagues-element>
+    <pw-leagues-element [league]="league"></pw-leagues-element>
   </div>
 </div>

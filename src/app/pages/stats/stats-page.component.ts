@@ -6,7 +6,7 @@ import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../shared
 import {DateUtil, DateUtilFunc} from '../../shared/utility/date-util';
 
 @Component({
-  selector: 'app-stats-page',
+  selector: 'pw-stats-page',
   templateUrl: './stats-page.component.html',
   styleUrls: ['./stats-page.component.css']
 })

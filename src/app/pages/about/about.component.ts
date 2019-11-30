@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FaqService} from '../../services/faq.service';
 
 @Component({
-  selector: 'app-about',
+  selector: 'pw-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css']
 })

@@ -3,7 +3,7 @@ import {ItemEntryLeague} from '../../../shared/api/item-entry';
 import {Subject} from 'rxjs';
 
 @Component({
-  selector: 'app-item-details',
+  selector: 'pw-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.css']
 })

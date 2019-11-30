@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-item-sparkline',
+  selector: 'pw-item-sparkline',
   templateUrl: './item-sparkline.component.html',
   styleUrls: ['./item-sparkline.component.css']
 })

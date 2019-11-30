@@ -3,7 +3,7 @@ import {Rarity} from '../../shared/rarity';
 import {ItemData} from '../../shared/api/item-data';
 
 @Component({
-  selector: 'app-item',
+  selector: 'pw-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })

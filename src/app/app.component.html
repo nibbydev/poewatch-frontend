@@ -1,22 +1,22 @@
-<app-header></app-header>
+<pw-header></pw-header>
 
 
 <div class="container-fluid max-width-xl my-4 pb-4">
 
   <div class="row d-block d-lg-none">
     <div class="col">
-      <app-sidebar [direction]="'horizontal'"></app-sidebar>
+      <pw-sidebar [direction]="'horizontal'"></pw-sidebar>
     </div>
   </div>
 
   <div class="row">
 
     <div class="col-2 d-none d-lg-block">
-      <app-sidebar [direction]="'vertical'"></app-sidebar>
+      <pw-sidebar [direction]="'vertical'"></pw-sidebar>
     </div>
 
     <div class="col-12 col-lg-10">
-      <app-title *ngIf="pageTitle" [title]="pageTitle"></app-title>
+      <pw-title *ngIf="pageTitle" [title]="pageTitle"></pw-title>
       <router-outlet></router-outlet>
     </div>
 
@@ -24,4 +24,4 @@
 </div>
 
 
-<app-footer></app-footer>
+<pw-footer></pw-footer>

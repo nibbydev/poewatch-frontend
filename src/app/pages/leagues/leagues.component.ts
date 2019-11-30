@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { LeagueService } from '../../services/league.service';
+import {Component, OnInit} from '@angular/core';
+import {LeagueService} from '../../services/league.service';
 
 @Component({
-  selector: 'app-leagues',
+  selector: 'pw-leagues',
   templateUrl: './leagues.component.html',
   styleUrls: ['./leagues.component.css']
 })

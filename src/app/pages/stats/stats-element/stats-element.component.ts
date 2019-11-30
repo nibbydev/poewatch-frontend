@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-stats-element',
+  selector: 'pw-stats-element',
   templateUrl: './stats-element.component.html',
   styleUrls: ['./stats-element.component.css']
 })

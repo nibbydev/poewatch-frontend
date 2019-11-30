@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-item-pricebox',
+  selector: 'pw-item-pricebox',
   templateUrl: './item-pricebox.component.html',
   styleUrls: ['./item-pricebox.component.css']
 })

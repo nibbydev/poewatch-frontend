@@ -7,24 +7,24 @@
       <div class="card-body">
         <div class='row'>
           <div *ngFor="let criteria of getEnabledCriteria()" class="col-6 col-sm">
-            <app-reactive-input [criteria]="criteria"></app-reactive-input>
+            <pw-reactive-input [criteria]="criteria"></pw-reactive-input>
           </div>
         </div>
       </div>
 
       <div class="card-body py-0 text-center">
-        <app-prices-table-status></app-prices-table-status>
+        <pw-prices-table-status></pw-prices-table-status>
       </div>
 
       <hr/>
 
       <div class="card-body py-0">
-        <app-spinner [ifValue]="priceFilterService.getEntries()"></app-spinner>
-        <app-prices-table></app-prices-table>
+        <pw-spinner [ifValue]="priceFilterService.getEntries()"></pw-spinner>
+        <pw-prices-table></pw-prices-table>
       </div>
 
       <div class="card-body pt-0">
-        <app-prices-table-loadmore></app-prices-table-loadmore>
+        <pw-prices-table-loadmore></pw-prices-table-loadmore>
       </div>
 
 

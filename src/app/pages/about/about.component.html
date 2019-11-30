@@ -4,7 +4,7 @@
       <div class="card-header">Questions someone might ask one day</div>
 
       <div class="card-body">
-        <app-spinner [ifValue]="faqService.faq$"></app-spinner>
+        <pw-spinner [ifValue]="faqService.faq$"></pw-spinner>
 
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngFor="let faq of (faqService.faq$ | async)?.faq">
