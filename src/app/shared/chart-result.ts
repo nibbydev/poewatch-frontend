@@ -5,7 +5,7 @@ export class ChartResult {
 }
 
 export class ChartSeries {
-  name: Date;
+  name: string;
   value: number;
   extra: ChartExtra;
 }

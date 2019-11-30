@@ -228,7 +228,7 @@ export class StatsPageComponent implements OnInit {
   private toResult(definition: StatDefinition, stats: Stat[]): ChartResult {
     const convertedSeries = stats.map(s => {
       return {
-        name: new Date(s.time),
+        name: new Date(s.time).toISOString(),
         value: s.value,
         extra: {
           sequence: undefined,

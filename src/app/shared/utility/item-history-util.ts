@@ -31,7 +31,7 @@ export class ItemHistoryUtil {
 
       for (let i = 0; i < dates.daysMissingStart; i++) {
         elem.series.push({
-          name: DateUtil.incDate(date, i),
+          name: DateUtil.incDate(date, i).toISOString(),
           value: 0,
           extra: {
             sequence: 0,
@@ -46,7 +46,7 @@ export class ItemHistoryUtil {
       const entry = h[i];
 
       elem.series.push({
-        name: DateUtilFunc.roundToDays(new Date(entry.time)),
+        name: DateUtilFunc.roundToDays(new Date(entry.time)).toISOString(),
         value: entry[elem.name],
         extra: {
           sequence: 1,
@@ -69,7 +69,7 @@ export class ItemHistoryUtil {
         // Fill missing days with "No data" (if any)
         for (let j = 0; j < diffDays; j++) {
           elem.series.push({
-            name: DateUtil.incDate(currentDate, j + 1),
+            name: DateUtil.incDate(currentDate, j + 1).toISOString(),
             value: 0,
             extra: {
               sequence: 2,
@@ -87,7 +87,7 @@ export class ItemHistoryUtil {
 
       for (let i = 0; i < dates.daysMissingEnd; i++) {
         elem.series.push({
-          name: DateUtil.incDate(date, i),
+          name: DateUtil.incDate(date, i).toISOString(),
           value: 0,
           extra: {
             sequence: 3,
@@ -101,7 +101,7 @@ export class ItemHistoryUtil {
     if (il.active) {
       const date = DateUtilFunc.floorToDays(new Date());
       elem.series.push({
-        name: date,
+        name: date.toISOString(),
         value: il[elem.name],
         extra: {
           sequence: 4,
@@ -119,7 +119,7 @@ export class ItemHistoryUtil {
 
       for (let i = 0; i < dates.emptyPadding; i++) {
         elem.series.push({
-          name: DateUtil.incDate(date, i),
+          name: DateUtil.incDate(date, i).toISOString(),
           value: 0,
           extra: {
             sequence: 5,

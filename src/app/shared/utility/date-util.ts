@@ -48,6 +48,9 @@ export const DateUtilFunc = {
   floorToHours(date: Date): Date {
     return new Date(Math.floor(date.getTime() / DateUtilConst.msInHour) * DateUtilConst.msInHour);
   },
+  ceilToHours(date: Date): Date {
+    return new Date(Math.ceil(date.getTime() / DateUtilConst.msInHour) * DateUtilConst.msInHour);
+  },
   roundToDays(date: Date): Date {
     return new Date(Math.round(date.getTime() / DateUtilConst.msInDay) * DateUtilConst.msInDay);
   },
