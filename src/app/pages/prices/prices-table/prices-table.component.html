@@ -19,6 +19,14 @@
     </td>
     <td class="d-none d-md-table-cell">
       <pw-item-sparkline [history]="item.history" [options]="sparkLineOptions"></pw-item-sparkline>
+
+      <pw-sparkline *ngIf="false"
+        [results]="results"
+        [view]="[60,30]"
+        [scheme]="colorScheme"
+        [animations]="true"
+      ></pw-sparkline>
+
     </td>
 
 

@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ChartResult, ChartSeries, ChartSeriesDef} from '../../../shared/chart-result';
+import {ChartResult, ChartSeries, ChartSeriesDef} from '../../../modules/chart-result';
 import {Subject, Subscription} from 'rxjs';
-import {ItemEntryLeague} from '../../../shared/api/item-entry';
+import {ItemEntryLeague} from '../../../modules/api/item-entry';
 import {DateUtilConst, DateUtilFunc} from '../../../utility/date-util';
 
 @Component({

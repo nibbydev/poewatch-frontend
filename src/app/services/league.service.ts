@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { League } from '../shared/api/league';
+import { League } from '../modules/api/league';
 import { Observable } from 'rxjs';
 import { first, shareReplay } from 'rxjs/operators';
 

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ItemService} from '../../services/item.service';
-import {ItemEntry, ItemEntryLeague} from '../../shared/api/item-entry';
+import {ItemEntry, ItemEntryLeague} from '../../modules/api/item-entry';
 import {first} from 'rxjs/operators';
-import {Criteria, SearchOption} from '../../shared/criteria';
+import {Criteria, SearchOption} from '../../modules/criteria';
 import {BehaviorSubject} from 'rxjs';
 import {ItemHistoryService} from '../../services/item-hisotry.service';
-import {ChartResult, ChartSeriesDef} from '../../shared/chart-result';
+import {ChartResult, ChartSeriesDef} from '../../modules/chart-result';
 import {ItemHistoryUtil} from '../../utility/item-history-util';
 
 @Component({

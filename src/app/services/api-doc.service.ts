@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
-import {Documentation} from '../shared/api/documentation';
+import {Documentation} from '../modules/api/documentation';
 
 @Injectable({
   providedIn: 'root'

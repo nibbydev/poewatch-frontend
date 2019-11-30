@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SidebarItem} from '../shared/sidebar-item';
+import {SidebarItem} from '../modules/sidebar-item';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ChartResult, StatDefinition} from '../../../shared/chart-result';
+import {ChartResult, StatDefinition} from '../../../modules/chart-result';
 import * as shape from 'd3-shape';
 
 @Component({

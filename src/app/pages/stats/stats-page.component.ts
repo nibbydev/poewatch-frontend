@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {StatsService} from '../../services/stats.service';
-import {Stat} from '../../shared/api/stat';
+import {Stat} from '../../modules/api/stat';
 import {first} from 'rxjs/operators';
-import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../shared/chart-result';
+import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../modules/chart-result';
 import {DateUtil, DateUtilFunc} from '../../utility/date-util';
 
 @Component({

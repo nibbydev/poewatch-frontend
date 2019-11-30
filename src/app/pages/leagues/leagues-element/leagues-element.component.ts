@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {League} from '../../../shared/api/league';
+import {League} from '../../../modules/api/league';
 
 @Component({
   selector: 'pw-leagues-element',

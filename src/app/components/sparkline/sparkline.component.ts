@@ -8,7 +8,7 @@ import {
   getUniqueXDomainValues,
   ViewDimensions
 } from '@swimlane/ngx-charts';
-import {ChartResult} from '../../shared/chart-result';
+import {ChartResult} from '../../modules/chart-result';
 
 @Component({
   selector: 'pw-sparkline',

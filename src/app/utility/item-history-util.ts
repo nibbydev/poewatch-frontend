@@ -1,6 +1,6 @@
-import {ItemEntryLeague} from '../shared/api/item-entry';
-import {ItemHistory} from '../shared/api/item-history';
-import {ChartResult, ChartSeriesDef} from '../shared/chart-result';
+import {ItemEntryLeague} from '../modules/api/item-entry';
+import {ItemHistory} from '../modules/api/item-history';
+import {ChartResult, ChartSeriesDef} from '../modules/chart-result';
 import {DateUtil, DateUtilConst, DateUtilFunc} from './date-util';
 
 export class ItemHistoryUtil {

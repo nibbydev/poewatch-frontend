@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Rarity} from '../../shared/rarity';
-import {ItemData} from '../../shared/api/item-data';
+import {Rarity} from '../../modules/rarity';
+import {ItemData} from '../../modules/api/item-data';
 
 @Component({
   selector: 'pw-item',
