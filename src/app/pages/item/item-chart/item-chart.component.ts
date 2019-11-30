@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ChartResult, ChartSeries, ChartSeriesDef} from '../../../shared/chart-result';
 import {Subject, Subscription} from 'rxjs';
 import {ItemEntryLeague} from '../../../shared/api/item-entry';
-import {DateUtil} from '../../../shared/utility/date-util';
+import {DateUtilConst, DateUtilFunc} from '../../../shared/utility/date-util';
 
 @Component({
   selector: 'app-item-chart',
@@ -63,22 +63,21 @@ export class ItemChartComponent implements OnInit, OnDestroy {
     }
 
     const messages = [];
-    const fourHours = 14400000;
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    console.log(date.toISOString(), DateUtil.roundDate(new Date(this.entryLeague.end)).toISOString());
+    console.log(date.toISOString(), DateUtilFunc.roundToDays(new Date(this.entryLeague.end)).toISOString());
 
-    const startDate = DateUtil.roundDate(new Date(this.entryLeague.start));
+    const startDate = DateUtilFunc.roundToDays(new Date(this.entryLeague.start));
     if (date.getTime() === startDate.getTime()) {
       messages.push('League start');
     }
 
-    const endDate = DateUtil.roundDate(new Date(this.entryLeague.end));
+    const endDate = DateUtilFunc.roundToDays(new Date(this.entryLeague.end));
     if (endDate.getTime() === date.getTime()) {
       messages.push('League end');
     }
 
-    const dayNumber = Math.ceil((date.getTime() - startDate.getTime() + 1) / 86400000);
+    const dayNumber = Math.ceil((date.getTime() - startDate.getTime() + 1) / DateUtilConst.msInDay);
     const weekNumber = Math.ceil(dayNumber / 7);
 
     messages.push('Week ' + weekNumber + ', Day ' + dayNumber);

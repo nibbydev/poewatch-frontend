@@ -1,11 +1,9 @@
-import { ItemEntryLeague } from '../api/item-entry';
-import { ItemHistory } from '../api/item-history';
-import { ChartResult, ChartSeriesDef } from '../chart-result';
-import { DateUtil } from './date-util';
+import {ItemEntryLeague} from '../api/item-entry';
+import {ItemHistory} from '../api/item-history';
+import {ChartResult, ChartSeriesDef} from '../chart-result';
+import {DateUtil, DateUtilConst, DateUtilFunc} from './date-util';
 
 export class ItemHistoryUtil {
-
-  private static readonly msInDay = 86400000;
 
   public static convert(il: ItemEntryLeague, h: ItemHistory[], sd: ChartSeriesDef[]): ChartResult[] {
     const dates = this.calculateDates(il, h);
@@ -29,7 +27,7 @@ export class ItemHistoryUtil {
   private static padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResult): void {
     // If entries are missing before the first entry, fill with "No data"
     if (dates.daysMissingStart) {
-      const date = DateUtil.roundDate(new Date(dates.startDate));
+      const date = DateUtilFunc.roundToDays(new Date(dates.startDate));
 
       for (let i = 0; i < dates.daysMissingStart; i++) {
         elem.series.push({
@@ -48,7 +46,7 @@ export class ItemHistoryUtil {
       const entry = h[i];
 
       elem.series.push({
-        name: DateUtil.roundDate(new Date(entry.time)),
+        name: DateUtilFunc.roundToDays(new Date(entry.time)),
         value: entry[elem.name],
         extra: {
           sequence: 1,
@@ -61,8 +59,8 @@ export class ItemHistoryUtil {
         const nextEntry = h[i + 1];
 
         // Get dates
-        const currentDate = DateUtil.roundDate(new Date(entry.time));
-        const nextDate = DateUtil.roundDate(new Date(nextEntry.time));
+        const currentDate = DateUtilFunc.roundToDays(new Date(entry.time));
+        const nextDate = DateUtilFunc.roundToDays(new Date(nextEntry.time));
 
         // Get difference in days between entries
         const timeDiff = Math.abs(nextDate.getTime() - currentDate.getTime());
@@ -84,7 +82,7 @@ export class ItemHistoryUtil {
 
     // If entries are missing after the first entry, fill with "No data"
     if (dates.daysMissingEnd && dates.lastDate) {
-      const date = DateUtil.roundDate(new Date(dates.lastDate));
+      const date = DateUtilFunc.roundToDays(new Date(dates.lastDate));
       date.setDate(date.getDate() + 1);
 
       for (let i = 0; i < dates.daysMissingEnd; i++) {
@@ -101,7 +99,7 @@ export class ItemHistoryUtil {
 
     // Add current values
     if (il.active) {
-      const date = DateUtil.floorDate(new Date());
+      const date = DateUtilFunc.floorToDays(new Date());
       elem.series.push({
         name: date,
         value: il[elem.name],
@@ -116,7 +114,7 @@ export class ItemHistoryUtil {
     // Or in other words the number of days left in the league
     if (dates.emptyPadding) {
       const lastElem = elem.series[elem.series.length - 1];
-      const date = DateUtil.roundDate(new Date(lastElem.name));
+      const date = DateUtilFunc.roundToDays(new Date(lastElem.name));
       date.setDate(date.getDate() + 1);
 
       for (let i = 0; i < dates.emptyPadding; i++) {
@@ -137,26 +135,26 @@ export class ItemHistoryUtil {
 
     // If there are any history entries for this league, find the first and last date
     if (h.length) {
-      dates.firstDate = DateUtil.roundDate(new Date(h[0].time));
-      dates.lastDate = DateUtil.roundDate(new Date(h[h.length - 1].time));
+      dates.firstDate = DateUtilFunc.roundToDays(new Date(h[0].time));
+      dates.lastDate = DateUtilFunc.roundToDays(new Date(h[h.length - 1].time));
     }
 
     // League should always have a start date
     if (il.start) {
-      dates.startDate = DateUtil.roundDate(new Date(il.start));
+      dates.startDate = DateUtilFunc.roundToDays(new Date(il.start));
     }
 
     // Permanent leagues don't have an end date
     if (il.end) {
-      dates.endDate = DateUtil.roundDate(new Date(il.end));
+      dates.endDate = DateUtilFunc.roundToDays(new Date(il.end));
     }
 
     // Find duration for non-permanent leagues
     if (dates.startDate && dates.endDate) {
-      dates.totalDays = Math.floor(Math.abs(dates.endDate.getTime() - dates.startDate.getTime()) / this.msInDay);
+      dates.totalDays = Math.floor(Math.abs(dates.endDate.getTime() - dates.startDate.getTime()) / DateUtilConst.msInDay);
 
       if (il.active) {
-        dates.elapsedDays = Math.floor(Math.abs(new Date().getTime() - dates.startDate.getTime()) / this.msInDay);
+        dates.elapsedDays = Math.floor(Math.abs(new Date().getTime() - dates.startDate.getTime()) / DateUtilConst.msInDay);
       } else {
         dates.elapsedDays = dates.totalDays;
       }
@@ -165,7 +163,7 @@ export class ItemHistoryUtil {
     // Find how many days worth of data is missing from the league start
     if (il.id > 2) {
       if (dates.firstDate && dates.startDate) {
-        dates.daysMissingStart = Math.floor(Math.abs(dates.firstDate.getTime() - dates.startDate.getTime()) / this.msInDay);
+        dates.daysMissingStart = Math.floor(Math.abs(dates.firstDate.getTime() - dates.startDate.getTime()) / DateUtilConst.msInDay);
       }
     }
 
@@ -173,12 +171,12 @@ export class ItemHistoryUtil {
     if (il.active) {
       // League is active, compare time of last entry to right now
       if (dates.lastDate) {
-        dates.daysMissingEnd = Math.floor(Math.abs(new Date().getTime() - dates.lastDate.getTime()) / this.msInDay);
+        dates.daysMissingEnd = Math.floor(Math.abs(new Date().getTime() - dates.lastDate.getTime()) / DateUtilConst.msInDay);
       }
     } else {
       // League has ended, compare time of last entry to time of league end
       if (dates.lastDate && dates.endDate) {
-        dates.daysMissingEnd = Math.floor(Math.abs(dates.lastDate.getTime() - dates.endDate.getTime()) / this.msInDay);
+        dates.daysMissingEnd = Math.floor(Math.abs(dates.lastDate.getTime() - dates.endDate.getTime()) / DateUtilConst.msInDay);
       }
     }
 
