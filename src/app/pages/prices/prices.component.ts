@@ -9,6 +9,7 @@ import {League} from '../../modules/api/league';
 import {Category} from '../../modules/api/category';
 import {first} from 'rxjs/operators';
 import {PriceSearchCriteria} from '../../modules/criteria';
+import {CriteriaUtil} from '../../utility/criteria-util';
 
 @Component({
   selector: 'pw-prices',
@@ -31,7 +32,7 @@ export class PricesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.resetParams();
-    PriceSearchCriteria.resetAll(this.priceFilterService.criteria);
+    CriteriaUtil.resetAll(this.priceFilterService.criteria);
     this.subscription = this.activatedRoute.queryParams.subscribe(params => this.parseQueryParams(params));
   }
 
@@ -40,7 +41,7 @@ export class PricesComponent implements OnInit, OnDestroy {
   }
 
   public getEnabledCriteria(): PriceSearchCriteria[] {
-    return PriceSearchCriteria.getEnabledCriteria(this.priceFilterService.criteria);
+    return CriteriaUtil.getEnabledCriteria(this.priceFilterService.criteria);
   }
 
   public resetParams(): void {

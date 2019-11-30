@@ -5,10 +5,11 @@ import {Category, Group} from '../modules/api/category';
 import {PriceService} from './price.service';
 import {League} from '../modules/api/league';
 import {PricePaginationService} from './price-pagination.service';
-import { PriceSearchCriteria, Criteria, SearchOption } from '../modules/criteria';
+import {PriceSearchCriteria, SearchOption} from '../modules/criteria';
 import {first} from 'rxjs/operators';
 import {Rarity} from '../modules/rarity';
 import {LeagueService} from './league.service';
+import {CriteriaUtil} from "../utility/criteria-util";
 
 @Injectable({
   providedIn: 'root'
@@ -110,7 +111,7 @@ export class PriceFilterService {
       categories: null,
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'Hide',
           value: 'hide'
@@ -146,7 +147,7 @@ export class PriceFilterService {
       categories: ['accessory', 'weapon', 'armour', 'flask'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -188,7 +189,7 @@ export class PriceFilterService {
       categories: ['weapon', 'armour'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'No links',
           value: 'none'
@@ -230,7 +231,7 @@ export class PriceFilterService {
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -279,7 +280,7 @@ export class PriceFilterService {
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -333,7 +334,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'Either',
           value: 'either'
@@ -375,7 +376,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -436,7 +437,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -477,7 +478,7 @@ export class PriceFilterService {
       categories: ['map'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'All',
           value: 'all'
@@ -594,7 +595,7 @@ export class PriceFilterService {
       categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
       reset: true,
       showSpinner: true,
-      options: Criteria.asObservable([
+      options: CriteriaUtil.asObservable([
         {
           display: 'Either',
           value: 'either'
@@ -637,7 +638,7 @@ export class PriceFilterService {
 
   public onQueryParamChange(league: League, category: Category): void {
     // hide certain search options depending on category
-    PriceSearchCriteria.setState(this.criteria, category);
+    CriteriaUtil.setState(this.criteria, category);
 
     // send null to force loading state on prices table
     this.rawEntries = null;
@@ -645,7 +646,7 @@ export class PriceFilterService {
     this.paginationService.resetPagination();
 
     // send null to force loading state on group input
-    const groupCriteria = Criteria.findCriteria(this.criteria, 'group');
+    const groupCriteria = CriteriaUtil.findCriteria(this.criteria, 'group');
     (groupCriteria.options as Subject<SearchOption[]>).next(null);
 
     // request new prices
@@ -678,7 +679,7 @@ export class PriceFilterService {
 
   public filter(allEntries: GetEntry[]): GetEntry[] {
     // find entries visible after applying search criteria
-    const enabledCriteria = PriceSearchCriteria.getEnabledCriteria(this.criteria);
+    const enabledCriteria = CriteriaUtil.getEnabledCriteria(this.criteria);
     const matchingEntries = allEntries.filter(e => {
       return enabledCriteria.every(c => c.showItem(e));
     });
@@ -696,7 +697,7 @@ export class PriceFilterService {
       .map(gs => category.groups.find(g => g.name.toLowerCase() === gs));
 
     // find criteria that deals with groups
-    const groupCriteria = Criteria.findCriteria(this.criteria, 'group');
+    const groupCriteria = CriteriaUtil.findCriteria(this.criteria, 'group');
     const searchOptions = groups.map(g => ({display: g.display, value: g.name}));
 
     // disable the input if there's only one group
