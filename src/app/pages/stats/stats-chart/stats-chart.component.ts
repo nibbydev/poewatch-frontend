@@ -19,6 +19,7 @@ export class StatsChartComponent implements OnInit {
   ngOnInit() {
     this.colorScheme = {domain: this.definitions.map(s => s.color)};
     console.log(this.colorScheme);
+    console.log(this.results);
   }
 
   /**

@@ -36,6 +36,7 @@ import {LeaguesElementComponent} from './pages/leagues/leagues-element/leagues-e
 import {StatsPageComponent} from './pages/stats/stats-page.component';
 import {StatsElementComponent} from './pages/stats/stats-element/stats-element.component';
 import {StatsChartComponent} from './pages/stats/stats-chart/stats-chart.component';
+import {HoursAgoPipe} from './pipes/hours-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {StatsChartComponent} from './pages/stats/stats-chart/stats-chart.compone
     StatsPageComponent,
     StatsElementComponent,
     StatsChartComponent,
+    HoursAgoPipe,
   ],
   imports: [
     BrowserModule,

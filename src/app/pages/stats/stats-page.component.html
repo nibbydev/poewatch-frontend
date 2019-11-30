@@ -1,19 +1,17 @@
 <div class="col-12 p-0" id="main">
-  <div class="card custom-card w-100 mb-3">
-    <div class="card-header"></div>
-
-    <div class="card-body">
-
-      <div *ngFor="let chartGroup of chartGroups">
-        <span *ngFor="let chart of chartGroup.definitions" class="pr-2">
-          {{chart.display}}
-        </span>
-
-        <div class="d-flex">
-          <app-stats-chart [definitions]="chartGroup.definitions" [results]="chartGroup.results" class=" w-100"
-                           style="height: 300px"></app-stats-chart>
-        </div>
+  <div *ngFor="let chartGroup of statDefinitionGroups" class="card custom-card w-100 mb-3">
+    <div class="card-header">
+      <div *ngFor="let chart of chartGroup.members" class="d-flex align-items-center">
+        <div [ngStyle]="{color: chart.color}" class="font-weight-bold mr-2">{{chart.display}}</div>
+        <div class="pw-subtext-1 custom-text-gray">{{chart.description}}</div>
       </div>
+    </div>
+
+    <div class="card-body d-flex">
+
+
+      <app-stats-chart [definitions]="chartGroup.members" [results]="chartGroup.results" class=" w-100"
+                       style="height: 300px"></app-stats-chart>
 
     </div>
 

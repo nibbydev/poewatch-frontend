@@ -1,0 +1,17 @@
+.colorbox {
+  width: 10px;
+  height: 10px;
+  border-radius: 0.1rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  background-color: #fff;
+}
+
+.colorbox-md {
+  width: 20px;
+  height: 20px;
+}
+
+.tooltip-large {
+  font-size: 1rem;
+}

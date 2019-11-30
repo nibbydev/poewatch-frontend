@@ -5,7 +5,7 @@
                        [xAxis]="true"
                        [yAxis]="true">
   <ng-template #tooltipTemplate let-model="model">
-    <div class="tooltip-large p-2">
+    <div class="p-2">
       <h5>{{model.name | date}}</h5>
 
       <!-- todo: remove me -->
@@ -26,10 +26,10 @@
 
   <ng-template #seriesTooltipTemplate let-model="model">
     <div class="p-2">
-      <h5>{{model[0].name | date}}</h5>
+      <h5>{{model[0].name | hoursAgo}}</h5>
 
       <!-- todo: remove me -->
-      <div>{{printOut('series', model[0].extra.sequence, model)}}</div>
+      <div>{{printOut('series', model)}}</div>
 
       <div class="pt-2">
         <div *ngFor="let m of model" class="d-flex justify-content-between align-items-center">
