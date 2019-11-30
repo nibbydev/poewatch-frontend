@@ -8,9 +8,6 @@
     <div class="tooltip-large p-2">
       <h5>{{model.name | date}}</h5>
 
-      <!-- todo: remove me -->
-      <div>{{printOut(model)}}</div>
-
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
           <div [ngStyle]="{'background-color': model.extra.color}" class="colorbox colorbox-md"></div>
@@ -30,9 +27,6 @@
       <div *ngFor="let message of getTimestampSubTexts(model[0].name)" class="custom-text-gray-lo">
         {{message}}
       </div>
-
-      <!-- todo: remove me -->
-      <div>{{printOut('series', model[0].extra.sequence, model)}}</div>
 
       <div *ngIf="!isDefaultSequence(model)" class="custom-text-gray">
         {{getSequenceWarning(model)}}

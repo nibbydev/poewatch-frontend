@@ -17,7 +17,6 @@ export class ItemChartComponent implements OnInit, OnDestroy {
   };
 
   public colorScheme: { domain: string[] };
-  public printOut = console.log; // todo: remove me
   private leagueSubscription: Subscription;
   private entryLeague: ItemEntryLeague = null;
 
@@ -57,15 +56,14 @@ export class ItemChartComponent implements OnInit, OnDestroy {
     return entries[0].extra.sequence === 1 || entries[0].extra.sequence === 4;
   }
 
-  public getTimestampSubTexts(date: Date): string[] {
+  public getTimestampSubTexts(name: string): string[] {
     if (!this.entryLeague) {
       return [];
     }
 
+    const date = new Date(name);
     const messages = [];
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    console.log(date.toISOString(), DateUtilFunc.roundToDays(new Date(this.entryLeague.end)).toISOString());
 
     const startDate = DateUtilFunc.roundToDays(new Date(this.entryLeague.start));
     if (date.getTime() === startDate.getTime()) {
