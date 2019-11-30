@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChartResult, StatDefinition} from '../../../shared/chart-result';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'pw-stats-chart',
@@ -9,6 +10,7 @@ import {ChartResult, StatDefinition} from '../../../shared/chart-result';
 export class StatsChartComponent implements OnInit {
   @Input() results: ChartResult[];
   @Input() definitions: StatDefinition[];
+  curve = shape.curveCardinal;
 
   public colorScheme: { domain: string[] };
 
