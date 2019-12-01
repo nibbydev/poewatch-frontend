@@ -1,6 +1,6 @@
 <div *ngIf="id" class="row">
   <div class="col">
-    <div class="card">
+    <div class="card mb-3">
       <div class="card-header p-2">
 
         <pw-spinner [ifValue]="item"></pw-spinner>
@@ -14,34 +14,37 @@
       <pw-spinner [ifValue]="item"></pw-spinner>
 
       <div *ngIf="item" class="card-body">
-
         <pw-item-details [entryLeague$]="entryLeague$"></pw-item-details>
-
-        <hr/>
-
-        <div class="row m-0">
-          <div class="col">
-
-            <div>
-              <h4>Item price history</h4>
-              <pw-spinner [ifValue]="priceChartData.results"></pw-spinner>
-              <pw-item-chart *ngIf="priceChartData.results" [data]="priceChartData" [entryLeague$]="entryLeague$"
-                             class="d-flex w-100" style="height: 300px"></pw-item-chart>
-            </div>
-
-            <div>
-              <h4>Listed daily & currently on sale</h4>
-              <pw-spinner [ifValue]="countChartData.results"></pw-spinner>
-              <pw-item-chart *ngIf="countChartData.results" [data]="countChartData" [entryLeague$]="entryLeague$"
-                             class="d-flex w-100" style="height: 300px"></pw-item-chart>
-            </div>
-
-          </div>
-        </div>
-
       </div>
 
       <div class="card-footer slim-card-edge"></div>
     </div>
+
+
+    <div *ngFor="let chartGroup of statDefinitionGroups" class="card w-100 mb-3">
+      <div class="card-header">
+        <table>
+          <tbody>
+          <tr *ngFor="let chart of chartGroup.members">
+            <td class="pr-3">
+              <div [ngStyle]="{color: chart.color}" class="font-weight-bold">{{chart.display}}</div>
+            </td>
+            <td>
+              <div class="pw-subtext-1 custom-text-gray">{{chart.description}}</div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card-body d-flex">
+        <pw-spinner [ifValue]="chartGroup.results.length"></pw-spinner>
+        <pw-item-chart *ngIf="chartGroup.results.length" [definitions]="chartGroup.members"
+                       [entryLeague$]="entryLeague$" [results]="chartGroup.results" class="chart"></pw-item-chart>
+      </div>
+
+      <div class="card-footer slim-card-edge"></div>
+    </div>
+
   </div>
 </div>

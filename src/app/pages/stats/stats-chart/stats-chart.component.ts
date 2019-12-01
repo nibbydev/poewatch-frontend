@@ -10,7 +10,8 @@ import * as shape from 'd3-shape';
 export class StatsChartComponent implements OnInit {
   @Input() results: ChartResult[];
   @Input() definitions: StatDefinition[];
-  curve = shape.curveCardinal;
+  @Input() curve = shape.curveMonotoneX;
+
 
   public colorScheme: { domain: string[] };
 

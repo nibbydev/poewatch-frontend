@@ -1,8 +1,9 @@
-<ngx-charts-line-chart [results]="data.results"
+<ngx-charts-line-chart [curve]="curve"
                        [scheme]="colorScheme"
                        [showGridLines]="true"
                        [xAxisTickFormatting]="emptyTickFormatting"
                        [xAxis]="true"
+                       [results]="results"
                        [yAxis]="true">
   <ng-template #tooltipTemplate let-model="model">
     <div class="tooltip-large p-2">

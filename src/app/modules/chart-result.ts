@@ -15,11 +15,6 @@ export class ChartExtra {
   color: string;
 }
 
-export class ChartSeriesDef {
-  name: string;
-  color: string;
-}
-
 // todo: rename me
 export class StatDefinition {
   id: string;

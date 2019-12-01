@@ -1,41 +1,40 @@
 import {ItemEntryLeague} from '../modules/api/item-entry';
 import {ItemHistory} from '../modules/api/item-history';
-import {ChartResult, ChartSeriesDef} from '../modules/chart-result';
+import {ChartResult, ChartSeries, StatDefinition} from '../modules/chart-result';
 import {DateUtil, DateUtilConst, DateUtilFunc} from './date-util';
 
 export class ItemHistoryUtil {
 
-  public static convert(il: ItemEntryLeague, h: ItemHistory[], sd: ChartSeriesDef[]): ChartResult[] {
+  public static convert(il: ItemEntryLeague, h: ItemHistory[], definitions: StatDefinition[]): ChartResult[] {
     const dates = this.calculateDates(il, h);
-    const output = [];
+    const output = [] as ChartResult[];
 
-    for (const s of sd) {
-      const elem = {
-        name: s.name,
-        color: s.color,
-        series: []
-      } as ChartResult;
-
-      this.padHistory(il, h, dates, elem);
-      output.push(elem);
-    }
+    definitions.forEach(def => {
+      output.push({
+        name: def.display,
+        color: def.color,
+        series: this.padHistory(il, h, dates, def)
+      } as ChartResult);
+    });
 
     return output;
   }
 
   // null values: https://github.com/swimlane/ngx-charts/issues/799
-  private static padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, elem: ChartResult): void {
+  private static padHistory(il: ItemEntryLeague, h: ItemHistory[], dates: DateSet, definition: StatDefinition): ChartSeries[] {
+    const output = [] as ChartSeries[];
+
     // If entries are missing before the first entry, fill with "No data"
     if (dates.daysMissingStart) {
       const date = DateUtilFunc.roundToDays(new Date(dates.startDate));
 
       for (let i = 0; i < dates.daysMissingStart; i++) {
-        elem.series.push({
+        output.push({
           name: DateUtil.incDate(date, i).toISOString(),
           value: 0,
           extra: {
             sequence: 0,
-            color: elem.color
+            color: definition.color
           }
         });
       }
@@ -45,12 +44,12 @@ export class ItemHistoryUtil {
     for (let i = 0; i < h.length; i++) {
       const entry = h[i];
 
-      elem.series.push({
+      output.push({
         name: DateUtilFunc.roundToDays(new Date(entry.time)).toISOString(),
-        value: entry[elem.name],
+        value: entry[definition.id],
         extra: {
           sequence: 1,
-          color: elem.color
+          color: definition.color
         }
       });
 
@@ -68,12 +67,12 @@ export class ItemHistoryUtil {
 
         // Fill missing days with "No data" (if any)
         for (let j = 0; j < diffDays; j++) {
-          elem.series.push({
+          output.push({
             name: DateUtil.incDate(currentDate, j + 1).toISOString(),
             value: 0,
             extra: {
               sequence: 2,
-              color: elem.color
+              color: definition.color
             }
           });
         }
@@ -86,12 +85,12 @@ export class ItemHistoryUtil {
       date.setDate(date.getDate() + 1);
 
       for (let i = 0; i < dates.daysMissingEnd; i++) {
-        elem.series.push({
+        output.push({
           name: DateUtil.incDate(date, i).toISOString(),
           value: 0,
           extra: {
             sequence: 3,
-            color: elem.color
+            color: definition.color
           }
         });
       }
@@ -100,12 +99,12 @@ export class ItemHistoryUtil {
     // Add current values
     if (il.active) {
       const date = DateUtilFunc.floorToDays(new Date());
-      elem.series.push({
+      output.push({
         name: date.toISOString(),
-        value: il[elem.name],
+        value: il[definition.id],
         extra: {
           sequence: 4,
-          color: elem.color
+          color: definition.color
         }
       });
     }
@@ -113,21 +112,23 @@ export class ItemHistoryUtil {
     // Bloat using 'null's the amount of days that should not have a tooltip.
     // Or in other words the number of days left in the league
     if (dates.emptyPadding) {
-      const lastElem = elem.series[elem.series.length - 1];
+      const lastElem = output[output.length - 1];
       const date = DateUtilFunc.roundToDays(new Date(lastElem.name));
       date.setDate(date.getDate() + 1);
 
       for (let i = 0; i < dates.emptyPadding; i++) {
-        elem.series.push({
+        output.push({
           name: DateUtil.incDate(date, i).toISOString(),
           value: 0,
           extra: {
             sequence: 5,
-            color: elem.color
+            color: definition.color
           }
         });
       }
     }
+
+    return output;
   }
 
   private static calculateDates(il: ItemEntryLeague, h: ItemHistory[]): DateSet {

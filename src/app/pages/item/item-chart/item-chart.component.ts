@@ -1,8 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ChartResult, ChartSeries, ChartSeriesDef} from '../../../modules/chart-result';
+import {ChartResult, ChartSeries, StatDefinition} from '../../../modules/chart-result';
 import {Subject, Subscription} from 'rxjs';
 import {ItemEntryLeague} from '../../../modules/api/item-entry';
 import {DateUtilConst, DateUtilFunc} from '../../../utility/date-util';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'pw-item-chart',
@@ -11,10 +12,9 @@ import {DateUtilConst, DateUtilFunc} from '../../../utility/date-util';
 })
 export class ItemChartComponent implements OnInit, OnDestroy {
   @Input() entryLeague$: Subject<ItemEntryLeague>;
-  @Input() data: {
-    results: ChartResult[],
-    seriesDef: ChartSeriesDef[]
-  };
+  @Input() results: ChartResult[];
+  @Input() definitions: StatDefinition[];
+  @Input() curve = shape.curveMonotoneX;
 
   public colorScheme: { domain: string[] };
   private leagueSubscription: Subscription;
@@ -24,7 +24,7 @@ export class ItemChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.colorScheme = {domain: this.data.seriesDef.map(s => s.color)};
+    this.colorScheme = {domain: this.definitions.map(s => s.color)};
     this.leagueSubscription = this.entryLeague$.subscribe(e => this.entryLeague = e);
   }
 

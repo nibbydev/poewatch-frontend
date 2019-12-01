@@ -6,7 +6,7 @@ import {first} from 'rxjs/operators';
 import {Criteria, SearchOption} from '../../modules/criteria';
 import {BehaviorSubject} from 'rxjs';
 import {ItemHistoryService} from '../../services/item-hisotry.service';
-import {ChartResult, ChartSeriesDef} from '../../modules/chart-result';
+import {ChartResult, StatDefinition} from '../../modules/chart-result';
 import {ItemHistoryUtil} from '../../utility/item-history-util';
 
 @Component({
@@ -15,36 +15,59 @@ import {ItemHistoryUtil} from '../../utility/item-history-util';
   styleUrls: ['./item-page.component.css']
 })
 export class ItemPageComponent implements OnInit {
-  public priceChartData = {
-    seriesDef: [
-      {
-        name: 'mean',
-        color: '#ffc459'
-      },
-      {
-        name: 'median',
-        color: '#f6ffa1'
-      },
-      {
-        name: 'mode',
-        color: '#99ffa0'
-      }
-    ] as ChartSeriesDef[],
-    results: null as ChartResult[],
-  };
-  public countChartData = {
-    seriesDef: [
-      {
-        name: 'daily',
-        color: '#b2f3ff'
-      },
-      {
-        name: 'current',
-        color: '#ff94b3'
-      }
-    ] as ChartSeriesDef[],
-    results: null as ChartResult[]
-  };
+  private readonly statDefinitionGroups = [
+    {
+      id: 'group_1',
+      members: [
+        {
+          id: 'mean',
+          display: 'Mean',
+          description: 'The sum divided by the number of elements',
+          unit: 'chaos',
+          color: '#ffc459'
+        },
+        {
+          id: 'median',
+          display: 'Median',
+          description: 'The center-most element (of a sorted list)',
+          unit: 'chaos',
+          color: '#f6ffa1'
+        },
+        {
+          id: 'mode',
+          display: 'Mode',
+          description: 'The most common element in the list',
+          unit: 'chaos',
+          color: '#99ffa0'
+        },
+      ],
+      results: []
+    },
+    {
+      id: 'group_2',
+      members: [
+        {
+          id: 'daily',
+          display: 'Listed daily',
+          description: 'Items listed in the past 24h',
+          unit: null,
+          color: '#b2f3ff'
+        },
+        {
+          id: 'current',
+          display: 'Now',
+          description: 'Items currently on sale',
+          unit: null,
+          color: '#ff94b3'
+        },
+      ],
+      results: []
+    }
+  ] as {
+    id: string,
+    members: StatDefinition[],
+    results: ChartResult[]
+  }[];
 
   public item: ItemEntry;
   private entryLeague$: BehaviorSubject<ItemEntryLeague> = new BehaviorSubject(null);
@@ -97,8 +120,10 @@ export class ItemPageComponent implements OnInit {
     this.entryLeague$.next(entryLeague);
 
     this.itemHistoryService.makeRequest(this.id, entryLeague.name).pipe(first()).subscribe(h => {
-      this.priceChartData.results = ItemHistoryUtil.convert(entryLeague, h, this.priceChartData.seriesDef);
-      this.countChartData.results = ItemHistoryUtil.convert(entryLeague, h, this.countChartData.seriesDef);
+      // todo: improve whatever the fuck this is supposed to be
+      this.statDefinitionGroups.forEach(sdg => {
+        sdg.results = ItemHistoryUtil.convert(entryLeague, h, sdg.members);
+      });
     });
   }
 }
