@@ -12,9 +12,12 @@ import * as shape from 'd3-shape';
 })
 export class ItemChartComponent implements OnInit, OnDestroy {
   @Input() entryLeague$: Subject<ItemEntryLeague>;
-  @Input() results: ChartResult[];
-  @Input() definitions: StatDefinition[];
-  @Input() curve = shape.curveMonotoneX;
+  @Input() data: {
+    id: string,
+    members: StatDefinition[],
+    results: ChartResult[],
+    curve: shape
+  };
 
   public colorScheme: { domain: string[] };
   private leagueSubscription: Subscription;
@@ -24,7 +27,7 @@ export class ItemChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.colorScheme = {domain: this.definitions.map(s => s.color)};
+    this.colorScheme = {domain: this.data.members.map(s => s.color)};
     this.leagueSubscription = this.entryLeague$.subscribe(e => this.entryLeague = e);
   }
 

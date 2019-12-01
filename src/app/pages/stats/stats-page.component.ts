@@ -4,6 +4,7 @@ import {Stat} from '../../modules/api/stat';
 import {first} from 'rxjs/operators';
 import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../modules/chart-result';
 import {DateUtil, DateUtilFunc} from '../../utility/date-util';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'pw-stats-page',
@@ -31,7 +32,8 @@ export class StatsPageComponent implements OnInit {
           color: '#a5ffe0'
         }
       ],
-      results: []
+      results: [],
+      curve: shape.curveMonotoneX
     },
     {
       id: 'group_2',
@@ -50,7 +52,8 @@ export class StatsPageComponent implements OnInit {
           color: '#ffca8a'
         }
       ],
-      results: []
+      results: [],
+      curve: shape.curveMonotoneX
     },
     {
       id: 'group_3',
@@ -98,7 +101,8 @@ export class StatsPageComponent implements OnInit {
           color: '#94b6ff'
         }
       ],
-      results: []
+      results: [],
+      curve: shape.curveStep
     },
     {
       id: 'group_4',
@@ -118,7 +122,8 @@ export class StatsPageComponent implements OnInit {
           color: '#fca1ff'
         }
       ],
-      results: []
+      results: [],
+      curve: shape.curveMonotoneX
     },
     {
       id: 'group_5',
@@ -131,7 +136,8 @@ export class StatsPageComponent implements OnInit {
           color: '#ff7474'
         }
       ],
-      results: []
+      results: [],
+      curve: shape.curveLinear
     },
     {
       id: 'group_6',
@@ -144,12 +150,14 @@ export class StatsPageComponent implements OnInit {
           color: '#ff997b'
         }
       ],
-      results: []
+      results: [],
+      curve: shape.curveLinear
     },
   ] as {
     id: string,
     members: StatDefinition[],
-    results: ChartResult[]
+    results: ChartResult[],
+    curve: shape
   }[];
 
   constructor(private statsService: StatsService) {

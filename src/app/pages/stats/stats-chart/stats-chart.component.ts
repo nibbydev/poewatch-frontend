@@ -8,10 +8,12 @@ import * as shape from 'd3-shape';
   styleUrls: ['./stats-chart.component.css']
 })
 export class StatsChartComponent implements OnInit {
-  @Input() results: ChartResult[];
-  @Input() definitions: StatDefinition[];
-  @Input() curve = shape.curveMonotoneX;
-
+  @Input() data: {
+    id: string,
+    members: StatDefinition[],
+    results: ChartResult[],
+    curve: shape
+  };
 
   public colorScheme: { domain: string[] };
 
@@ -19,7 +21,7 @@ export class StatsChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.colorScheme = {domain: this.definitions.map(s => s.color)};
+    this.colorScheme = {domain: this.data.members.map(s => s.color)};
   }
 
   /**

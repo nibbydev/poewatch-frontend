@@ -8,6 +8,7 @@ import {BehaviorSubject} from 'rxjs';
 import {ItemHistoryService} from '../../services/item-hisotry.service';
 import {ChartResult, StatDefinition} from '../../modules/chart-result';
 import {ItemHistoryUtil} from '../../utility/item-history-util';
+import * as shape from 'd3-shape';
 
 @Component({
   selector: 'pw-item-page',
@@ -41,7 +42,8 @@ export class ItemPageComponent implements OnInit {
           color: '#99ffa0'
         },
       ],
-      results: []
+      results: [],
+      curve: shape.curveMonotoneX
     },
     {
       id: 'group_2',
@@ -61,12 +63,14 @@ export class ItemPageComponent implements OnInit {
           color: '#ff94b3'
         },
       ],
-      results: []
+      results: [],
+      curve: shape.curveMonotoneX
     }
   ] as {
     id: string,
     members: StatDefinition[],
-    results: ChartResult[]
+    results: ChartResult[],
+    curve: shape
   }[];
 
   public item: ItemEntry;
