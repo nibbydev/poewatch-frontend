@@ -128,14 +128,7 @@ export class StatsPageComponent implements OnInit {
           display: 'API download',
           description: 'Stash API reply download time in milliseconds',
           unit: 'ms',
-          color: '#ffd58d'
-        },
-        {
-          id: 'TIME_PARSE_REPLY',
-          display: 'API process',
-          description: 'Stash API reply processing time in milliseconds',
-          unit: 'ms',
-          color: '#ff90b6'
+          color: '#c29cff'
         },
         {
           id: 'TIME_API_TTFB',
