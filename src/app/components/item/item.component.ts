@@ -9,11 +9,9 @@ import {ItemData} from '../../modules/api/item-data';
 })
 export class ItemComponent implements OnInit {
   @Input() item: ItemData;
-  @Input() options: {
-    clickable: boolean,
-    showImg: boolean,
-    imgSize: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  };
+  @Input() clickable: boolean;
+  @Input() showImg: boolean;
+  @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
   constructor() {
   }
@@ -22,12 +20,12 @@ export class ItemComponent implements OnInit {
   }
 
   private getImgSizeClass(): string {
-    return 'img-container-' + this.options.imgSize;
+    return 'img-container-' + this.size;
   }
 
   private getPrimaryClasses(): {} {
     return {
-      'cursor-pointer': this.options.clickable,
+      'cursor-pointer': this.clickable,
       'item-unique': this.item.frame === Rarity.UNIQUE,
       'item-foil': this.item.frame === Rarity.RELIC,
       'item-prophecy': this.item.frame === Rarity.PROPHECY,
@@ -35,6 +33,7 @@ export class ItemComponent implements OnInit {
       'item-currency': this.item.frame === Rarity.CURRENCY,
       'item-shaper': this.item.baseIsShaper,
       'item-elder': this.item.baseIsElder,
+      'text-lg': this.size === 'lg',
     };
   }
 

@@ -6,7 +6,7 @@
         <pw-spinner [ifValue]="item"></pw-spinner>
 
         <div *ngIf="item" class="d-flex justify-content-between align-items-center">
-          <pw-item [item]="item" [options]="{clickable: false, showImg: true, imgSize: 'lg'}"></pw-item>
+          <pw-item [clickable]="false" [item]="item" [showImg]="true" [size]="'lg'"></pw-item>
           <pw-reactive-input [criteria]="leagueCriteria"></pw-reactive-input>
         </div>
       </div>

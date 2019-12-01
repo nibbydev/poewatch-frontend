@@ -15,7 +15,7 @@
   <tbody>
   <tr *ngFor="let item of entries">
     <td class="d-flex align-items-center">
-      <pw-item [item]="item" [options]="{clickable: true, showImg: true, imgSize: 'sm'}"></pw-item>
+      <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
     </td>
     <td class="d-none d-md-table-cell">
       <pw-item-sparkline [history]="item.history" [options]="sparkLineOptions"></pw-item-sparkline>

@@ -259,3 +259,12 @@ pre {
 .pricebox .sparkline {padding: 0 5px 0 0}
 .chart-large {height: 250px}
 .chart-small {height: 110px}
+
+
+.text-sm {
+  font-size: 16px
+}
+
+.text-lg {
+  font-size: 24px
+}
