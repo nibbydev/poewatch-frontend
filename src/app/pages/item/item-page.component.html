@@ -37,8 +37,9 @@
         </table>
       </div>
 
+      <pw-spinner [ifValue]="chartGroup.results.length"></pw-spinner>
+
       <div class="card-body d-flex">
-        <pw-spinner [ifValue]="chartGroup.results.length"></pw-spinner>
         <pw-item-chart *ngIf="chartGroup.results.length" [definitions]="chartGroup.members"
                        [entryLeague$]="entryLeague$" [results]="chartGroup.results" class="chart"></pw-item-chart>
       </div>
