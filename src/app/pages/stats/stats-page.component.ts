@@ -29,13 +29,6 @@ export class StatsPageComponent implements OnInit {
           description: 'Nr of items listed per hour that have been accepted for price calculation',
           unit: null,
           color: '#a5ffe0'
-        },
-        {
-          id: 'COUNT_REPLY_SIZE',
-          display: 'API reply size',
-          description: 'Stash API reply size in bytes',
-          unit: null,
-          color: '#a3adff'
         }
       ],
       results: []
@@ -61,19 +54,6 @@ export class StatsPageComponent implements OnInit {
     },
     {
       id: 'group_3',
-      members: [
-        {
-          id: 'COUNT_API_CALLS',
-          display: 'API calls',
-          description: 'Nr of stash API calls per hour',
-          unit: null,
-          color: '#ff7474'
-        }
-      ],
-      results: []
-    },
-    {
-      id: 'group_4',
       members: [
         {
           id: 'COUNT_API_ERRORS_READ_TIMEOUT',
@@ -121,7 +101,7 @@ export class StatsPageComponent implements OnInit {
       results: []
     },
     {
-      id: 'group_5',
+      id: 'group_4',
       members: [
         {
           id: 'TIME_API_REPLY_DOWNLOAD',
@@ -139,7 +119,33 @@ export class StatsPageComponent implements OnInit {
         }
       ],
       results: []
-    }
+    },
+    {
+      id: 'group_5',
+      members: [
+        {
+          id: 'COUNT_API_CALLS',
+          display: 'API calls',
+          description: 'Nr of stash API calls per hour',
+          unit: null,
+          color: '#ff7474'
+        }
+      ],
+      results: []
+    },
+    {
+      id: 'group_6',
+      members: [
+        {
+          id: 'COUNT_REPLY_SIZE',
+          display: 'API reply size',
+          description: 'Stash API reply size in bytes',
+          unit: null,
+          color: '#ff997b'
+        }
+      ],
+      results: []
+    },
   ] as {
     id: string,
     members: StatDefinition[],
