@@ -7,6 +7,7 @@ import { ApiComponent } from './pages/api/api.component';
 import { ItemPageComponent } from './pages/item/item-page.component';
 import { LeaguesComponent } from './pages/leagues/leagues.component';
 import { StatsPageComponent } from './pages/stats/stats-page.component';
+import { DemoComponent } from './pages/demo/demo.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,16 @@ const routes: Routes = [
     component: ItemPageComponent,
     data: {
       pageTitle: 'Item details',
+      navTitle: null,
+      isNew: false,
+      enabled: false,
+      comment: null
+    },
+  }, {
+    path: 'demo',
+    component: DemoComponent,
+    data: {
+      pageTitle: 'Demo',
       navTitle: null,
       isNew: false,
       enabled: false,
