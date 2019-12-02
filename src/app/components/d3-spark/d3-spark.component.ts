@@ -1,25 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { area as d3_area, line as d3_line, range as d3_range, scaleLinear as d3_scaleLinear, select as d3_select } from 'd3';
 import * as d3_shape from 'd3-shape';
 
 @Component({
   selector: 'pw-d3-spark',
-  templateUrl: './d3-spark.component.html',
+  template: '<div #container class="d-inline-block"></div>',
   styleUrls: ['./d3-spark.component.css']
 })
-export class D3SparkComponent implements OnInit {
+export class D3SparkComponent implements OnInit, AfterViewInit {
   @Input() size: [number, number] = [200, 90];
   @Input() padding: [number, number, number, number] = [0, 0, 0, 0];
-  @Input() data: number[];
+  @Input() data: number[] = d3_range(7).map(d => Math.random());
+  @Input() colors: string[] = ['#a8b992', '#b8afb6'];
+  @ViewChild('container', {static: false}) container;
 
   constructor() {
   }
 
-  ngOnInit() {
-    if (!this.data) {
-      this.data = d3_range(14).map(d => Math.random());
-    }
-
+  ngAfterViewInit() {
     const [w, h] = this.size;
     const [pT, pR, pB, pL] = this.padding;
 
@@ -29,7 +27,7 @@ export class D3SparkComponent implements OnInit {
     const scaleX = d3_scaleLinear().domain([0, this.data.length - 1]).range([0, innerWidth]);
     const scaleY = d3_scaleLinear().domain([0, 1]).range([innerHeight, 0]);
 
-    const svg = d3_select('.sparkline').append('svg')
+    const svg = d3_select(this.container.nativeElement).append('svg')
       .attr('width', w)
       .attr('height', h)
       .append('g')
@@ -48,25 +46,36 @@ export class D3SparkComponent implements OnInit {
 
     svg.append('path').datum(this.data)
       .attr('fill', 'none')
-      .attr('stroke', '#bbb')
-      .attr('stroke-width', 2)
+      .attr('stroke', 'url(#gradient)')
+      .attr('stroke-width', 1.5)
       .attr('d', line);
 
     svg.append('path')
-      .attr('fill', 'rgba(255,255,255,0.2)')
+      .attr('fill', 'rgba(0,0,0,0.15)')
       .attr('d', area(this.data));
 
-    // svg.append('circle')
-    //   .attr('r', 5)
-    //   .attr('cx', x(0))
-    //   .attr('cy', y(this.data[0]))
-    //   .attr('fill', 'steelblue');
-    //
-    // svg.append('circle')
-    //   .attr('r', 5)
-    //   .attr('cx', x(this.data.length - 1))
-    //   .attr('cy', y(this.data[this.data.length - 1]))
-    //   .attr('fill', 'tomato');
-
+    this.buildGradient(svg, this.colors);
   }
+
+  ngOnInit() {
+  }
+
+  buildGradient(svg: any, colors: string[]): void {
+    const linearGradient = svg.append('defs')
+      .append('linearGradient')
+      .attr('id', 'gradient')
+      .attr('gradientTransform', 'rotate(90)');
+
+    for (let j = 0; j < colors.length - 1; j++) {
+      const percentage = Math.round(j / colors.length * 100);
+      linearGradient.append('stop')
+        .attr('offset', percentage + '%')
+        .attr('stop-color', colors[j]);
+    }
+
+    linearGradient.append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', colors[colors.length - 1]);
+  }
+
 }

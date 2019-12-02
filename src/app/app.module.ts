@@ -18,7 +18,6 @@ import { ItemComponent } from './components/item/item.component';
 import { PricesTableComponent } from './pages/prices/prices-table/prices-table.component';
 import { FormsModule } from '@angular/forms';
 import { ItemPriceboxComponent } from './components/item/item-pricebox/item-pricebox.component';
-import { ItemSparklineComponent } from './components/item/item-sparkline/item-sparkline.component';
 import { EnumToArrayPipe } from './pipes/enum-to-array.pipe';
 import { ActiveLeaguePipe } from './pipes/active-league.pipe';
 import { PricesTableLoadmoreComponent } from './pages/prices/prices-table/prices-table-loadmore/prices-table-loadmore.component';
@@ -54,7 +53,6 @@ import { D3SparkComponent } from './components/d3-spark/d3-spark.component';
     SidebarComponent,
     ItemComponent,
     ItemPriceboxComponent,
-    ItemSparklineComponent,
     PricesTableComponent,
     EnumToArrayPipe,
     ActiveLeaguePipe,
