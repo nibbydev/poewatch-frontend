@@ -27,7 +27,7 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.data = this.formatData();
+    this.data = this.formatData(this.data);
   }
 
 
@@ -50,13 +50,13 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
     const line = d3_line()
       .x((d, i) => scaleX(i))
       .y(d => scaleY(d))
-      .curve(d3_shape.curveCardinal);
+      .curve(d3_shape.curveMonotoneX);
 
     const area = d3_area()
       .x((d, i) => scaleX(i))
       .y(d => scaleY(d))
       .y1(d => h)
-      .curve(d3_shape.curveCardinal);
+      .curve(d3_shape.curveMonotoneX);
 
     svg.append('path').datum(this.data)
       .attr('fill', 'none')
@@ -83,12 +83,21 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
     linearGradient.append('stop')
       .attr('offset', '100%')
       .attr('stop-color', this.colors[this.colors.length - 1]);
+
+    // const stepSize = 50 / Math.floor(this.colors.length / 2);
+    // let currentStep = 0;
+    // for (const color of this.colors) {
+    //   linearGradient.append('stop')
+    //     .attr('offset', currentStep + '%')
+    //     .attr('stop-color', color);
+    //   currentStep += stepSize;
+    // }
   }
 
-  private formatData(): number[] {
-    const min = Math.min.apply(null, this.data);
-    const max = Math.max.apply(null, this.data);
+  private formatData(data: number[]): number[] {
+    const min = Math.min.apply(null, data);
+    const max = Math.max.apply(null, data);
     const scale = d3_scaleLinear().domain([min, max]).range([0, 1]);
-    return this.data.map(d => scale(d));
+    return data.map(d => scale(d));
   }
 }
