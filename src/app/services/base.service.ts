@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
-import { AppSettings } from '../app-settings';
+import { AppConstants } from '../app-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class BaseService {
   }
 
   get<T>(endPoint: string, params: HttpParams, ifFailed?: T): Observable<T> {
-    const url = AppSettings.API_ENDPOINT + endPoint;
+    const url = AppConstants.API_ENDPOINT + endPoint;
 
     return this.http.get<T>(url, {params}).pipe(
       tap(_ => console.log('Made request to ' + endPoint)),

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiDocService} from '../../services/api-doc.service';
-import {AppSettings} from '../../app-settings';
+import { Component, OnInit } from '@angular/core';
+import { ApiDocService } from '../../services/api-doc.service';
+import { AppConstants } from '../../app-constants';
 
 @Component({
   selector: 'pw-api',
@@ -8,7 +8,7 @@ import {AppSettings} from '../../app-settings';
   styleUrls: ['./api.component.css']
 })
 export class ApiComponent implements OnInit {
-  private appSettings = AppSettings;
+  private appConstants = AppConstants;
 
   constructor(private apiDocService: ApiDocService) {
   }
