@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GetEntry } from '../../../modules/api/get-entry';
 import { PriceFilterService } from '../../../services/price-filter.service';
 import { Subscription } from 'rxjs';
+import { AppConstants } from '../../../app-constants';
 
 @Component({
   selector: 'pw-prices-table',
@@ -11,9 +12,7 @@ import { Subscription } from 'rxjs';
 export class PricesTableComponent implements OnInit, OnDestroy {
   public entries: GetEntry[];
   private subscription$: Subscription;
-
-  private readonly chaosIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&amp;w=1&amp;h=1';
-  private readonly exaltedIcon = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&amp;w=1&amp;h=1';
+  private appConstants = AppConstants;
 
   constructor(private priceFilterService: PriceFilterService) {
   }

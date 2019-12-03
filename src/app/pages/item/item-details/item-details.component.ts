@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ItemEntryLeague} from '../../../modules/api/item-entry';
-import {Subject} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { ItemEntryLeague } from '../../../modules/api/item-entry';
+import { Subject } from 'rxjs';
+import { AppConstants } from '../../../app-constants';
 
 @Component({
   selector: 'pw-item-details',
@@ -9,6 +10,7 @@ import {Subject} from 'rxjs';
 })
 export class ItemDetailsComponent implements OnInit {
   @Input() entryLeague$: Subject<ItemEntryLeague>;
+  private appConstants = AppConstants;
 
   constructor() {
   }

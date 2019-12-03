@@ -24,7 +24,7 @@
     <td>
       <div class="pricebox pw-subtext-1 font-weight-bold">
           <span class="img-container img-container-xs text-center mr-1">
-            <img [src]="chaosIcon" alt="...">
+            <img [src]="appConstants.CHAOS_ICON" alt="...">
           </span>
         {{item.mean | number:'1.0-2'}}
       </div>
@@ -32,7 +32,7 @@
     <td class="d-none d-md-table-cell">
       <div *ngIf="item.exalted > 1" class="pricebox pw-subtext-1 font-weight-bold">
           <span class="img-container img-container-xs text-center mr-1">
-            <img [src]="exaltedIcon" alt="...">
+            <img [src]="appConstants.EXALTED_ICON" alt="...">
           </span>
         {{item.exalted | number:'1.0-2'}}
       </div>
