@@ -1,15 +1,16 @@
-import {Injectable} from '@angular/core';
-import {GetEntry} from '../modules/api/get-entry';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {Category, Group} from '../modules/api/category';
-import {PriceService} from './price.service';
-import {League} from '../modules/api/league';
-import {PricePaginationService} from './price-pagination.service';
-import {PriceSearchCriteria, SearchOption} from '../modules/criteria';
-import {first} from 'rxjs/operators';
-import {Rarity} from '../modules/rarity';
-import {LeagueService} from './league.service';
-import {CriteriaUtil} from "../utility/criteria-util";
+import { Injectable } from '@angular/core';
+import { GetEntry } from '../modules/api/get-entry';
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import { Category, Group } from '../modules/api/category';
+import { PriceService } from './price.service';
+import { League } from '../modules/api/league';
+import { PricePaginationService } from './price-pagination.service';
+import { PriceSearchCriteria, SearchOption } from '../modules/criteria';
+import { first } from 'rxjs/operators';
+import { Rarity } from '../modules/rarity';
+import { LeagueService } from './league.service';
+import { CriteriaUtil } from '../utility/criteria-util';
+import { SiteDataService } from './site-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,15 @@ export class PriceFilterService {
       reset: false,
       showSpinner: true,
       options: new Observable(t => {
-        this.leagueService.entries$.pipe(first()).subscribe(leagues => {
-          const searchOptions: SearchOption[] = leagues.map(g => ({display: g.display, value: g.name})).reverse();
+        const formatName = (l: League) => (l.active ? '' : '> ') + (l.display ? l.display : l.name);
+        forkJoin([
+          this.leagueService.entries$,
+          this.siteDataService.data$
+        ]).pipe(first()).subscribe(result => {
+          const [leagues, siteData] = result;
+          const searchOptions: SearchOption[] = leagues
+            .filter(l => siteData.leagues.includes(l.id))
+            .map(l => ({display: formatName(l), value: l.name})).reverse();
           t.next(searchOptions);
           t.complete();
         });
@@ -159,7 +167,7 @@ export class PriceFilterService {
         {
           display: 'Relic',
           value: 'relic'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -201,7 +209,7 @@ export class PriceFilterService {
         {
           display: 'Six links',
           value: '6'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -255,7 +263,7 @@ export class PriceFilterService {
         {
           display: '86+',
           value: '86'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -300,7 +308,7 @@ export class PriceFilterService {
         {
           display: 'Elder',
           value: 'elder'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -346,7 +354,7 @@ export class PriceFilterService {
         {
           display: 'No',
           value: 'no'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -412,7 +420,7 @@ export class PriceFilterService {
         {
           display: '21',
           value: '21'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -607,7 +615,7 @@ export class PriceFilterService {
         {
           display: 'No',
           value: 'no'
-        },
+        }
       ]),
       showItem(e: GetEntry) {
         switch (this.value) {
@@ -624,12 +632,13 @@ export class PriceFilterService {
         }
       },
       onChange: () => this.sortEntries()
-    },
+    }
   ];
 
   constructor(private priceService: PriceService,
               private paginationService: PricePaginationService,
-              private leagueService: LeagueService) {
+              private leagueService: LeagueService,
+              private siteDataService: SiteDataService) {
   }
 
   public getEntries(): Observable<GetEntry[]> {
