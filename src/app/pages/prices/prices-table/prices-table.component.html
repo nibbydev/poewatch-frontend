@@ -18,7 +18,7 @@
       <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
     </td>
     <td class="d-none d-md-table-cell">
-      <pw-d3-spark [id]="item.id" [size]="[60, 30]"></pw-d3-spark>
+      <pw-d3-spark [data]="item.history" [size]="[60, 30]"></pw-d3-spark>
     </td>
 
     <td>

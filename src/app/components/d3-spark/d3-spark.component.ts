@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { area as d3_area, line as d3_line, range as d3_range, scaleLinear as d3_scaleLinear, select as d3_select } from 'd3';
+import {
+  area as d3_area,
+  line as d3_line,
+  range as d3_range,
+  scaleLinear as d3_scaleLinear,
+  select as d3_select
+} from 'd3';
 import * as d3_shape from 'd3-shape';
 
 @Component({
@@ -14,8 +20,16 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
   @Input() colors: string[] = ['#a8b992', '#b8afb6'];
   @ViewChild('container', {static: false}) container;
 
+  private readonly strokeWidth = 1.5;
+  private readonly backgroundOpacity = 0.15;
+
   constructor() {
   }
+
+  ngOnInit() {
+    this.data = this.formatData();
+  }
+
 
   ngAfterViewInit() {
     const [w, h] = this.size;
@@ -41,41 +55,40 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
     const area = d3_area()
       .x((d, i) => scaleX(i))
       .y(d => scaleY(d))
-      .y1(d => innerHeight)
+      .y1(d => h)
       .curve(d3_shape.curveCardinal);
 
     svg.append('path').datum(this.data)
       .attr('fill', 'none')
       .attr('stroke', 'url(#gradient)')
-      .attr('stroke-width', 1.5)
+      .attr('stroke-width', this.strokeWidth)
       .attr('d', line);
 
     svg.append('path')
       .attr('fill', 'rgba(0,0,0,0.15)')
       .attr('d', area(this.data));
 
-    this.buildGradient(svg, this.colors);
-  }
-
-  ngOnInit() {
-  }
-
-  buildGradient(svg: any, colors: string[]): void {
     const linearGradient = svg.append('defs')
       .append('linearGradient')
       .attr('id', 'gradient')
       .attr('gradientTransform', 'rotate(90)');
 
-    for (let j = 0; j < colors.length - 1; j++) {
-      const percentage = Math.round(j / colors.length * 100);
+    for (let j = 0; j < this.colors.length - 1; j++) {
+      const percentage = Math.round(j / this.colors.length * 100);
       linearGradient.append('stop')
         .attr('offset', percentage + '%')
-        .attr('stop-color', colors[j]);
+        .attr('stop-color', this.colors[j]);
     }
 
     linearGradient.append('stop')
       .attr('offset', '100%')
-      .attr('stop-color', colors[colors.length - 1]);
+      .attr('stop-color', this.colors[this.colors.length - 1]);
   }
 
+  private formatData(): number[] {
+    const min = Math.min.apply(null, this.data);
+    const max = Math.max.apply(null, this.data);
+    const scale = d3_scaleLinear().domain([min, max]).range([0, 1]);
+    return this.data.map(d => scale(d));
+  }
 }
