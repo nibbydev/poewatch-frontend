@@ -18,6 +18,10 @@ import { SiteDataService } from './site-data.service';
 export class PriceFilterService {
   private readonly entries$: BehaviorSubject<GetEntry[]> = new BehaviorSubject(null);
   private rawEntries: GetEntry[] = null;
+  private readonly sort = {
+    field: null as string,
+    order: null as string
+  };
 
   public readonly criteria: PriceSearchCriteria[] = [
     {
@@ -641,18 +645,16 @@ export class PriceFilterService {
               private siteDataService: SiteDataService) {
   }
 
-  public getEntries(): Observable<GetEntry[]> {
-    return this.entries$;
-  }
-
   public onQueryParamChange(league: League, category: Category): void {
     // hide certain search options depending on category
     CriteriaUtil.setState(this.criteria, category);
 
-    // send null to force loading state on prices table
     this.rawEntries = null;
+    // send null to force loading state on prices table
     this.entries$.next(null);
     this.paginationService.resetPagination();
+    this.sort.order = null;
+    this.sort.field = null;
 
     // send null to force loading state on group input
     const groupCriteria = CriteriaUtil.findCriteria(this.criteria, 'group');
@@ -666,6 +668,23 @@ export class PriceFilterService {
       this.processPriceGroups(category, this.rawEntries);
       this.sortEntries();
     });
+  }
+
+  public getEntries(): Observable<GetEntry[]> {
+    return this.entries$;
+  }
+
+  public filter(allEntries: GetEntry[]): GetEntry[] {
+    // find entries visible after applying search criteria
+    const enabledCriteria = CriteriaUtil.getEnabledCriteria(this.criteria);
+    const matchingEntries = allEntries.filter(e => {
+      return enabledCriteria.every(c => c.showItem(e));
+    });
+
+    // sort by
+    const orderedEntries = matchingEntries.sort((a, b) => this.sortFn(a, b));
+    // create pages
+    return this.paginationService.page(allEntries, orderedEntries);
   }
 
   public loadNextPage() {
@@ -686,15 +705,9 @@ export class PriceFilterService {
     this.entries$.next(this.filter(this.rawEntries));
   }
 
-  public filter(allEntries: GetEntry[]): GetEntry[] {
-    // find entries visible after applying search criteria
-    const enabledCriteria = CriteriaUtil.getEnabledCriteria(this.criteria);
-    const matchingEntries = allEntries.filter(e => {
-      return enabledCriteria.every(c => c.showItem(e));
-    });
-
-    // create pages
-    return this.paginationService.page(allEntries, matchingEntries);
+  public setSortParams(field: string, direction: string): void {
+    this.sort.field = field;
+    this.sort.order = direction;
   }
 
   private processPriceGroups(category: Category, prices: GetEntry[]): void {
@@ -719,6 +732,21 @@ export class PriceFilterService {
 
     // set its options to the current groups
     (groupCriteria.options as Subject<SearchOption[]>).next(searchOptions);
+  }
+
+  private sortFn(a: GetEntry, b: GetEntry): number {
+    if (!this.sort.field || !this.sort.order) {
+      return a.mean === b.mean ? 0 : (a.mean > b.mean ? -1 : 1);
+    }
+
+    if (a[this.sort.field] === b[this.sort.field]) {
+      return 0;
+    }
+    if (a[this.sort.field] > b[this.sort.field]) {
+      return this.sort.order === 'down' ? 1 : -1;
+    }
+
+    return this.sort.order === 'up' ? 1 : -1;
   }
 
 }

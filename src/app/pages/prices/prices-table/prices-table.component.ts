@@ -23,7 +23,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       tooltip: 'Item picture, name, rarity and extras',
       hideOnMd: false,
       sort: true,
-      sortKey: 'item',
+      sortKey: 'name',
       colspan: 1
     },
     {
@@ -32,7 +32,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       tooltip: 'Price in Chaos and Exalted Orbs',
       hideOnMd: false,
       sort: true,
-      sortKey: 'price',
+      sortKey: 'mean',
       colspan: 1
     },
     {
@@ -50,7 +50,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       tooltip: 'Number of items currently on sale',
       hideOnMd: false,
       sort: true,
-      sortKey: 'now',
+      sortKey: 'current',
       colspan: 1
     },
     {
@@ -84,9 +84,8 @@ export class PricesTableComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  public stateChange(column: string, state: string) {
-    console.log(column, state);
-    // todo: me
+  public stateChange(field: string, direction: string) {
+    this.priceFilterService.setSortParams(field, direction);
     this.priceFilterService.sortEntries();
   }
 }
