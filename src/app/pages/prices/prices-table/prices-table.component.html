@@ -1,14 +1,14 @@
 <table *ngIf="entries" class="table table-sm table-hover table-striped mb-0 table-responsive">
   <thead>
   <tr>
-    <th class="w-100"><span class="sort-column">Item</span></th>
+    <th class="w-100"><span>Item</span></th>
     <th class="d-none d-md-table-cell">Spark</th>
-    <th><span class="sort-column">Chaos</span></th>
+    <th><span>Chaos</span></th>
     <th class="d-none d-md-table-cell">Exalted</th>
-    <th><span class="sort-column" title="Price compared to 7d ago">Change</span></th>
-    <th><span class="sort-column" title="Number of items currently on sale">Now</span></th>
-    <th><span class="sort-column" title="Number of items listed every 24h">Daily</span></th>
-    <th><span class="sort-column" title="Total number of items listed">Total</span></th>
+    <th><span title="Price compared to 7d ago">Change</span></th>
+    <th><span title="Number of items currently on sale">Now</span></th>
+    <th><span title="Number of items listed every 24h">Daily</span></th>
+    <th (click)="sortBy('total')"><span title="Total number of items listed">Total</span></th>
   </tr>
   </thead>
 

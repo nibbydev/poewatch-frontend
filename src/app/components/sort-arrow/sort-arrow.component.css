@@ -1,0 +1,81 @@
+.header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.pointer-middle {
+  margin: auto;
+  height: 2px;
+  width: 2px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.pointer-left, .pointer-right {
+  background: currentColor;
+  width: 6px;
+  height: 2px;
+  position: absolute;
+  top: 0;
+}
+
+.pointer-right {
+  transform-origin: left;
+  right: 0;
+}
+
+.pointer-left {
+  transform-origin: right;
+  left: 0;
+}
+
+.header-arrow {
+  height: 12px;
+  width: 12px;
+  min-width: 12px;
+  position: relative;
+  display: flex;
+  color: #ddd;
+  opacity: 0;
+  transition: all 0.25s ease;
+}
+
+.header-container:hover .header-arrow {
+  opacity: 0.5;
+}
+
+.header-container.active .header-arrow {
+  opacity: 1;
+}
+
+.header-arrow.down {
+  transform: rotate(180deg);
+}
+
+.header-indicator {
+  width: 100%;
+  height: 2px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.header-stem {
+  background: currentColor;
+  height: 10px;
+  width: 2px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.pointer-left {
+  transform: rotate(-45deg);
+}
+
+.pointer-right {
+  transform: rotate(45deg);
+}

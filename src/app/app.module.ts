@@ -39,6 +39,7 @@ import { HoursAgoPipe } from './pipes/hours-ago.pipe';
 import { SparklineComponent } from './components/sparkline/sparkline.component';
 import { DemoComponent } from './pages/demo/demo.component';
 import { D3SparkComponent } from './components/d3-spark/d3-spark.component';
+import { SortArrowComponent } from './components/sort-arrow/sort-arrow.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { D3SparkComponent } from './components/d3-spark/d3-spark.component';
     SparklineComponent,
     DemoComponent,
     D3SparkComponent,
+    SortArrowComponent
   ],
   imports: [
     BrowserModule,

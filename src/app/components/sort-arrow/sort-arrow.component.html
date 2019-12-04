@@ -1,0 +1,13 @@
+<div (click)="cycle()" [ngClass]="{active: active}" class="header-container">
+  <div>{{title}}</div>
+
+  <div [ngClass]="{up: state !== 'down', down: state === 'down'}" class="header-arrow ml-1">
+    <div class="header-stem"></div>
+    <div class="header-indicator">
+      <div class="pointer-left"></div>
+      <div class="pointer-right"></div>
+      <div class="pointer-middle"></div>
+    </div>
+  </div>
+
+</div>

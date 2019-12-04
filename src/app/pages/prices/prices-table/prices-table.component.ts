@@ -24,4 +24,9 @@ export class PricesTableComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
   }
+
+  public sortBy(a): void {
+    console.log(a);
+    this.priceFilterService.sortEntries();
+  }
 }

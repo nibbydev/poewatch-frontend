@@ -13,4 +13,7 @@ export class DemoComponent implements OnInit {
   ngOnInit() {
   }
 
+  stateChange(state: string) {
+    console.log(state);
+  }
 }
