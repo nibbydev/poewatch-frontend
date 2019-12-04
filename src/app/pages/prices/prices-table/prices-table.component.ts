@@ -11,7 +11,8 @@ import { scaleLinear } from 'd3-scale';
   styleUrls: ['./prices-table.component.css']
 })
 export class PricesTableComponent implements OnInit, OnDestroy {
-  public readonly color = scaleLinear().domain([-100, 100]).range(['#ff857e', '#9cff87']);
+  public readonly changeColor = scaleLinear().domain([-100, 100]).range(['#ff857e', '#9cff87']);
+  public readonly confidenceColor = scaleLinear().domain([0, 20]).range(['#ff4348', '#72ff32']);
   public entries: GetEntry[];
   private subscription$: Subscription;
   private appConstants = AppConstants;
@@ -87,5 +88,26 @@ export class PricesTableComponent implements OnInit, OnDestroy {
   public stateChange(field: string, direction: string) {
     this.priceFilterService.setSortParams(field, direction);
     this.priceFilterService.sortEntries();
+  }
+
+  public getConfidence(e: GetEntry) {
+    let confidence = 0;
+
+    if (e.daily > 200) {
+      confidence += 10;
+    }
+    if (e.daily > 50) {
+      confidence += 5;
+    }
+    if (e.daily > 10) {
+      confidence += 2;
+    }
+
+    // todo: find a decent confidence algorithm
+    // const diff1 = Math.abs(e.mean - e.median);
+    // const diff2 = Math.abs(e.mode - e.median);
+    // const diff3 = Math.abs(e.mean - e.mode);
+
+    return this.confidenceColor(confidence);
   }
 }

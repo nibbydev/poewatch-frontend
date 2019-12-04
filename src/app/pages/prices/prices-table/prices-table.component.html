@@ -14,8 +14,10 @@
 
   <tbody>
   <tr *ngFor="let item of entries">
-    <td class="d-flex align-items-center">
+    <td class="d-flex align-items-center justify-content-between">
       <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
+
+      <div [ngStyle]="{'background-color': getConfidence(item)}" class="colorbox"></div>
     </td>
 
 
@@ -43,7 +45,7 @@
       </div>
     </td>
     <td class="text-center p-0 nowrap">
-      <span [style.color]="color(item.change)" class="pw-subtext-1 font-weight-bold custom-text-gray-lo mx-2">
+      <span [style.color]="changeColor(item.change)" class="pw-subtext-1 font-weight-bold custom-text-gray-lo mx-2">
         {{item.change | number:'1.0-0'}}%
       </span>
     </td>
