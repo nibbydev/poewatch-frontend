@@ -30,6 +30,7 @@ tbody > tr:hover {
 .pricebox {
   display: flex;
   align-items: center;
+  transition: all 0.5s ease;
 }
 
 .pricebox .sparkline {padding: 0 5px 0 0}
@@ -38,4 +39,32 @@ tbody > tr:hover {
 .custom-text-gray-lo    {color: #a1a1a1}
 
 
+.pricebox-container {
+  max-height: 32px;
+  height: 32px;
+  overflow: hidden;
+  position: relative;
+  width: 100px;
+  padding-left: 5px;
+  transition: all 0.5s ease;
+}
 
+.pricebox {
+  position: absolute;
+  transform: translate(0, -50%);
+  top: 50%;
+  width: 100px;
+}
+
+
+.pricebox:nth-child(2) {
+  transform: translate(-100%, -50%);
+}
+
+.pricebox-container:hover > .pricebox:nth-child(2) {
+  transform: translate(0%, -50%);
+}
+
+.pricebox-container:hover > .pricebox:nth-child(1) {
+  transform: translate(100%, -50%);
+}

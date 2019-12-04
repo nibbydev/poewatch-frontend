@@ -13,6 +13,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
   public entries: GetEntry[];
   private subscription$: Subscription;
   private appConstants = AppConstants;
+  public showExalted = false;
 
   public tableColumnHeaders = [
     {
@@ -22,6 +23,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       hideOnMd: false,
       sort: true,
       sortKey: 'item',
+      colspan: 1
     },
     {
       fullWidth: false,
@@ -30,6 +32,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       hideOnMd: false,
       sort: true,
       sortKey: 'price',
+      colspan: 1
     },
     {
       fullWidth: false,
@@ -38,6 +41,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       hideOnMd: false,
       sort: true,
       sortKey: 'change',
+      colspan: 2
     },
     {
       fullWidth: false,
@@ -46,6 +50,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       hideOnMd: false,
       sort: true,
       sortKey: 'now',
+      colspan: 1
     },
     {
       fullWidth: false,
@@ -54,6 +59,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       hideOnMd: false,
       sort: true,
       sortKey: 'daily',
+      colspan: 1
     },
     {
       fullWidth: false,
@@ -62,6 +68,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       hideOnMd: false,
       sort: true,
       sortKey: 'total',
+      colspan: 1
     },
   ];
 

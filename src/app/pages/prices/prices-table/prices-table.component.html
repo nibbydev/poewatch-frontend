@@ -1,7 +1,7 @@
 <table *ngIf="entries" class="table table-sm table-hover table-striped mb-0 table-responsive">
   <thead>
   <tr>
-    <th *ngFor="let col of tableColumnHeaders"
+    <th *ngFor="let col of tableColumnHeaders" [colSpan]="col.colspan"
         [ngClass]="{'d-none': col.hideOnMd, 'd-md-table-cell': col.hideOnMd, 'w-100': col.fullWidth}">
           <span [title]="col.tooltip">
             <pw-sort-arrow (stateChange)="stateChange(col.sortKey, $event)" *ngIf="col.sort"
@@ -17,28 +17,35 @@
     <td class="d-flex align-items-center">
       <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
     </td>
+
+
     <td>
-      <div class="pricebox pw-subtext-1 font-weight-bold mr-2">
+      <div class="pricebox-container">
+        <div class="pricebox pw-subtext-1 font-weight-bold">
         <span class="img-container img-container-xs text-center mr-1">
           <img [src]="appConstants.CHAOS_ICON" alt="...">
         </span>
-        {{item.mean | number:'1.0-2'}}
+          {{item.mean | number:'1.0-2'}}
+        </div>
+        <div class="pricebox pw-subtext-1 font-weight-bold">
+        <span class="img-container img-container-xs text-center mr-1">
+          <img [src]="appConstants.EXALTED_ICON" alt="...">
+        </span>
+          {{item.exalted | number:'1.0-2'}}
+        </div>
       </div>
-      <!--      <div *ngIf="item.exalted > 1" class="pricebox pw-subtext-1 font-weight-bold">-->
-      <!--        <span class="img-container img-container-xs text-center mr-1">-->
-      <!--          <img [src]="appConstants.EXALTED_ICON" alt="...">-->
-      <!--        </span>-->
-      <!--        {{item.exalted | number:'1.0-2'}}-->
-      <!--      </div>-->
     </td>
+
 
     <td class="text-center p-0 nowrap">
       <div class="d-flex align-items-center">
         <pw-d3-spark [data]="item.history" [size]="[60, 30]"></pw-d3-spark>
-        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo mx-2">
+      </div>
+    </td>
+    <td class="text-center p-0 nowrap">
+      <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo mx-2">
         {{item.change | number:'1.0-0'}}%
       </span>
-      </div>
     </td>
     <td class="text-center p-0">
         <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">

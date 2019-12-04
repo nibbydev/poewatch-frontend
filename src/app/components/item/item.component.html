@@ -3,7 +3,7 @@
     <img [src]="item | itemFormat:'icon'" alt="...">
   </div>
 
-  <div class="custom-text-gray-lo item-nowrap">
+  <div class="custom-text-gray-lo">
 
     <span *ngIf="clickable" [ngClass]="getPrimaryClasses()" [queryParams]="{id: item.id}" [routerLink]="['/item']">
       <span>{{item | itemFormat:'name'}}</span>
