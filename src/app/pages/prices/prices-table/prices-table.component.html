@@ -3,11 +3,11 @@
   <tr>
     <th *ngFor="let col of tableColumnHeaders" [colSpan]="col.colspan"
         [ngClass]="{'d-none': col.hideOnMd, 'd-md-table-cell': col.hideOnMd, 'w-100': col.fullWidth}">
-          <span [title]="col.tooltip">
-            <pw-sort-arrow (stateChange)="stateChange(col.sortKey, $event)" *ngIf="col.sort"
-                           [display]="col.display"></pw-sort-arrow>
-            <span *ngIf="!col.sort">{{col.display}}</span>
-          </span>
+      <span [title]="col.tooltip">
+        <pw-sort-arrow (stateChange)="stateChange(col.sortKey, $event)" *ngIf="col.sort"
+                       [display]="col.display"></pw-sort-arrow>
+        <span *ngIf="!col.sort">{{col.display}}</span>
+      </span>
     </th>
   </tr>
   </thead>
@@ -16,7 +16,6 @@
   <tr *ngFor="let item of entries">
     <td class="d-flex align-items-center justify-content-between">
       <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
-
       <div [ngStyle]="{'background-color': getConfidence(item)}" class="colorbox"></div>
     </td>
 
@@ -24,15 +23,15 @@
     <td>
       <div class="pricebox-container">
         <div class="pricebox pw-subtext-1 font-weight-bold">
-        <span class="img-container img-container-xs text-center mr-1">
-          <img [src]="appConstants.CHAOS_ICON" alt="...">
-        </span>
+          <span class="img-container img-container-xs text-center mr-1">
+            <img [src]="appConstants.CHAOS_ICON" alt="...">
+          </span>
           {{item.mean | number:'1.0-2'}}
         </div>
         <div class="pricebox pw-subtext-1 font-weight-bold">
-        <span class="img-container img-container-xs text-center mr-1">
-          <img [src]="appConstants.EXALTED_ICON" alt="...">
-        </span>
+          <span class="img-container img-container-xs text-center mr-1">
+            <img [src]="appConstants.EXALTED_ICON" alt="...">
+          </span>
           {{item.exalted | number:'1.0-2'}}
         </div>
       </div>
@@ -50,19 +49,19 @@
       </span>
     </td>
     <td class="text-center p-0">
-        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
-          {{item.current}}
-        </span>
+      <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+        {{item.current}}
+      </span>
     </td>
     <td class="text-center p-0">
-        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
-          {{item.daily}}
-        </span>
+      <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+        {{item.daily}}
+      </span>
     </td>
     <td class="text-center p-0">
-        <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
-          {{item.total}}
-        </span>
+      <span class="pw-subtext-1 font-weight-bold custom-text-gray-lo">
+        {{item.total}}
+      </span>
     </td>
   </tr>
   </tbody>
