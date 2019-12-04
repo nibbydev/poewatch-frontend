@@ -664,8 +664,7 @@ export class PriceFilterService {
       this.rawEntries = entries;
       // extract groups from the entries and update criteria
       this.processPriceGroups(category, this.rawEntries);
-      // filter the entries including pagination and send them to subscribers
-      this.entries$.next(this.filter(this.rawEntries));
+      this.sortEntries();
     });
   }
 
@@ -675,7 +674,7 @@ export class PriceFilterService {
     }
 
     this.paginationService.incPage();
-    this.entries$.next(this.filter(this.rawEntries));
+    this.sortEntries();
   }
 
   public sortEntries() {
@@ -683,6 +682,7 @@ export class PriceFilterService {
       return;
     }
 
+    // filter the entries including pagination and send them to subscribers
     this.entries$.next(this.filter(this.rawEntries));
   }
 
