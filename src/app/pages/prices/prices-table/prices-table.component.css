@@ -8,8 +8,12 @@ table > thead > tr > th {
 
 td {
   vertical-align: middle;
-  padding: 0 5px 0 2px;
+  padding: 0;
   border: 0;
+}
+
+td:not(:first-of-type) {
+  border-left: 1px solid rgba(255, 255, 255, .05);
 }
 
 tbody > td {
@@ -32,3 +36,6 @@ tbody > tr:hover {
 
 .pw-subtext-1 {font-size: 75%}
 .custom-text-gray-lo    {color: #a1a1a1}
+
+
+

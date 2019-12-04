@@ -1,16 +1,10 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  area as d3_area,
-  line as d3_line,
-  range as d3_range,
-  scaleLinear as d3_scaleLinear,
-  select as d3_select
-} from 'd3';
+import { area as d3_area, line as d3_line, range as d3_range, scaleLinear as d3_scaleLinear, select as d3_select } from 'd3';
 import * as d3_shape from 'd3-shape';
 
 @Component({
   selector: 'pw-d3-spark',
-  template: '<div #container class="d-inline-block"></div>',
+  template: '<div #container></div>',
   styleUrls: ['./d3-spark.component.css']
 })
 export class D3SparkComponent implements OnInit, AfterViewInit {

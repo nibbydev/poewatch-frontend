@@ -1,5 +1,5 @@
 <div (click)="cycle()" [ngClass]="{active: active}" class="header-container">
-  <div>{{title}}</div>
+  <div>{{display}}</div>
 
   <div [ngClass]="{up: state !== 'down', down: state === 'down'}" class="header-arrow ml-1">
     <div class="header-stem"></div>

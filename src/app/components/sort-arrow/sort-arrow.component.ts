@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class SortArrowComponent implements OnInit {
 
   @Output() stateChange = new EventEmitter<string>();
-  @Input() title: string;
+  @Input() display: string;
   public active = false;
   public state = null;
 
