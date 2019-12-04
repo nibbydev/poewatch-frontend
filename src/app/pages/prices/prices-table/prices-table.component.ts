@@ -3,6 +3,7 @@ import { GetEntry } from '../../../modules/api/get-entry';
 import { PriceFilterService } from '../../../services/price-filter.service';
 import { Subscription } from 'rxjs';
 import { AppConstants } from '../../../app-constants';
+import { scaleLinear } from 'd3-scale';
 
 @Component({
   selector: 'pw-prices-table',
@@ -10,10 +11,10 @@ import { AppConstants } from '../../../app-constants';
   styleUrls: ['./prices-table.component.css']
 })
 export class PricesTableComponent implements OnInit, OnDestroy {
+  public readonly color = scaleLinear().domain([-100, 100]).range(['#ff857e', '#9cff87']);
   public entries: GetEntry[];
   private subscription$: Subscription;
   private appConstants = AppConstants;
-  public showExalted = false;
 
   public tableColumnHeaders = [
     {
@@ -69,7 +70,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       sort: true,
       sortKey: 'total',
       colspan: 1
-    },
+    }
   ];
 
   constructor(private priceFilterService: PriceFilterService) {
@@ -85,6 +86,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
 
   public stateChange(column: string, state: string) {
     console.log(column, state);
+    // todo: me
     this.priceFilterService.sortEntries();
   }
 }
