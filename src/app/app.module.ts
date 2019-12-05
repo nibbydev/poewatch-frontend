@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { BsDropdownModule, ModalModule, TooltipModule } from 'ngx-bootstrap';
 import { FrontComponent } from './pages/front/front.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -40,6 +39,7 @@ import { SparklineComponent } from './components/sparkline/sparkline.component';
 import { DemoComponent } from './pages/demo/demo.component';
 import { D3SparkComponent } from './components/d3-spark/d3-spark.component';
 import { SortArrowComponent } from './components/sort-arrow/sort-arrow.component';
+import { TooltipComponent } from './components/tooltip/tooltip.component';
 
 @NgModule({
   declarations: [
@@ -74,14 +74,12 @@ import { SortArrowComponent } from './components/sort-arrow/sort-arrow.component
     SparklineComponent,
     DemoComponent,
     D3SparkComponent,
-    SortArrowComponent
+    SortArrowComponent,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ModalModule.forRoot(),
-    TooltipModule.forRoot(),
-    BsDropdownModule.forRoot(),
     HttpClientModule,
     FormsModule,
     NgxChartsModule,
