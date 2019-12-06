@@ -2,6 +2,23 @@
   <div class="col">
     <div class="card">
       <div class="card-body">
+
+
+        <ng-template #popContent>Hello, <b>james</b>!</ng-template>
+        <ng-template #popTitle>Fancy <b>content!!</b></ng-template>
+        <button [ngbPopover]="popContent" [popoverTitle]="popTitle" class="btn btn-outline-secondary"
+                triggers="mouseenter:mouseleave" type="button">
+          Hover over me!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
         <pw-tooltip [display]="'Hover me'">
           <h3>Lorem Ipsum</h3>
           <div>Dolor sit amet, consectetur adipiscing elit.</div>

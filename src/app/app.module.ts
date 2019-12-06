@@ -40,6 +40,7 @@ import { DemoComponent } from './pages/demo/demo.component';
 import { D3SparkComponent } from './components/d3-spark/d3-spark.component';
 import { SortArrowComponent } from './components/sort-arrow/sort-arrow.component';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
     FormsModule,
     NgxChartsModule,
     BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
