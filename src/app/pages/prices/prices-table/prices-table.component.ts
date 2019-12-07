@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GetEntry } from '../../../modules/api/get-entry';
 import { PriceFilterService } from '../../../services/price-filter.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { AppConstants } from '../../../app-constants';
 import { scaleLinear } from 'd3-scale';
 
@@ -16,6 +16,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
   public entries: GetEntry[];
   private subscription$: Subscription;
   private appConstants = AppConstants;
+  private readonly resetSortArrows: Subject<string> = new Subject();
 
   public tableColumnHeaders = [
     {
@@ -85,8 +86,9 @@ export class PricesTableComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  public stateChange(field: string, direction: string) {
-    this.priceFilterService.setSortParams(field, direction);
+  public stateChange(e: { id: string, state: string }) {
+    this.resetSortArrows.next(e.id);
+    this.priceFilterService.setSortParams(e);
     this.priceFilterService.sortEntries();
   }
 

@@ -705,9 +705,9 @@ export class PriceFilterService {
     this.entries$.next(this.filter(this.rawEntries));
   }
 
-  public setSortParams(field: string, direction: string): void {
-    this.sort.field = field;
-    this.sort.order = direction;
+  public setSortParams(e: { id: string, state: string }): void {
+    this.sort.field = e.id;
+    this.sort.order = e.state;
   }
 
   private processPriceGroups(category: Category, prices: GetEntry[]): void {
