@@ -7,13 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DemoComponent implements OnInit {
 
+  public log = console.log;
+
   constructor() {
   }
 
   ngOnInit() {
   }
 
-  stateChange(state: string) {
-    console.log(state);
-  }
 }

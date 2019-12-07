@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { area as d3_area, line as d3_line, range as d3_range, scaleLinear as d3_scaleLinear, select as d3_select } from 'd3';
+import {
+  area as d3_area,
+  line as d3_line,
+  range as d3_range,
+  scaleLinear as d3_scaleLinear,
+  select as d3_select
+} from 'd3';
 import * as d3_shape from 'd3-shape';
 
 @Component({
@@ -30,10 +36,12 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
     const [pT, pR, pB, pL] = this.padding;
 
     const innerWidth = w - pL - pR;
-    const innerHeight = h - pT - pB;
-
     const scaleX = d3_scaleLinear().domain([0, this.data.length - 1]).range([0, innerWidth]);
-    const scaleY = d3_scaleLinear().domain([0, 1]).range([innerHeight, 0]);
+
+    const innerHeightLine = h - pT - pB - this.strokeWidth;
+    const innerHeightArea = h - pT - pB;
+    const scaleYLine = d3_scaleLinear().domain([0, 1]).range([innerHeightLine, 0]);
+    const scaleYArea = d3_scaleLinear().domain([0, 1]).range([innerHeightArea, 0]);
 
     const svg = d3_select(this.container.nativeElement).append('svg')
       .attr('width', w)
@@ -43,12 +51,12 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
 
     const line = d3_line()
       .x((d, i) => scaleX(i))
-      .y(d => scaleY(d))
+      .y(d => scaleYLine(d) + this.strokeWidth / 2)
       .curve(d3_shape.curveMonotoneX);
 
     const area = d3_area()
       .x((d, i) => scaleX(i))
-      .y(d => scaleY(d))
+      .y(d => scaleYArea(d))
       .y1(d => h)
       .curve(d3_shape.curveMonotoneX);
 

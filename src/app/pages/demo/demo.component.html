@@ -1,21 +1,32 @@
-<div class="row">
+<div class="row mb-4">
   <div class="col">
     <div class="card">
       <div class="card-body">
 
+        <div class="d-flex align-items-center">
+          <pw-d3-spark [size]="[60, 30]"></pw-d3-spark>
+        </div>
 
-        <ng-template #popContent>Hello, <b>james</b>!</ng-template>
-        <ng-template #popTitle>Fancy <b>content!!</b></ng-template>
-        <button [ngbPopover]="popContent" [popoverTitle]="popTitle" class="btn btn-outline-secondary"
-                triggers="mouseenter:mouseleave" type="button">
-          Hover over me!
-        </button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row">
+<div class="row mb-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <ng-template #popContent>Hello, <b>james</b>!</ng-template>
+        <ng-template #popTitle>Fancy <b>content!!</b></ng-template>
+        <div [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
+          Hover over me!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
   <div class="col">
     <div class="card">
       <div class="card-body">
@@ -28,11 +39,11 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row mb-4">
   <div class="col">
     <div class="card">
       <div class="card-body">
-        <pw-sort-arrow (stateChange)="stateChange($event)" [display]="'test header'"></pw-sort-arrow>
+        <pw-sort-arrow (stateChange)="log($event)" [display]="'sort arrow'"></pw-sort-arrow>
       </div>
     </div>
   </div>
