@@ -1,7 +1,8 @@
-<div (click)="cycle()" [ngClass]="{active: active}" class="header-container">
+<div (click)="cycle()" [ngClass]="{active: state !== states.NONE}" class="header-container">
   <div>{{display}}</div>
 
-  <div [ngClass]="{up: state !== 'down', down: state === 'down'}" class="header-arrow ml-1">
+  <div [ngClass]="{ascending: state === states.ASCENDING, descending: state === states.DESCENDING}"
+       class="header-arrow ml-1">
     <div class="header-stem"></div>
     <div class="header-indicator">
       <div class="pointer-left"></div>

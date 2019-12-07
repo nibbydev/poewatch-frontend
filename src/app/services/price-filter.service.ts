@@ -11,6 +11,7 @@ import { Rarity } from '../modules/rarity';
 import { LeagueService } from './league.service';
 import { CriteriaUtil } from '../utility/criteria-util';
 import { SiteDataService } from './site-data.service';
+import { SortArrowState } from '../modules/sort-arrow-state';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class PriceFilterService {
   private rawEntries: GetEntry[] = null;
   private readonly sort = {
     field: null as string,
-    order: null as string
+    state: SortArrowState.NONE
   };
 
   public readonly criteria: PriceSearchCriteria[] = [
@@ -653,7 +654,7 @@ export class PriceFilterService {
     // send null to force loading state on prices table
     this.entries$.next(null);
     this.paginationService.resetPagination();
-    this.sort.order = null;
+    this.sort.state = null;
     this.sort.field = null;
 
     // send null to force loading state on group input
@@ -705,9 +706,9 @@ export class PriceFilterService {
     this.entries$.next(this.filter(this.rawEntries));
   }
 
-  public setSortParams(e: { id: string, state: string }): void {
+  public setSortParams(e: { id: string, state: SortArrowState }): void {
     this.sort.field = e.id;
-    this.sort.order = e.state;
+    this.sort.state = e.state;
   }
 
   private processPriceGroups(category: Category, prices: GetEntry[]): void {
@@ -735,7 +736,7 @@ export class PriceFilterService {
   }
 
   private sortFn(a: GetEntry, b: GetEntry): number {
-    if (!this.sort.field || !this.sort.order) {
+    if (!this.sort.field || !this.sort.state || this.sort.state === SortArrowState.NONE) {
       return a.mean === b.mean ? 0 : (a.mean > b.mean ? -1 : 1);
     }
 
@@ -743,10 +744,10 @@ export class PriceFilterService {
       return 0;
     }
     if (a[this.sort.field] > b[this.sort.field]) {
-      return this.sort.order === 'down' ? 1 : -1;
+      return this.sort.state === SortArrowState.DESCENDING ? -1 : 1;
     }
 
-    return this.sort.order === 'up' ? 1 : -1;
+    return this.sort.state === SortArrowState.ASCENDING ? -1 : 1;
   }
 
 }

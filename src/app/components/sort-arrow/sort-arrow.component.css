@@ -49,7 +49,11 @@
   opacity: 1;
 }
 
-.header-arrow.down {
+.header-arrow.ascending {
+  transform: rotate(0deg);
+}
+
+.header-arrow.descending {
   transform: rotate(180deg);
 }
 

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { SortArrowState } from '../../modules/sort-arrow-state';
 
 @Component({
   selector: 'pw-sort-arrow',
@@ -8,51 +9,42 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class SortArrowComponent implements OnInit, OnDestroy {
 
-  @Output() stateChange = new EventEmitter<{ id: string, state: string }>();
+  @Output() stateChange = new EventEmitter<{ id: string, state: SortArrowState }>();
   @Input() display: string;
-  @Input() resetOn: Observable<string>;
   @Input() id: string;
 
-  private subscription$: Subscription;
-  public active = false;
-  public state = null;
+  @Input() reset: Observable<string>;
+  public states = SortArrowState;
+  public state = SortArrowState.NONE;
+  private resetSubscription$: Subscription;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.subscription$ = this.resetOn.subscribe(r => {
-      if (r === this.id) {
-        return;
+    this.resetSubscription$ = this.reset.subscribe(r => {
+      if (r !== this.id) {
+        this.state = SortArrowState.NONE;
       }
-      this.reset();
     });
   }
 
   ngOnDestroy(): void {
-    if (this.subscription$) {
-      this.subscription$.unsubscribe();
+    if (this.resetSubscription$) {
+      this.resetSubscription$.unsubscribe();
     }
   }
 
 
   public cycle(): void {
-    if (!this.state) {
-      this.state = 'up';
-      this.active = true;
-    } else if (this.state === 'up') {
-      this.state = 'down';
-      this.active = true;
+    if (this.state === SortArrowState.NONE) {
+      this.state = SortArrowState.ASCENDING;
+    } else if (this.state === SortArrowState.ASCENDING) {
+      this.state = SortArrowState.DESCENDING;
     } else {
-      this.state = null;
-      this.active = false;
+      this.state = SortArrowState.NONE;
     }
     this.stateChange.emit({id: this.id, state: this.state});
-  }
-
-  public reset(): void {
-    this.state = null;
-    this.active = false;
   }
 
 }

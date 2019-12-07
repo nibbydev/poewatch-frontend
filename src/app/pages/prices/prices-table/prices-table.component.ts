@@ -4,6 +4,7 @@ import { PriceFilterService } from '../../../services/price-filter.service';
 import { Subject, Subscription } from 'rxjs';
 import { AppConstants } from '../../../app-constants';
 import { scaleLinear } from 'd3-scale';
+import { SortArrowState } from '../../../modules/sort-arrow-state';
 
 @Component({
   selector: 'pw-prices-table',
@@ -24,7 +25,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       display: 'Item',
       tooltip: 'Item picture, name, rarity and extras',
       hideOnMd: false,
-      sort: true,
+      isSortable: true,
       sortKey: 'name',
       colspan: 1
     },
@@ -33,7 +34,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       display: 'Price',
       tooltip: 'Price in Chaos and Exalted Orbs',
       hideOnMd: false,
-      sort: true,
+      isSortable: true,
       sortKey: 'mean',
       colspan: 1
     },
@@ -42,7 +43,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       display: 'Change',
       tooltip: 'Price compared to 7d ago',
       hideOnMd: false,
-      sort: true,
+      isSortable: true,
       sortKey: 'change',
       colspan: 2
     },
@@ -51,7 +52,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       display: 'Now',
       tooltip: 'Number of items currently on sale',
       hideOnMd: false,
-      sort: true,
+      isSortable: true,
       sortKey: 'current',
       colspan: 1
     },
@@ -60,7 +61,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       display: 'Daily',
       tooltip: 'Number of items listed every 24h',
       hideOnMd: false,
-      sort: true,
+      isSortable: true,
       sortKey: 'daily',
       colspan: 1
     },
@@ -69,7 +70,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
       display: 'Total',
       tooltip: 'Total number of items listed',
       hideOnMd: false,
-      sort: true,
+      isSortable: true,
       sortKey: 'total',
       colspan: 1
     }
@@ -86,7 +87,7 @@ export class PricesTableComponent implements OnInit, OnDestroy {
     this.subscription$.unsubscribe();
   }
 
-  public stateChange(e: { id: string, state: string }) {
+  public stateChange(e: { id: string, state: SortArrowState }) {
     this.resetSortArrows.next(e.id);
     this.priceFilterService.setSortParams(e);
     this.priceFilterService.sortEntries();

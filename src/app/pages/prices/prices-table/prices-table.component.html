@@ -6,9 +6,10 @@
 
       <ng-template #popContent>{{col.tooltip}}</ng-template>
       <div [ngbPopover]="popContent" triggers="mouseenter:mouseleave">
-        <pw-sort-arrow (stateChange)="stateChange($event)" *ngIf="col.sort" [display]="col.display" [id]="col.sortKey"
-                       [resetOn]="resetSortArrows"></pw-sort-arrow>
-        <span *ngIf="!col.sort">{{col.display}}</span>
+        <pw-sort-arrow (stateChange)="stateChange($event)" *ngIf="col.isSortable" [display]="col.display"
+                       [id]="col.sortKey"
+                       [reset]="resetSortArrows"></pw-sort-arrow>
+        <span *ngIf="!col.isSortable">{{col.display}}</span>
       </div>
 
     </th>
