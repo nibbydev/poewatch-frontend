@@ -68,12 +68,3 @@ tbody > tr:hover {
 .pricebox-container:hover > .pricebox:nth-child(1) {
   transform: translate(100%, -50%);
 }
-
-.colorbox {
-  width: 10px;
-  height: 10px;
-  border-radius: 0.1rem;
-  display: inline-block;
-  margin-right: 0.5rem;
-  background-color: #fff;
-}

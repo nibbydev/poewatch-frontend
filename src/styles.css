@@ -538,3 +538,17 @@ canvas {
 .bs-popover-right .arrow::after {
   border-right-color: #222;
 }
+
+
+/*------------------------------------------------------------------------------------------------------------
+// Misc
+//----------------------------------------------------------------------------------------------------------*/
+
+.colorbox {
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: 0.1rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  background-color: #fff;
+}
