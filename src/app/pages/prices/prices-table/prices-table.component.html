@@ -31,12 +31,19 @@
           </span>
           {{item.mean | number:'1.0-2'}}
         </div>
-        <div class="pricebox pw-subtext-1 font-weight-bold">
+        <div *ngIf="item.id !== 142; else elseExalted" class="pricebox pw-subtext-1 font-weight-bold">
           <span class="img-container img-container-xs text-center mr-1">
             <img [src]="appConstants.EXALTED_ICON" alt="...">
           </span>
           {{item.exalted | number:'1.0-2'}}
         </div>
+        <ng-template #elseExalted>
+          <div *ngIf="item.id === 142" class="pricebox pw-subtext-1 font-weight-bold">
+          <span style="font-size: 10px">
+            how much do you think it's worth :)
+          </span>
+          </div>
+        </ng-template>
       </div>
     </td>
 
