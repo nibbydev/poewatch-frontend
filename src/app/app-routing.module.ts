@@ -8,6 +8,7 @@ import { ItemPageComponent } from './pages/item/item-page.component';
 import { LeaguesComponent } from './pages/leagues/leagues.component';
 import { StatsPageComponent } from './pages/stats/stats-page.component';
 import { DemoComponent } from './pages/demo/demo.component';
+import { CharactersComponent } from './pages/characters/characters.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,16 @@ const routes: Routes = [
       enabled: true,
       comment: 'Info about the site'
     },
+  }, {
+    path: 'characters',
+    component: CharactersComponent,
+    data: {
+      pageTitle: 'Characters',
+      navTitle: 'Characters',
+      isNew: false,
+      enabled: true,
+      comment: 'Look up players by character or account names'
+    }
   }, {
     path: 'item',
     component: ItemPageComponent,
