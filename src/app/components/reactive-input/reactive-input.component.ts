@@ -36,6 +36,13 @@ export class ReactiveInputComponent implements OnInit {
       });
 
       return;
+    } else {
+      // get the initial query param
+      const paramMap = this.activatedRoute.snapshot.queryParamMap;
+      const paramValue = paramMap.has(this.criteria.id) ? paramMap.get(this.criteria.id) : null;
+      if (paramValue) {
+        this.criteria.value = paramValue;
+      }
     }
 
     // const paramMap = this.activatedRoute.snapshot.queryParamMap;
