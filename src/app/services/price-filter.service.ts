@@ -28,6 +28,7 @@ export class PriceFilterService {
     {
       id: 'league',
       title: 'League',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -60,6 +61,7 @@ export class PriceFilterService {
     {
       id: 'group',
       title: 'Group',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -84,6 +86,7 @@ export class PriceFilterService {
     {
       id: 'search',
       title: 'Search',
+      showTitle: true,
       inputType: 'input',
       visible: false,
       disabled: false,
@@ -115,6 +118,7 @@ export class PriceFilterService {
     {
       id: 'confidence',
       title: 'Low Confidence',
+      showTitle: true,
       inputType: 'radio',
       visible: false,
       disabled: false,
@@ -151,6 +155,7 @@ export class PriceFilterService {
     {
       id: 'rarity',
       title: 'Rarity',
+      showTitle: true,
       inputType: 'radio',
       visible: false,
       disabled: false,
@@ -193,6 +198,7 @@ export class PriceFilterService {
     {
       id: 'links',
       title: 'Links',
+      showTitle: true,
       inputType: 'radio',
       visible: false,
       disabled: false,
@@ -235,6 +241,7 @@ export class PriceFilterService {
     {
       id: 'ilvl',
       title: 'Ilvl',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -284,6 +291,7 @@ export class PriceFilterService {
     {
       id: 'influence',
       title: 'Influence',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -338,6 +346,7 @@ export class PriceFilterService {
     {
       id: 'corruption',
       title: 'Corruption',
+      showTitle: true,
       inputType: 'radio',
       visible: false,
       disabled: false,
@@ -380,6 +389,7 @@ export class PriceFilterService {
     {
       id: 'level',
       title: 'Level',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -441,6 +451,7 @@ export class PriceFilterService {
     {
       id: 'quality',
       title: 'Quality',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -482,6 +493,7 @@ export class PriceFilterService {
     {
       id: 'tier',
       title: 'Tier',
+      showTitle: true,
       inputType: 'dropdown',
       visible: false,
       disabled: false,
@@ -599,6 +611,7 @@ export class PriceFilterService {
     {
       id: 'variant',
       title: 'Has variant',
+      showTitle: true,
       inputType: 'radio',
       visible: false,
       disabled: false,

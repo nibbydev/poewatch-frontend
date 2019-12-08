@@ -1,24 +1,26 @@
-import {Observable} from 'rxjs';
-import {GetEntry} from './api/get-entry';
+import { Observable } from 'rxjs';
+import { GetEntry } from './api/get-entry';
 
 export class Criteria {
   // unique identifier, used as query param key
   id: string;
   // title/label of the input
-  title?: string;
+  title: string;
+  // show the title/label
+  showTitle: boolean;
   // should the criteria input be visible
   visible: boolean;
   // should it be disabled and grayed out
   disabled: boolean;
   // type of the input (eg radio/input/dropdown)
-  inputType: string;
+  inputType: 'radio' | 'input' | 'dropdown';
   // a list of options or null
   options?: Observable<SearchOption[]>;
   // current value of the input
   value?: string;
   // index of the default option
   defaultOptionIndex?: number;
-  //  on input initialization set query param
+  // on input initialization set query param
   setInitialQueryParam: boolean;
   // display a spinner when options are undefined
   showSpinner: boolean;

@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ItemService} from '../../services/item.service';
-import {ItemEntry, ItemEntryLeague} from '../../modules/api/item-entry';
-import {first} from 'rxjs/operators';
-import {Criteria, SearchOption} from '../../modules/criteria';
-import {BehaviorSubject} from 'rxjs';
-import {ItemHistoryService} from '../../services/item-hisotry.service';
-import {ChartResult, StatDefinition} from '../../modules/chart-result';
-import {ItemHistoryUtil} from '../../utility/item-history-util';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ItemService } from '../../services/item.service';
+import { ItemEntry, ItemEntryLeague } from '../../modules/api/item-entry';
+import { first } from 'rxjs/operators';
+import { Criteria, SearchOption } from '../../modules/criteria';
+import { BehaviorSubject } from 'rxjs';
+import { ItemHistoryService } from '../../services/item-hisotry.service';
+import { ChartResult, StatDefinition } from '../../modules/chart-result';
+import { ItemHistoryUtil } from '../../utility/item-history-util';
 import * as shape from 'd3-shape';
 
 @Component({
@@ -78,7 +78,8 @@ export class ItemPageComponent implements OnInit {
   private id: number;
   private leagueCriteria: Criteria = {
     id: 'league',
-    title: null,
+    title: 'League',
+    showTitle: false,
     inputType: 'dropdown',
     visible: true,
     disabled: false,
