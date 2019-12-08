@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {StatsService} from '../../services/stats.service';
-import {Stat} from '../../modules/api/stat';
-import {first} from 'rxjs/operators';
-import {ChartExtra, ChartResult, ChartSeries, StatDefinition} from '../../modules/chart-result';
-import {DateUtil, DateUtilFunc} from '../../utility/date-util';
+import { Component, OnInit } from '@angular/core';
+import { StatsService } from '../../services/stats.service';
+import { Stat } from '../../modules/api/stat';
+import { first } from 'rxjs/operators';
+import { ChartExtra, ChartResult, ChartSeries, StatDefinition } from '../../modules/chart-result';
+import { DateUtil, DateUtilFunc } from '../../utility/date-util';
 import * as shape from 'd3-shape';
 
 @Component({
@@ -164,7 +164,7 @@ export class StatsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.statsService.makeRequest().pipe(first()).subscribe(stats => {
+    this.statsService.entries$.pipe(first()).subscribe(stats => {
       const statGroups = this.groupStats(stats);
 
       const min = DateUtil.getNHoursAgo(this.historySize).toISOString();
