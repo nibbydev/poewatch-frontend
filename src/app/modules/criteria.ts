@@ -22,6 +22,8 @@ export class Criteria {
   defaultOptionIndex?: number;
   // on input initialization set query param
   setInitialQueryParam: boolean;
+  // whether to unset the default option in query params
+  unsetDefaultQueryParam: boolean;
   // display a spinner when options are undefined
   showSpinner: boolean;
   // function called after input value changes

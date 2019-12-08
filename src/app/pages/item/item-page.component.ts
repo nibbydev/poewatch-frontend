@@ -85,6 +85,7 @@ export class ItemPageComponent implements OnInit {
     disabled: false,
     value: null,
     defaultOptionIndex: 0,
+    unsetDefaultQueryParam: false,
     setInitialQueryParam: true,
     showSpinner: true,
     options: new BehaviorSubject<SearchOption[]>(null),

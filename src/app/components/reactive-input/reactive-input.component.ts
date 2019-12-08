@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Criteria, SearchOption} from '../../modules/criteria';
-import {ActivatedRoute} from '@angular/router';
-import {RouterHelperService} from '../../services/router-helper.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Criteria, SearchOption } from '../../modules/criteria';
+import { ActivatedRoute } from '@angular/router';
+import { RouterHelperService } from '../../services/router-helper.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'pw-reactive-input',
@@ -131,7 +131,7 @@ export class ReactiveInputComponent implements OnInit {
       }
 
       const defaultOption = o[this.criteria.defaultOptionIndex];
-      if (defaultOption && queryParams[this.criteria.id] === defaultOption.value) {
+      if (this.criteria.unsetDefaultQueryParam && defaultOption && queryParams[this.criteria.id] === defaultOption.value) {
         queryParams[this.criteria.id] = undefined;
       }
 
