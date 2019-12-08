@@ -15,6 +15,11 @@
   vertical-align: middle;
 }
 
+.img-container.shade {
+  background-color: rgba(0, 0, 0, .15);
+  border-radius: .25rem !important;
+}
+
 /* XL image containers */
 
 .img-container-xl {
@@ -22,8 +27,6 @@
   max-width: 100px;
   min-height: 120px;
   max-height: 120px;
-  background-color: rgba(0,0,0,.15);
-  border-radius: .25rem !important;
 }
 .img-container-xl img {
   max-height: 120px;

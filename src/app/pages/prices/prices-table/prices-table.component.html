@@ -20,7 +20,7 @@
   <tr *ngFor="let item of entries">
     <td class="d-flex align-items-center justify-content-between">
       <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
-      <div [ngStyle]="{'background-color': getConfidence(item)}" class="colorbox"></div>
+      <!--      <div [ngStyle]="{'background-color': getConfidence(item)}" class="colorbox"></div>-->
     </td>
 
 
@@ -39,9 +39,9 @@
           {{item.exalted | number:'1.0-2'}}
         </div>
         <ng-template #elseExalted>
-          <div *ngIf="item.id === 142" class="pricebox pw-subtext-1 font-weight-bold">
+          <div class="pricebox pw-subtext-1 font-weight-bold">
           <span style="font-size: 10px">
-            ah yes, an exalted is worth an exalted
+            ah yes, 1 exalted is worth 1 exalted
           </span>
           </div>
         </ng-template>
