@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpParams} from '@angular/common/http';
-import {BaseService} from './base.service';
-import {GetEntry} from '../modules/api/get-entry';
-import {Observable} from 'rxjs';
-import {League} from '../modules/api/league';
-import {Category} from '../modules/api/category';
+import { Injectable } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { BaseService } from '../base.service';
+import { GetEntry } from '../../modules/api/get-entry';
+import { Observable } from 'rxjs';
+import { League } from '../../modules/api/league';
+import { Category } from '../../modules/api/category';
 
 @Injectable({
   providedIn: 'root'

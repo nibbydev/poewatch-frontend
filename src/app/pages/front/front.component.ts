@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {FaqService} from '../../services/faq.service';
+import { Component, OnInit } from '@angular/core';
+import { FaqService } from '../../services/api/faq.service';
 
 @Component({
   selector: 'pw-front',

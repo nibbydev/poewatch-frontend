@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatsService } from '../../services/stats.service';
+import { StatsService } from '../../services/api/stats.service';
 import { Stat } from '../../modules/api/stat';
 import { first } from 'rxjs/operators';
 import { ChartExtra, ChartResult, ChartSeries, StatDefinition } from '../../modules/chart-result';

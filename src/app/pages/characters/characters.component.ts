@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteDataService } from '../../services/site-data.service';
+import { SiteDataService } from '../../services/api/site-data.service';
 import { SiteData } from '../../modules/api/site-data';
 import { first } from 'rxjs/operators';
 import { Criteria } from '../../modules/criteria';

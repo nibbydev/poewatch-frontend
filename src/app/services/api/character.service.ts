@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { BaseService } from './base.service';
+import { BaseService } from '../base.service';
 import { Observable } from 'rxjs';
-import { Character } from '../modules/api/character';
+import { Character } from '../../modules/api/character';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {BaseService} from './base.service';
-import {Category, Group} from '../modules/api/category';
-import {Observable} from 'rxjs';
-import {shareReplay} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { BaseService } from '../base.service';
+import { Category, Group } from '../../modules/api/category';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

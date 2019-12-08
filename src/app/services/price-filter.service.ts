@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { GetEntry } from '../modules/api/get-entry';
 import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import { Category, Group } from '../modules/api/category';
-import { PriceService } from './price.service';
+import { PriceService } from './api/price.service';
 import { League } from '../modules/api/league';
 import { PricePaginationService } from './price-pagination.service';
 import { PriceSearchCriteria, SearchOption } from '../modules/criteria';
 import { first } from 'rxjs/operators';
 import { Rarity } from '../modules/rarity';
-import { LeagueService } from './league.service';
+import { LeagueService } from './api/league.service';
 import { CriteriaUtil } from '../utility/criteria-util';
-import { SiteDataService } from './site-data.service';
+import { SiteDataService } from './api/site-data.service';
 import { SortArrowState } from '../modules/sort-arrow-state';
 
 @Injectable({

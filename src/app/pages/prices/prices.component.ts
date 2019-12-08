@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {LeagueService} from '../../services/league.service';
-import {CategoryService} from '../../services/category.service';
-import {ActivatedRoute, Params} from '@angular/router';
-import {forkJoin, Subscription} from 'rxjs';
-import {PriceFilterService} from '../../services/price-filter.service';
-import {RouterHelperService} from '../../services/router-helper.service';
-import {League} from '../../modules/api/league';
-import {Category} from '../../modules/api/category';
-import {first} from 'rxjs/operators';
-import {PriceSearchCriteria} from '../../modules/criteria';
-import {CriteriaUtil} from '../../utility/criteria-util';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LeagueService } from '../../services/api/league.service';
+import { CategoryService } from '../../services/api/category.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { forkJoin, Subscription } from 'rxjs';
+import { PriceFilterService } from '../../services/price-filter.service';
+import { RouterHelperService } from '../../services/router-helper.service';
+import { League } from '../../modules/api/league';
+import { Category } from '../../modules/api/category';
+import { first } from 'rxjs/operators';
+import { PriceSearchCriteria } from '../../modules/criteria';
+import { CriteriaUtil } from '../../utility/criteria-util';
 
 @Component({
   selector: 'pw-prices',

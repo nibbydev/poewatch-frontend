@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SidebarService} from '../../services/sidebar.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { SidebarService } from '../../services/api/sidebar.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'pw-sidebar',
