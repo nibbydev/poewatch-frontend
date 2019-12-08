@@ -1,3 +1,17 @@
+<div *ngIf="leagueService.filerLeagues(leagueService.filters.upcoming, true) | async" class="row">
+  <div class="col-12 d-flex align-content-center">
+    <h1 class="display-4 mb-4 mx-auto">Upcoming leagues</h1>
+  </div>
+
+  <div class="col-12">
+    <pw-spinner [ifValue]="leagueService.entries$"></pw-spinner>
+  </div>
+  <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.upcoming, true) | async"
+       class="col-sm-6 col-12">
+    <pw-leagues-element [league]="league"></pw-leagues-element>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-12 d-flex align-content-center">
     <h1 class="display-4 mb-4 mx-auto">Active leagues</h1>
@@ -6,7 +20,7 @@
   <div class="col-12">
     <pw-spinner [ifValue]="leagueService.entries$"></pw-spinner>
   </div>
-  <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.active, true) | async"
+  <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.ongoing, true) | async"
        class="col-sm-6 col-12">
     <pw-leagues-element [league]="league"></pw-leagues-element>
   </div>
@@ -20,7 +34,7 @@
   <div class="col-12">
     <pw-spinner [ifValue]="leagueService.entries$"></pw-spinner>
   </div>
-  <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.inactive, true) | async"
+  <div *ngFor="let league of leagueService.filerLeagues(leagueService.filters.ended, true) | async"
        class="col-lg-4 col-md-6 col-12">
     <pw-leagues-element [league]="league"></pw-leagues-element>
   </div>

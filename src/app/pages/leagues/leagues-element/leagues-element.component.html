@@ -22,15 +22,17 @@
             <span *ngIf="!league.end" class="subtext-1">Not found</span>
           </td>
         </tr>
-        <tr *ngIf="league.active">
-          <td class="pr-2">Remaining:</td>
+        <tr *ngIf="league.active || league.upcoming">
+          <td *ngIf="league.active" class="pr-2">Remaining:</td>
+          <td *ngIf="league.upcoming" class="pr-2">Ends in:</td>
           <td>
             <span *ngIf="!calcTime(league.end)" class="subtext-1">Can't calculate</span>
             <span *ngFor="let t of calcTime(league.end)" [ngClass]="t.class" class="pr-2">{{t.val}}{{t.id}}</span>
           </td>
         </tr>
-        <tr *ngIf="league.active">
-          <td class="pr-2">Elapsed:</td>
+        <tr *ngIf="league.active || league.upcoming">
+          <td *ngIf="league.active" class="pr-2">Elapsed:</td>
+          <td *ngIf="league.upcoming" class="pr-2">Starts in:</td>
           <td>
             <span *ngIf="!calcTime(league.start)" class="subtext-1">Can't calculate</span>
             <span *ngFor="let t of calcTime(league.start)" [ngClass]="t.class" class="pr-2">{{t.val}}{{t.id}}</span>

@@ -11,8 +11,9 @@ export class LeagueService {
 
   public readonly entries$: Observable<League[]>;
   public readonly filters = {
-    active: (l: League) => l.active,
-    inactive: (l: League) => !l.active,
+    ongoing: (l: League) => l.active,
+    ended: (l: League) => !l.active && !l.upcoming,
+    upcoming: (l: League) => l.upcoming
   };
 
   constructor(private baseService: BaseService) {
