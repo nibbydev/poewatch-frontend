@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {BaseService} from './base.service';
-import {Observable} from 'rxjs';
-import {HttpParams} from '@angular/common/http';
-import {ItemHistory} from '../modules/api/item-history';
+import { Injectable } from '@angular/core';
+import { BaseService } from './base.service';
+import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { ItemHistory } from '../modules/api/item-history';
 
 @Injectable({
   providedIn: 'root'

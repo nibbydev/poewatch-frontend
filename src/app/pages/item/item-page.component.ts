@@ -5,7 +5,7 @@ import { ItemEntry, ItemEntryLeague } from '../../modules/api/item-entry';
 import { first } from 'rxjs/operators';
 import { Criteria, SearchOption } from '../../modules/criteria';
 import { BehaviorSubject } from 'rxjs';
-import { ItemHistoryService } from '../../services/item-hisotry.service';
+import { ItemHistoryService } from '../../services/item-history.service';
 import { ChartResult, StatDefinition } from '../../modules/chart-result';
 import { ItemHistoryUtil } from '../../utility/item-history-util';
 import * as shape from 'd3-shape';
