@@ -1,7 +1,7 @@
-import {Observable, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {Category} from '../modules/api/category';
-import {Criteria, PriceSearchCriteria} from '../modules/criteria';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Category } from '../modules/api/category';
+import { Criteria, PriceSearchCriteria } from '../modules/criteria';
 
 export class CriteriaUtil {
 
@@ -19,19 +19,25 @@ export class CriteriaUtil {
       return;
     }
 
-    const destroy$ = new Subject<boolean>();
-    c.options.pipe(takeUntil(destroy$)).subscribe(o => {
-      if (o === null) {
-        return;
-      }
+    if (c.options instanceof Observable) {
+      const destroy$ = new Subject<boolean>();
+      c.options.pipe(takeUntil(destroy$)).subscribe(o => {
+        if (o === null) {
+          return;
+        }
 
-      // group sends null to force loading state on input
-      c.value = o ? o[c.defaultOptionIndex].value : null;
+        // group sends null to force loading state on input
+        c.value = o ? o[c.defaultOptionIndex].value : null;
 
-      // stop the subscription
-      destroy$.next(true);
-      destroy$.complete();
-    });
+        // stop the subscription
+        destroy$.next(true);
+        destroy$.complete();
+      });
+    }
+
+    if (c.options instanceof Array) {
+      c.value = c.options ? c.options[c.defaultOptionIndex].value : null;
+    }
   }
 
   public static findCriteria(criteria: Criteria[], id: string): Criteria {

@@ -132,7 +132,7 @@ export class PriceFilterService {
       categories: null,
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'Hide',
           value: 'hide'
@@ -141,7 +141,7 @@ export class PriceFilterService {
           display: 'Show',
           value: 'show'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -170,7 +170,7 @@ export class PriceFilterService {
       categories: ['accessory', 'weapon', 'armour', 'flask'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'All',
           value: 'all'
@@ -183,7 +183,7 @@ export class PriceFilterService {
           display: 'Relic',
           value: 'relic'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -214,7 +214,7 @@ export class PriceFilterService {
       categories: ['weapon', 'armour'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'No links',
           value: 'none'
@@ -227,7 +227,7 @@ export class PriceFilterService {
           display: 'Six links',
           value: '6'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -258,7 +258,7 @@ export class PriceFilterService {
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'All',
           value: 'all'
@@ -283,7 +283,7 @@ export class PriceFilterService {
           display: '86+',
           value: '86'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -309,7 +309,7 @@ export class PriceFilterService {
       categories: ['base'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'All',
           value: 'all'
@@ -330,7 +330,7 @@ export class PriceFilterService {
           display: 'Elder',
           value: 'elder'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -365,7 +365,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'Either',
           value: 'either'
@@ -378,7 +378,7 @@ export class PriceFilterService {
           display: 'No',
           value: 'no'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -409,7 +409,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'All',
           value: 'all'
@@ -446,7 +446,7 @@ export class PriceFilterService {
           display: '21',
           value: '21'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -472,7 +472,7 @@ export class PriceFilterService {
       categories: ['gem'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'All',
           value: 'all'
@@ -489,7 +489,7 @@ export class PriceFilterService {
           display: '23',
           value: '23'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -515,7 +515,7 @@ export class PriceFilterService {
       categories: ['map'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'All',
           value: 'all'
@@ -600,7 +600,7 @@ export class PriceFilterService {
           display: '16+',
           value: '16'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:
@@ -634,7 +634,7 @@ export class PriceFilterService {
       categories: ['armour', 'weapon', 'flask', 'accessory', 'jewel'],
       reset: true,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'Either',
           value: 'either'
@@ -647,7 +647,7 @@ export class PriceFilterService {
           display: 'No',
           value: 'no'
         }
-      ]),
+      ],
       showItem(e: GetEntry) {
         switch (this.value) {
           case null:

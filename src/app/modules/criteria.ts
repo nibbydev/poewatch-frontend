@@ -15,7 +15,7 @@ export class Criteria {
   // type of the input (eg radio/input/dropdown)
   inputType: 'radio' | 'input' | 'dropdown';
   // a list of options or null
-  options?: Observable<SearchOption[]>;
+  options?: Observable<SearchOption[]> | SearchOption[];
   // current value of the input
   value?: string;
   // index of the default option

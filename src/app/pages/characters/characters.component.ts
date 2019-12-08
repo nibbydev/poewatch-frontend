@@ -3,7 +3,6 @@ import { SiteDataService } from '../../services/site-data.service';
 import { SiteData } from '../../modules/api/site-data';
 import { first } from 'rxjs/operators';
 import { Criteria } from '../../modules/criteria';
-import { CriteriaUtil } from '../../utility/criteria-util';
 
 @Component({
   selector: 'pw-characters',
@@ -26,7 +25,7 @@ export class CharactersComponent implements OnInit {
       setInitialQueryParam: true,
       unsetDefaultQueryParam: false,
       showSpinner: true,
-      options: CriteriaUtil.asObservable([
+      options: [
         {
           display: 'Account',
           value: 'account'
@@ -35,7 +34,7 @@ export class CharactersComponent implements OnInit {
           display: 'Character',
           value: 'character'
         }
-      ]),
+      ],
       onChange: () => this.onChange()
     },
     {
