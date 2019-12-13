@@ -97,6 +97,10 @@ export class D3SparkComponent implements OnInit, AfterViewInit {
   }
 
   private formatData(data: number[]): number[] {
+    if (!data) {
+      return [];
+    }
+
     const min = Math.min.apply(null, data);
     const max = Math.max.apply(null, data);
     const scale = d3_scaleLinear().domain([min, max]).range([0, 1]);
