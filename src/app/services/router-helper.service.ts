@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,14 @@ export class RouterHelperService {
               private activatedRoute: ActivatedRoute) {
   }
 
-  public navigate(params: {}): void {
+  public navigate(params: Params, skipLocationChange: boolean = false): void {
     this.router.navigate(
       [],
       {
         relativeTo: this.activatedRoute,
         queryParams: params,
-        queryParamsHandling: 'merge'
-      });
+        queryParamsHandling: 'merge',
+        skipLocationChange
+      } as NavigationExtras);
   }
 }

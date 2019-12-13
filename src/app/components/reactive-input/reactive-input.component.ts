@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Criteria, SearchOption } from '../../modules/criteria';
 import { ActivatedRoute } from '@angular/router';
 import { RouterHelperService } from '../../services/router-helper.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { CriteriaUtil } from '../../utility/criteria-util';
 
 @Component({
   selector: 'pw-reactive-input',
@@ -98,62 +99,12 @@ export class ReactiveInputComponent implements OnInit {
   }
 
   private onChange(): void {
-    this.updateQueryParams();
+    CriteriaUtil.updateQueryParams(this.routerHelperService, this.criteria);
 
     // call the onChange function if it is defined
     if (this.criteria.onChange) {
       this.criteria.onChange.call(this.criteria);
     }
-  }
-
-  private updateQueryParams() {
-    const queryParams = {};
-    queryParams[this.criteria.id] = this.criteria.value
-      ? this.criteria.value.trim()
-      : this.criteria.value;
-
-    // if it was empty string
-    if (!queryParams[this.criteria.id]) {
-      queryParams[this.criteria.id] = undefined;
-    }
-
-    // if there are no options or no default option, skip checking
-    if (this.criteria.defaultOptionIndex === null || !this.criteria.options) {
-      this.routerHelperService.navigate(queryParams);
-      return;
-    }
-
-    // options are observable, subscribe and verify
-    if (this.criteria.options instanceof Observable) {
-      this.criteria.options.pipe(first()).subscribe(o => {
-        // some inputs send null to force loading state
-        // todo .pipe(first()) should be replaced with takeUntil()?
-        if (o === null) {
-          return;
-        }
-
-        const defaultOption = o[this.criteria.defaultOptionIndex];
-        this.updateParamsWithDefaultOption(defaultOption, queryParams);
-      });
-
-      return;
-    }
-
-    // options are array, verify
-    if (this.criteria.options instanceof Array) {
-      const defaultOption = this.criteria.options[this.criteria.defaultOptionIndex];
-      this.updateParamsWithDefaultOption(defaultOption, queryParams);
-    }
-  }
-
-  private updateParamsWithDefaultOption(defaultOption: SearchOption, queryParams: any): void {
-    // if value is equal to default option, unset the query param
-    if (this.criteria.unsetDefaultQueryParam && defaultOption && queryParams[this.criteria.id] === defaultOption.value) {
-      queryParams[this.criteria.id] = undefined;
-    }
-
-    // todo: calls twice for league? bad for performance?
-    this.routerHelperService.navigate(queryParams);
   }
 
 }

@@ -1,16 +1,19 @@
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Category } from '../modules/api/category';
 import { Criteria, PriceSearchCriteria } from '../modules/criteria';
+import { RouterHelperService } from '../services/router-helper.service';
 
 export class CriteriaUtil {
 
   public static resetAll(criteria: Criteria[]): void {
-    criteria.forEach(c => {
-      c.disabled = false;
-      c.visible = false;
-      CriteriaUtil.setDefaultCriteriaValue(c);
-    });
+    criteria.forEach(c => this.resetOne(c));
+  }
+
+  public static resetOne(c: Criteria): void {
+    c.disabled = false;
+    c.visible = false;
+    CriteriaUtil.setDefaultCriteriaValue(c);
   }
 
   public static setDefaultCriteriaValue(c: Criteria): void {
@@ -39,6 +42,61 @@ export class CriteriaUtil {
       c.value = c.options ? c.options[c.defaultOptionIndex].value : null;
     }
   }
+
+  public static updateQueryParams(rhs: RouterHelperService, criteria: Criteria): void {
+    const queryParams = {};
+    queryParams[criteria.id] = criteria.value
+      ? criteria.value.trim()
+      : criteria.value;
+
+    // if it was empty string
+    if (!queryParams[criteria.id]) {
+      queryParams[criteria.id] = undefined;
+    }
+
+    // if there are no options or no default option, skip checking
+    if (criteria.defaultOptionIndex === null || !criteria.options) {
+      rhs.navigate(queryParams);
+      return;
+    }
+
+    // options are observable, subscribe and verify
+    if (criteria.options instanceof Observable) {
+      criteria.options.pipe(first()).subscribe(o => {
+        // some inputs send null to force loading state
+        // todo .pipe(first()) should be replaced with takeUntil()?
+        if (o === null) {
+          return;
+        }
+
+        const defaultOption = o[criteria.defaultOptionIndex];
+        // if value is equal to default option, unset the query param
+        if (criteria.unsetDefaultQueryParam && defaultOption && queryParams[criteria.id] === defaultOption.value) {
+          queryParams[criteria.id] = undefined;
+        }
+
+        // todo: calls twice for league? bad for performance?
+        rhs.navigate(queryParams, true);
+      });
+
+      return;
+    }
+
+    // options are array, verify
+    if (criteria.options instanceof Array) {
+      const defaultOption = criteria.options[criteria.defaultOptionIndex];
+      // if value is equal to default option, unset the query param
+      if (criteria.unsetDefaultQueryParam && defaultOption && queryParams[criteria.id] === defaultOption.value) {
+        queryParams[criteria.id] = undefined;
+      }
+
+      // todo: calls twice for league? bad for performance?
+      rhs.navigate(queryParams, true);
+    }
+  }
+
+
+
 
   public static findCriteria(criteria: Criteria[], id: string): Criteria {
     return criteria.find(c => c.id === id);
