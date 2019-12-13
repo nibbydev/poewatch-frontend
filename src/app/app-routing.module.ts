@@ -42,16 +42,6 @@ const routes: Routes = [
       comment: 'Documentation for developers'
     },
   }, {
-    path: 'stats',
-    component: StatsPageComponent,
-    data: {
-      pageTitle: 'Statistics',
-      navTitle: 'Statistics',
-      isNew: false,
-      enabled: true,
-      comment: 'Site and backend statistics'
-    },
-  }, {
     path: 'leagues',
     component: LeaguesComponent,
     data: {
@@ -61,6 +51,16 @@ const routes: Routes = [
       enabled: true,
       comment: 'Listings and countdowns for leagues'
     },
+  }, {
+    path: 'stats',
+    component: StatsPageComponent,
+    data: {
+      pageTitle: 'Statistics',
+      navTitle: 'Statistics',
+      isNew: false,
+      enabled: true,
+      comment: 'Site and backend statistics'
+    }
   }, {
     path: 'about',
     component: AboutComponent,
@@ -78,7 +78,7 @@ const routes: Routes = [
       pageTitle: 'Characters',
       navTitle: 'Characters',
       isNew: false,
-      enabled: true,
+      enabled: false,
       comment: 'Look up players by character or account names'
     }
   }, {
