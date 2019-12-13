@@ -47,6 +47,7 @@ export class PriceFilterService {
         ]).pipe(first()).subscribe(result => {
           const [leagues, siteData] = result;
           const searchOptions: SearchOption[] = leagues
+            .sort(this.leagueService.sortFn)
             .filter(l => siteData.leagues.includes(l.id))
             .map(l => ({display: formatName(l), value: l.name})).reverse();
           t.next(searchOptions);

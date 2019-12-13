@@ -30,4 +30,18 @@ export class LeagueService {
       });
     });
   }
+
+  public sortFn(league1: League, league2: League): number {
+    if (league1.active) {
+      return 1;
+    } else if (league2.active) {
+      return -1;
+    }
+
+    if (league1.id > league2.id) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
 }
