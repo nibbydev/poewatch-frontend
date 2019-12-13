@@ -3,6 +3,9 @@ import { SiteDataService } from '../../services/api/site-data.service';
 import { SiteData } from '../../modules/api/site-data';
 import { first } from 'rxjs/operators';
 import { Criteria } from '../../modules/criteria';
+import { CharacterService } from '../../services/api/character.service';
+import { AccountService } from '../../services/api/account.service';
+import { CriteriaUtil } from '../../utility/criteria-util';
 
 @Component({
   selector: 'pw-characters',
@@ -12,49 +15,46 @@ import { Criteria } from '../../modules/criteria';
 export class CharactersComponent implements OnInit {
   public siteData: SiteData;
 
-  public criteria = [
-    {
-      id: 'type',
-      title: 'Type',
-      showTitle: true,
-      inputType: 'radio',
-      visible: true,
-      disabled: false,
-      value: null,
-      defaultOptionIndex: 0,
-      setInitialQueryParam: true,
-      unsetDefaultQueryParam: false,
-      showSpinner: true,
-      options: [
-        {
-          display: 'Account',
-          value: 'account'
-        },
-        {
-          display: 'Character',
-          value: 'character'
-        }
-      ],
-      onChange: () => this.onChange()
-    },
-    {
-      id: 'name',
-      title: 'Name',
-      showTitle: true,
-      inputType: 'input',
-      visible: false,
-      disabled: false,
-      value: null,
-      defaultOptionIndex: null,
-      setInitialQueryParam: false,
-      unsetDefaultQueryParam: true,
-      showSpinner: false,
-      options: null,
-      onChange: () => this.onChange()
+  public characterCriteria: Criteria = {
+    id: 'account',
+    title: 'Account Name',
+    showTitle: false,
+    inputType: 'input',
+    visible: false,
+    disabled: false,
+    value: null,
+    defaultOptionIndex: null,
+    setInitialQueryParam: false,
+    unsetDefaultQueryParam: true,
+    showSpinner: false,
+    options: null,
+    onChange: () => {
+      CriteriaUtil.resetOne(this.accountCriteria);
+      this.onChange();
     }
-  ] as Criteria[];
+  };
+  public accountCriteria: Criteria = {
+    id: 'character',
+    title: 'Character Name',
+    showTitle: false,
+    inputType: 'input',
+    visible: false,
+    disabled: false,
+    value: null,
+    defaultOptionIndex: null,
+    setInitialQueryParam: false,
+    unsetDefaultQueryParam: true,
+    showSpinner: false,
+    options: null,
+    onChange: () => {
+      CriteriaUtil.resetOne(this.characterCriteria);
+      this.onChange();
+    }
+  };
 
-  constructor(private siteDataService: SiteDataService) {
+  constructor(private siteDataService: SiteDataService,
+              private characterService: CharacterService,
+              private accountService: AccountService) {
   }
 
   ngOnInit() {

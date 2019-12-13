@@ -2,10 +2,12 @@
   <div class="col">
     <div class="card">
       <div class="card-header">
-        <div>Explore
-          <span class="custom-text-green">{{siteData?.counts.accounts | number}}</span>
+        <pw-spinner [ifValue]="siteData" [isSmall]="true"></pw-spinner>
+        <div *ngIf="siteData">
+          Explore
+          <span class="custom-text-green">{{siteData.counts.accounts | number}}</span>
           account names and
-          <span class="custom-text-green">{{siteData?.counts.characters | number}}</span>
+          <span class="custom-text-green">{{siteData.counts.characters | number}}</span>
           character names collected from the stash API. Only characters that have listed
           something through the public stash API will appear here. This is also available
           as an API.
@@ -14,17 +16,21 @@
 
       <div class="card-body">
         <div class='row'>
-          <div *ngFor="let criteria of criteria" class="col-6 col-sm">
-            <pw-reactive-input [criteria]="criteria"></pw-reactive-input>
+          <div class="col-sm-4 col">
+            <pw-reactive-input [criteria]="characterCriteria"></pw-reactive-input>
           </div>
-          <div class="col-6 col-sm">
-            <h4>Search</h4>
+          <div class="col-sm-4 col">
+            <pw-reactive-input [criteria]="accountCriteria"></pw-reactive-input>
+          </div>
+          <div class="col-sm-4 col">
             <button class="btn btn-outline-dark w-100">Search</button>
           </div>
         </div>
       </div>
 
-      <div class="card-footer"></div>
+      <div class="card-footer slim-card-edge"></div>
+
     </div>
   </div>
 </div>
+
