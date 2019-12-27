@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'pw-spinner',
@@ -7,15 +7,16 @@ import {Observable} from 'rxjs';
   styleUrls: ['./spinner.component.css']
 })
 export class SpinnerComponent implements OnInit {
-  @Input() private ifValue: any;
-  @Input() private isSmall: boolean;
+  @Input() public ifValue: any;
+  @Input() public isSmall: boolean;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
-  private isObservable(): boolean {
+  public isObservable(): boolean {
     return this.ifValue instanceof Observable;
   }
 }

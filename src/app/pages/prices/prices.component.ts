@@ -26,7 +26,7 @@ export class PricesComponent implements OnInit, OnDestroy {
   constructor(private leagueService: LeagueService,
               private categoryService: CategoryService,
               private activatedRoute: ActivatedRoute,
-              private priceFilterService: PriceFilterService,
+              public priceFilterService: PriceFilterService,
               private routerHelperService: RouterHelperService) {
   }
 

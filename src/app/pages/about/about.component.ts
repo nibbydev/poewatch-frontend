@@ -8,7 +8,7 @@ import { FaqService } from '../../services/api/faq.service';
 })
 export class AboutComponent implements OnInit {
 
-  constructor(private faqService: FaqService) {
+  constructor(public faqService: FaqService) {
   }
 
   ngOnInit() {

@@ -10,7 +10,7 @@ import { AppConstants } from '../../../app-constants';
 })
 export class ItemDetailsComponent implements OnInit {
   @Input() entryLeague$: Subject<ItemEntryLeague>;
-  private appConstants = AppConstants;
+  public appConstants = AppConstants;
 
   constructor() {
   }

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, RoutesRecognized} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RoutesRecognized } from '@angular/router';
 
 @Component({
   selector: 'pw-root',
@@ -7,7 +7,7 @@ import {Router, RoutesRecognized} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  private pageTitle: string;
+  public pageTitle: string;
 
   constructor(private router: Router) {
   }

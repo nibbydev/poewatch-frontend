@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {PricePaginationService} from '../../../../services/price-pagination.service';
-import {PriceFilterService} from '../../../../services/price-filter.service';
+import { Component, OnInit } from '@angular/core';
+import { PricePaginationService } from '../../../../services/price-pagination.service';
+import { PriceFilterService } from '../../../../services/price-filter.service';
 
 @Component({
   selector: 'pw-prices-table-loadmore',
@@ -10,7 +10,7 @@ import {PriceFilterService} from '../../../../services/price-filter.service';
 export class PricesTableLoadmoreComponent implements OnInit {
 
   constructor(private priceFilterService: PriceFilterService,
-              private paginationService: PricePaginationService) {
+              public paginationService: PricePaginationService) {
   }
 
   ngOnInit() {

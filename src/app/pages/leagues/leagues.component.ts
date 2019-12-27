@@ -12,7 +12,7 @@ export class LeaguesComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<boolean>();
 
-  constructor(private leagueService: LeagueService) {
+  constructor(public leagueService: LeagueService) {
   }
 
   ngOnInit() {

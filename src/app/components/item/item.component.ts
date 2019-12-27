@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Rarity} from '../../modules/rarity';
-import {ItemData} from '../../modules/api/item-data';
+import { Component, Input, OnInit } from '@angular/core';
+import { Rarity } from '../../modules/rarity';
+import { ItemData } from '../../modules/api/item-data';
 
 @Component({
   selector: 'pw-item',
@@ -44,7 +44,7 @@ export class ItemComponent implements OnInit {
     };
   }
 
-  private hasProperties(): boolean {
+  public hasProperties(): boolean {
     if (this.item.variation) {
       return true;
     }

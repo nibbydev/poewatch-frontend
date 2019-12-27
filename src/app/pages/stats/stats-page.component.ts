@@ -13,7 +13,7 @@ import * as shape from 'd3-shape';
 })
 export class StatsPageComponent implements OnInit {
   private readonly historySize = 128;
-  private readonly statDefinitionGroups = [
+  public readonly statDefinitionGroups = [
     {
       id: 'group_1',
       members: [

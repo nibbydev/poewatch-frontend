@@ -12,8 +12,8 @@ import { CriteriaUtil } from '../../utility/criteria-util';
   styleUrls: ['./reactive-input.component.css']
 })
 export class ReactiveInputComponent implements OnInit {
-  @Input() private criteria: Criteria;
-  private options: SearchOption[];
+  @Input() public criteria: Criteria;
+  public options: SearchOption[];
 
   constructor(private activatedRoute: ActivatedRoute,
               private routerHelperService: RouterHelperService) {

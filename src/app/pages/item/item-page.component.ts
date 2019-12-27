@@ -75,7 +75,7 @@ export class ItemPageComponent implements OnInit {
 
   public item: ItemEntry;
   private entryLeague$: BehaviorSubject<ItemEntryLeague> = new BehaviorSubject(null);
-  private id: number;
+  public id: number;
   private leagueCriteria: Criteria = {
     id: 'league',
     title: 'League',

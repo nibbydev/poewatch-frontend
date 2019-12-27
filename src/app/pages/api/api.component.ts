@@ -8,9 +8,9 @@ import { AppConstants } from '../../app-constants';
   styleUrls: ['./api.component.css']
 })
 export class ApiComponent implements OnInit {
-  private appConstants = AppConstants;
+  public appConstants = AppConstants;
 
-  constructor(private apiDocService: ApiDocService) {
+  constructor(public apiDocService: ApiDocService) {
   }
 
   ngOnInit() {

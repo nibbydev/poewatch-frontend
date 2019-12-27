@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Route, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'pw-header',
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  private getFilteredRoutes(): Route[] {
+  public getFilteredRoutes(): Route[] {
     return this.router.config.filter((route) => route.data.enabled);
   }
 

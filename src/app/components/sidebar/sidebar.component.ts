@@ -11,7 +11,7 @@ export class SidebarComponent implements OnInit {
   @Input() private direction: string;
   private category: string;
 
-  constructor(private sidebarService: SidebarService,
+  constructor(public sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -21,10 +21,11 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  private isVertical(): boolean {
+  public isVertical(): boolean {
     return this.direction === 'vertical';
   }
-  private isHorizontal(): boolean {
+
+  public isHorizontal(): boolean {
     return this.direction === 'horizontal';
   }
 }
