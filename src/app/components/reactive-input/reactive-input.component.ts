@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Criteria, SearchOption } from '../../modules/criteria';
 import { ActivatedRoute } from '@angular/router';
 import { RouterHelperService } from '../../services/router-helper.service';
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { CriteriaUtil } from '../../utility/criteria-util';
 
 @Component({
@@ -11,9 +11,10 @@ import { CriteriaUtil } from '../../utility/criteria-util';
   templateUrl: './reactive-input.component.html',
   styleUrls: ['./reactive-input.component.css']
 })
-export class ReactiveInputComponent implements OnInit {
+export class ReactiveInputComponent implements OnInit, OnDestroy {
   @Input() public criteria: Criteria;
   public options: SearchOption[];
+  private subscriptions: Subscription[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private routerHelperService: RouterHelperService) {
@@ -36,10 +37,28 @@ export class ReactiveInputComponent implements OnInit {
       return;
     }
 
+    if (this.criteria.options instanceof Subject) {
+      const subscription = this.criteria.options.subscribe(o => {
+        // some inputs send null to force loading state
+        if (o === null) {
+          return;
+        }
+
+        this.options = o;
+        this.onInitVerifyAndSetOption(o);
+        if (this.criteria.onReady) {
+          this.criteria.onReady();
+        }
+      });
+
+      this.subscriptions.push(subscription);
+      return;
+    }
+
     // options are observable, subscribe and verify
     if (this.criteria.options instanceof Observable) {
       const destroy$ = new Subject<boolean>();
-      this.criteria.options.pipe(takeUntil(destroy$)).subscribe(o => {
+      const subscription = this.criteria.options.pipe(takeUntil(destroy$)).subscribe(o => {
         // some inputs send null to force loading state
         if (o === null) {
           return;
@@ -55,6 +74,7 @@ export class ReactiveInputComponent implements OnInit {
         destroy$.complete();
       });
 
+      this.subscriptions.push(subscription);
       return;
     }
 
@@ -67,6 +87,16 @@ export class ReactiveInputComponent implements OnInit {
       }
     }
   }
+
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => {
+      if (s) {
+        s.unsubscribe();
+      }
+    });
+  }
+
 
   private onInitVerifyAndSetOption(options: SearchOption[]): void {
     // get the initial query param
