@@ -1,4 +1,4 @@
-import {Rarity} from '../rarity';
+import { Rarity } from '../rarity';
 
 export class ItemData {
   id: number;
@@ -9,8 +9,7 @@ export class ItemData {
   frame: Rarity;
   mapSeries?: number;
   mapTier?: number;
-  baseIsShaper?: boolean;
-  baseIsElder?: boolean;
+  influences: string[];
   baseItemLevel?: number;
   gemQuality?: number;
   gemLevel?: number;

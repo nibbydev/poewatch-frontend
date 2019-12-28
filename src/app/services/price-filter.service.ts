@@ -316,20 +316,28 @@ export class PriceFilterService {
           value: 'all'
         },
         {
-          display: 'None',
-          value: 'none'
-        },
-        {
-          display: 'Either',
-          value: 'either'
-        },
-        {
           display: 'Shaper',
           value: 'shaper'
         },
         {
           display: 'Elder',
           value: 'elder'
+        },
+        {
+          display: 'Crusader',
+          value: 'crusader'
+        },
+        {
+          display: 'Redeemer',
+          value: 'redeemer'
+        },
+        {
+          display: 'Hunter',
+          value: 'hunter'
+        },
+        {
+          display: 'Warlord',
+          value: 'warlord'
         }
       ],
       showItem(e: GetEntry) {
@@ -337,17 +345,8 @@ export class PriceFilterService {
           case null:
           case 'all':
             return true;
-          case 'none':
-            return !(e.baseIsElder || e.baseIsShaper);
-          case 'either':
-            return e.baseIsElder || e.baseIsShaper;
-          case 'shaper':
-            return e.baseIsShaper;
-          case 'elder':
-            return e.baseIsElder;
           default:
-            console.log('Invalid option', this, e);
-            return true;
+            return e.influences.includes(this.value);
         }
       },
       onChange: () => this.sortEntries()

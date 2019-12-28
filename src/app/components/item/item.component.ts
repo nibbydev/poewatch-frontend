@@ -23,27 +23,6 @@ export class ItemComponent implements OnInit {
     return 'img-container-' + this.size;
   }
 
-  private getPrimaryClasses(): {} {
-    return {
-      'cursor-pointer': this.clickable,
-      'item-unique': this.item.frame === Rarity.UNIQUE,
-      'item-foil': this.item.frame === Rarity.RELIC,
-      'item-prophecy': this.item.frame === Rarity.PROPHECY,
-      'item-gem': this.item.frame === Rarity.GEM,
-      'item-currency': this.item.frame === Rarity.CURRENCY,
-      'item-shaper': this.item.baseIsShaper,
-      'item-elder': this.item.baseIsElder,
-      'text-lg': this.size === 'lg',
-    };
-  }
-
-  private getSecondaryClasses() {
-    return {
-      'item-unique-secondary': this.item.frame === Rarity.UNIQUE,
-      'item-foil-secondary': this.item.frame === Rarity.RELIC
-    };
-  }
-
   public hasProperties(): boolean {
     if (this.item.variation) {
       return true;
@@ -53,7 +32,7 @@ export class ItemComponent implements OnInit {
       return true;
     }
 
-    if (this.item.baseIsElder || this.item.baseIsElder) {
+    if (this.item.influences.length) {
       return true;
     }
 
@@ -70,6 +49,27 @@ export class ItemComponent implements OnInit {
     }
 
     return false;
+  }
+
+  private getSecondaryClasses() {
+    return {
+      'item-unique-secondary': this.item.frame === Rarity.UNIQUE,
+      'item-foil-secondary': this.item.frame === Rarity.RELIC
+    };
+  }
+
+  private getPrimaryClasses(): {} {
+    return {
+      'cursor-pointer': this.clickable,
+      'item-unique': this.item.frame === Rarity.UNIQUE,
+      'item-foil': this.item.frame === Rarity.RELIC,
+      'item-prophecy': this.item.frame === Rarity.PROPHECY,
+      'item-gem': this.item.frame === Rarity.GEM,
+      'item-currency': this.item.frame === Rarity.CURRENCY,
+      'item-shaper': 'shaper' in this.item.influences,
+      'item-elder': 'elder' in this.item.influences,
+      'text-lg': this.size === 'lg'
+    };
   }
 
 }

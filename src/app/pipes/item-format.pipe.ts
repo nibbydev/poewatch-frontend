@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {ItemData} from '../modules/api/item-data';
+import { Pipe, PipeTransform } from '@angular/core';
+import { ItemData } from '../modules/api/item-data';
 
 @Pipe({
   name: 'itemFormat'
@@ -23,9 +23,10 @@ export class ItemFormatPipe implements PipeTransform {
 
     // If item is base
     if (item.category === 'base') {
-      if (item.baseIsShaper) {
+      if (item.influences.includes('shaper')) {
         icon += '&shaper=1';
-      } else if (item.baseIsElder) {
+      }
+      if (item.influences.includes('elder')) {
         icon += '&elder=1';
       }
     }
@@ -34,7 +35,6 @@ export class ItemFormatPipe implements PipeTransform {
   }
 
   private formatProperties(item: ItemData): string {
-    // Begin builder
     let builder = '';
 
     if (item.variation) {
@@ -45,12 +45,8 @@ export class ItemFormatPipe implements PipeTransform {
       builder += 'tier ' + item.mapTier + ', ';
     }
 
-    if (item.category === 'base') {
-      if (item.baseIsShaper) {
-        builder += 'shaper, ';
-      } else if (item.baseIsElder) {
-        builder += 'elder, ';
-      }
+    if (item.influences.length) {
+      item.influences.forEach(i => builder += i + ', ');
     }
 
     if (item.baseItemLevel) {
