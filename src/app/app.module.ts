@@ -42,6 +42,7 @@ import { SortArrowComponent } from './components/sort-arrow/sort-arrow.component
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CharactersComponent } from './pages/characters/characters.component';
+import { LabComponent } from './pages/lab/lab.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { CharactersComponent } from './pages/characters/characters.component';
     D3SparkComponent,
     SortArrowComponent,
     TooltipComponent,
-    CharactersComponent
+    CharactersComponent,
+    LabComponent
   ],
   imports: [
     BrowserModule,

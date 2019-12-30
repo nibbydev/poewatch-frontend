@@ -9,6 +9,7 @@ import { LeaguesComponent } from './pages/leagues/leagues.component';
 import { StatsPageComponent } from './pages/stats/stats-page.component';
 import { DemoComponent } from './pages/demo/demo.component';
 import { CharactersComponent } from './pages/characters/characters.component';
+import { LabComponent } from './pages/lab/lab.component';
 
 const routes: Routes = [
   {
@@ -100,8 +101,18 @@ const routes: Routes = [
       isNew: false,
       enabled: false,
       comment: null
-    },
-  },
+    }
+  }, {
+    path: 'lab',
+    component: LabComponent,
+    data: {
+      pageTitle: 'Labyrinth layouts',
+      navTitle: 'Lab',
+      isNew: true,
+      enabled: true,
+      comment: null
+    }
+  }
 ];
 
 @NgModule({
