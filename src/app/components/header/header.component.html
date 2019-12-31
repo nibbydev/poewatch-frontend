@@ -15,7 +15,7 @@
         <a routerLink="{{route.path}}" class="pw-nav-link" [title]="route.data.comment"
            [class.active]="isCurrentRoute(route.path)">
           {{route.data.navTitle}}
-          <span *ngIf="route.data.isNew" class="badge custom-badge-orange"
+          <span *ngIf="route.data.isNew" class="badge custom-badge-green"
                 title="This page was added recently">New</span>
         </a>
       </li>

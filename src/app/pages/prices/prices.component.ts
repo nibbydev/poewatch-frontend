@@ -71,7 +71,7 @@ export class PricesComponent implements OnInit, OnDestroy {
         this.routerHelperService.navigate({
           league: (matchingLeague || defaultLeague).name,
           category: (matchingCategory || defaultCategory).name
-        });
+        }, true);
         return;
       }
 

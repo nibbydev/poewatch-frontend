@@ -509,32 +509,32 @@ canvas {
 //----------------------------------------------------------------------------------------------------------*/
 
 .popover {
-  background-color: #222;
+  background-color: #ddd;
 }
 
 .popover > .popover-header {
   border-bottom: 0;
-  background-color: #2c2c2c;
+  background-color: #ddd;
 }
 
 .popover > .popover-body {
-  color: #ddd;
+  color: #333;
 }
 
 .bs-popover-top .arrow::after {
-  border-top-color: #222;
+  border-top-color: #ddd;
 }
 
 .bs-popover-bottom .arrow::after {
-  border-bottom-color: #222;
+  border-bottom-color: #ddd;
 }
 
 .bs-popover-left .arrow::after {
-  border-left-color: #222;
+  border-left-color: #ddd;
 }
 
 .bs-popover-right .arrow::after {
-  border-right-color: #222;
+  border-right-color: #ddd;
 }
 
 
@@ -547,6 +547,4 @@ canvas {
   min-height: 10px;
   border-radius: 0.1rem;
   display: inline-block;
-  margin-right: 0.5rem;
-  background-color: #fff;
 }

@@ -68,3 +68,13 @@ tbody > tr:hover {
 .pricebox-container:hover > .pricebox:nth-child(1) {
   transform: translate(100%, -50%);
 }
+
+.colorbox {
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.colorbox:hover {
+  background-color: #70ca5a;
+}
