@@ -124,7 +124,7 @@ export class ReactiveInputComponent implements OnInit, OnDestroy {
     // if user provided a query param or if criteria should set a query param on init
     if (paramValue !== null || this.criteria.setInitialQueryParam) {
       // navigate to either the default or matching param
-      this.routerHelperService.navigate(queryParams);
+      this.routerHelperService.navigate(queryParams, true);
     }
   }
 
