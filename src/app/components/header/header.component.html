@@ -1,24 +1,27 @@
-<nav class="navbar navbar-expand-sm pw-navbar">
-  <a class="navbar-brand text-reset" routerLink="/">
-    <img src='assets/favicon.png' class='d-inline-block align-top mr-2' alt="Logo">
-    PoeWatch
-  </a>
+<nav class="navbar navbar-expand-md navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand text-reset" routerLink="/">
+      <img alt="Logo" class='d-inline-block align-top mr-2' src='assets/favicon.png'>
+      PoeWatch
+    </a>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler collapsed"
+            data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav mr-auto">
-      <li *ngFor="let route of getFilteredRoutes()" class="nav-item nav-link">
-        <a routerLink="{{route.path}}" class="pw-nav-link" [title]="route.data.comment"
-           [class.active]="isCurrentRoute(route.path)">
-          {{route.data.navTitle}}
-          <span *ngIf="route.data.isNew" class="badge custom-badge-green"
-                title="This page was added recently">New</span>
-        </a>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav mr-auto">
+        <li *ngFor="let route of getFilteredRoutes()" class="nav-item nav-link">
+          <a [class.active]="isCurrentRoute(route.path)" [title]="route.data.comment" class="pw-nav-link"
+             routerLink="{{route.path}}">
+            {{route.data.navTitle}}
+            <span *ngIf="route.data.isNew" class="badge custom-badge-green"
+                  title="This page was added recently">New</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
