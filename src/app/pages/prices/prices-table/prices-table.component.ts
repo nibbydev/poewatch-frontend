@@ -13,7 +13,7 @@ import { SortArrowState } from '../../../modules/sort-arrow-state';
 })
 export class PricesTableComponent implements OnInit, OnDestroy {
   public readonly changeColor = scaleLinear().domain([-100, 100]).range(['#ff857e', '#9cff87']);
-  public readonly dailyColor = scaleLinear().domain([0, 50, 1000]).range(['#ff857e', '#ffdc88', '#9cff87']);
+  public readonly dailyColor = scaleLinear().domain([0, 200]).range(['#ff857e', '#9cff87']);
   public entries: GetEntry[];
   private subscription$: Subscription;
   private appConstants = AppConstants;
@@ -113,4 +113,8 @@ export class PricesTableComponent implements OnInit, OnDestroy {
   //
   //   return this.confidenceColor(confidence);
   // }
+
+  public capDaily(item: GetEntry): number {
+    return item.daily > 200 ? 200 : item.daily;
+  }
 }
