@@ -51,28 +51,43 @@
 
     <td>
       <div class="pricebox-container">
-        <div class="pricebox pw-subtext-1 font-weight-bold">
-          <span class="img-container img-container-xs text-center mr-1">
-            <img [src]="appConstants.CHAOS_ICON" alt="...">
-          </span>
-          {{item.mean | number:'1.0-2'}}
-        </div>
-        <div *ngIf="item.id !== 142; else elseExalted" class="pricebox pw-subtext-1 font-weight-bold">
-          <span class="img-container img-container-xs text-center mr-1">
-            <img [src]="appConstants.EXALTED_ICON" alt="...">
-          </span>
-          {{item.exalted | number:'1.0-2'}}
-        </div>
-        <ng-template #elseExalted>
-          <div class="pricebox pw-subtext-1 font-weight-bold">
-          <span style="font-size: 10px">
-            ah yes, 1 exalted is worth 1 exalted
-          </span>
-          </div>
-        </ng-template>
+        <div *ngIf="item.exalted >= 1 && item.id !== 142" [ngTemplateOutlet]="chaosPrice"></div>
+        <div *ngIf="item.exalted >= 1 && item.id !== 142" [ngTemplateOutlet]="exaltedPrice"></div>
+
+        <div *ngIf="item.exalted < 1" [ngTemplateOutlet]="exaltedPrice"></div>
+        <div *ngIf="item.exalted < 1" [ngTemplateOutlet]="chaosPrice"></div>
+
+        <div *ngIf="item.id === 142" [ngTemplateOutlet]="exaltedJoke"></div>
+        <div *ngIf="item.id === 142" [ngTemplateOutlet]="chaosPrice"></div>
+
       </div>
     </td>
 
+    <ng-template #chaosPrice>
+      <div class="pricebox pw-subtext-1 font-weight-bold">
+          <span class="img-container img-container-xs text-center mr-1">
+            <img [src]="appConstants.CHAOS_ICON" alt="...">
+          </span>
+        {{item.mean | number:'1.0-2'}}
+      </div>
+    </ng-template>
+
+    <ng-template #exaltedPrice>
+      <div class="pricebox pw-subtext-1 font-weight-bold">
+         <span class="img-container img-container-xs text-center mr-1">
+            <img [src]="appConstants.EXALTED_ICON" alt="...">
+          </span>
+        {{item.exalted | number:'1.0-2'}}
+      </div>
+    </ng-template>
+
+    <ng-template #exaltedJoke>
+      <div class="pricebox pw-subtext-1 font-weight-bold">
+          <span style="font-size: 10px">
+            ah yes, 1 exalted is worth 1 exalted
+          </span>
+      </div>
+    </ng-template>
 
     <td class="text-center p-0 nowrap">
       <div class="d-flex align-items-center">

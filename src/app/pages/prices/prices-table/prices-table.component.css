@@ -65,7 +65,7 @@ tbody > tr:hover {
   transform: translate(0%, -50%);
 }
 
-.pricebox-container:hover > .pricebox:nth-child(1) {
+.pricebox-container:hover > .pricebox:nth-child(4) {
   transform: translate(100%, -50%);
 }
 
