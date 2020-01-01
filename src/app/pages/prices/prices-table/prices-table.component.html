@@ -22,22 +22,18 @@
       <pw-item [clickable]="true" [item]="item" [showImg]="true" [size]="'sm'"></pw-item>
 
       <ng-template #itemInfo>
-        <div class="text-center">This is a WIP feature</div>
-
+        <div class="text-center">[WIP] External links for {{item.name}}</div>
         <hr class="my-2">
-
         <div class="row">
           <div class="col">
             <div class="small">Wiki link</div>
             <div class="small">Trade link 1</div>
             <div class="small">Trade link 2</div>
-            <div class="small">PoeNinja link</div>
           </div>
           <div class="col">
             <a class="d-block small text-black-50" href="#">pathofexile.gamepedia.com</a>
             <a class="d-block small text-black-50" href="#">pathofexile.com/trade</a>
             <a class="d-block small text-black-50" href="#">poe.trade</a>
-            <a class="d-block small text-black-50" href="#">poe.ninja</a>
           </div>
         </div>
       </ng-template>
@@ -45,7 +41,7 @@
 
       <div class="mr-2">
         <div [autoClose]="'outside'" [ngbPopover]="itemInfo">
-          <div class="colorbox colorbox-bg"></div>
+          <div class="colorbox custom-text-green-lo">?</div>
         </div>
       </div>
 
