@@ -10,14 +10,14 @@ export class RouterHelperService {
               private activatedRoute: ActivatedRoute) {
   }
 
-  public navigate(params: Params, skipLocationChange: boolean = false): void {
+  public navigate(params: Params, replaceUrl: boolean = false): void {
     this.router.navigate(
       [],
       {
         relativeTo: this.activatedRoute,
         queryParams: params,
         queryParamsHandling: 'merge',
-        skipLocationChange
+        replaceUrl
       } as NavigationExtras);
   }
 }

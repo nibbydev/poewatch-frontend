@@ -56,7 +56,7 @@ export class CriteriaUtil {
 
     // if there are no options or no default option, skip checking
     if (criteria.defaultOptionIndex === null || !criteria.options) {
-      rhs.navigate(queryParams);
+      rhs.navigate(queryParams, true);
       return;
     }
 
